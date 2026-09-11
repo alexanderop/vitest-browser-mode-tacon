@@ -1,0 +1,23 @@
+<script setup lang="ts">
+import { computed } from 'vue'
+import { handleBackground } from '../layoutHelper'
+
+const props = defineProps({
+  background: {
+    type: String,
+  },
+})
+
+const style = computed(() => handleBackground(props.background, true))
+</script>
+
+<template>
+  <div
+    class="slidev-layout end text-center"
+    :style="style"
+  >
+    <div class="my-auto w-full">
+      <slot />
+    </div>
+  </div>
+</template>

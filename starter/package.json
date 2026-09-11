@@ -1,0 +1,27 @@
+{
+  "name": "slidev-starter",
+  "version": "1.0.0",
+  "description": "Slidev starter template with @alexop theme and addon",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "slidev",
+    "build": "slidev build",
+    "export": "slidev export",
+    "export:pdf": "slidev export --format pdf",
+    "export:png": "slidev export --format png",
+    "research:check": "node scripts/check-research.mjs",
+    "research:test": "node --test scripts/check-research.test.mjs"
+  },
+  "dependencies": {
+    "@alexop/slidev-addon-utils": "workspace:*",
+    "@alexop/slidev-theme-brand": "workspace:*"
+  },
+  "devDependencies": {
+    "@slidev/cli": "^52.19.1",
+    "@slidev/theme-default": "^0.25.0",
+    "typescript": "^7.0.2",
+    "unocss": "^66.10.2",
+    "vite": "^8.3.0"
+  }
+}
