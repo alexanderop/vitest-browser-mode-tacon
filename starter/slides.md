@@ -132,6 +132,11 @@ layout: default
 <BlockedButtonSlide />
 
 ---
+layout: statement
+---
+# Würdet ihr euren Node.js-Backend-Server in Chrome laufen lassen?
+
+---
 layout: default
 class: p-0
 hideFooter: true
@@ -193,28 +198,65 @@ hideFooter: true
 
 ---
 layout: default
-class: p-0
-hideFooter: true
+class: talk-code
 ---
-<h1 class="sr-only">Auf den Zustand warten</h1>
-<img
-  src="/diagrams/browser-mode-assertions.png"
-  alt="expect.element prüft den DOM-Zustand mit expect.poll wiederholt. Ist die Assertion erfüllt, läuft der Test weiter. Andernfalls wird bis zum Zeitlimit erneut geprüft; danach schlägt die Assertion fehl. Sichtbarkeit allein beweist keine Klickbarkeit."
-  class="absolute inset-0 h-full w-full object-contain"
-/>
+# Locator behalten
+
+<div class="mb-4 text-xl">Vitest übernimmt das Warten.</div>
+
+```ts {all|4-5|7-8|10-11}
+import { page, userEvent } from 'vitest/browser'
+const kaufen = page.getByRole('button', { name: /kaufen/i })
+
+// Sofort auflösen: Fehlt der Button, wirft element().
+await userEvent.click(kaufen.element())
+
+// Locator behalten: Die Interaktion kann warten.
+await userEvent.click(kaufen)
+
+// Kürzer:
+await kaufen.click()
+```
+
+---
+layout: default
+class: talk-code
+---
+# Auf den Zustand warten
+
+```ts {all|1-2|4-5|7-9}
+// Ziel beschreiben
+const kaufen = page.getByRole('button', { name: /kaufen/i })
+
+// Aktion abwarten
+await kaufen.click()
+
+// Erwarteten Zustand wiederholt prüfen
+await expect.element(page.getByRole('status'))
+  .toHaveText('1 Artikel im Warenkorb')
+```
+
+<div class="mt-8 text-xl">Locator erstellen: synchron. Aktion und Assertion: <code>await</code>.</div>
+<div class="mt-3 text-lg"><code>.element()</code> nur, wenn ich wirklich einen DOM-Knoten brauche.</div>
 
 ---
 layout: default
 ---
 # Der Browser findet den Fehler
 
-<div class="grid grid-cols-3 gap-8 mt-12 text-xl">
-<div><h2 style="font-size: 1.65rem">JSDOM: grün</h2><p>Das ausgelöste Event erreicht den Handler.</p></div>
-<div><h2 style="font-size: 1.65rem">Browser: rot</h2><p>Die Dekoration fängt den Klick ab.</p></div>
-<div><h2 style="font-size: 1.65rem">Repariert: grün</h2><p>Der Button ist wieder erreichbar.</p></div>
-</div>
+<BrowserFailureFlow />
 
-<div class="mt-10 text-xl">Die Erwartung bleibt gleich: ein Plüschtier im Warenkorb.</div>
+---
+layout: default
+class: p-0
+hideFooter: true
+---
+<img
+  src="/memes/hamcrab-three-component-contracts-v2.png"
+  alt="Drei Hamcrabs zeigen die Verträge Verhalten, Accessibility und Darstellung"
+  class="absolute inset-0 h-full w-full object-contain"
+/>
+
 
 ---
 layout: statement
@@ -261,63 +303,183 @@ layout: statement
 ---
 layout: default
 ---
-# Kundenkonto: Inhalt und Bedeutung
+# Sichtbar gewechselt. Falsch gemeldet.
 
 <TabsContractDemo />
 
 ---
-layout: two-cols-header
+layout: default
+class: talk-code
 zoom: 0.9
 ---
-# Axe bleibt grün
+# Der Bug: ARIA bleibt auf Account stehen
 
-::left::
+<div class="mb-4 text-lg">Aus unserer Demo: <code>broken = true</code> hält den gemeldeten Namen fest.</div>
 
-## Sichtbarer Inhalt
-
-```text
-Password
-
-Change your password here.
+```ts
+const selected = ref<'Account' | 'Password'>('Password')
+const semanticName = computed(() =>
+  broken.value ? 'Account' : selected.value
+)
 ```
 
-::right::
-
-## Accessibility-Modell
-
-```text
-tab "Account" [selected]
-tabpanel "Account"
+```vue
+<!-- Auszug: Der Password-Tab bekommt zwei verschiedene Zustände. -->
+<button role="tab"
+  :class="{ active: selected === 'Password' }"
+  :aria-selected="semanticName === 'Password'"
+  @click="selected = 'Password'">Password</button>
 ```
 
-<div v-click class="mt-10 text-center text-2xl">
-Jedes Attribut ist gültig. Die gemeinsame Bedeutung ist falsch.
+<div class="mt-5 grid grid-cols-2 gap-8 text-xl">
+<div><span style="color: #a6e3a1">Sichtbar: selected = Password</span><br>Markierung und Inhalt wechseln.</div>
+<div><span style="color: #f38ba8">Gemeldet: semanticName = Account</span><br><code>aria-selected</code> bleibt falsch.</div>
 </div>
+<div class="mt-4 text-base opacity-80">Auch <code>aria-labelledby</code> nutzt semanticName: Der Passwort-Bereich heißt weiter „Account“.</div>
+
+---
+layout: default
+class: talk-code
+zoom: 0.85
+---
+# Dieser JSDOM-Test bleibt grün
+
+```ts
+// @vitest-environment jsdom
+import { expect, test } from 'vitest'
+import { render, screen } from '@testing-library/vue'
+import userEvent from '@testing-library/user-event'
+import TabsContractDemo from './TabsContractDemo.vue'
+
+test('zeigt den Passwort-Bereich', async () => {
+  render(TabsContractDemo)
+  const user = userEvent.setup()
+  await user.click(screen.getByRole('tab', { name: 'Account' }))
+  await user.click(screen.getByRole('tab', { name: 'Password' }))
+  expect(screen.getByText('Change your password here.')).toBeTruthy()
+})
+```
+
+<div class="mt-5 text-xl" style="color: #a6e3a1">✓ Der Text ist da. Genau das prüft dieser Test.</div>
+<div class="mt-3 text-lg">Er prüft weder die gemeldete Auswahl noch den Namen des Panels.</div>
+<div class="mt-3 text-base opacity-70">Testbeispiel: Mit derselben Text-Assertion wäre auch Browser Mode grün.</div>
+
+---
+layout: default
+class: talk-code
+zoom: 0.85
+---
+# Dieser Browser-Test prüft auch die Bedeutung
+
+```ts
+import { expect, test } from 'vitest'
+import { page, userEvent } from 'vitest/browser'
+import { render } from 'vitest-browser-vue'
+import TabsContractDemo from './TabsContractDemo.vue'
+
+test('wechselt Auswahl und Bedeutung per Tastatur', async () => {
+  await render(TabsContractDemo)
+  await page.getByRole('tab', { name: 'Account' }).click()
+  await userEvent.keyboard('{ArrowRight}')
+  const password = page.getByRole('tab', { name: 'Password' })
+  await expect.element(password).toHaveFocus()
+  await expect.element(password).toHaveAttribute('aria-selected', 'true')
+  await expect.element(page.getByRole('tabpanel'))
+    .toHaveAccessibleName('Password')
+})
+```
+
+<div class="mt-4 text-xl" style="color: #f38ba8">✕ Erwartet: aria-selected="true" · Tatsächlich: "false"</div>
+<div class="mt-2 text-base">Testbeispiel: Die Auswahl-Assertion schlägt fehl. Nach der Reparatur passen auch Auswahl und Panel-Name.</div>
+<div class="mt-2 text-base opacity-70">Auch JSDOM könnte diese ARIA-Fehler prüfen. Browser Mode ergänzt die echte Browser- und Tastaturumgebung.</div>
+
+---
+layout: default
+class: talk-code
+zoom: 0.9
+---
+# Der Fix: ARIA folgt der sichtbaren Auswahl
+
+<div class="mb-4 text-lg">Den festgehaltenen Wert entfernen. Beide Darstellungen lesen denselben Zustand.</div>
+
+```diff
+- const semanticName = computed(() =>
+-   broken.value ? 'Account' : selected.value
+- )
++ const semanticName = computed(() => selected.value)
+```
+
+<div class="mt-5 text-lg">Nach dem Wechsel zu Password rendert Vue jetzt:</div>
+
+```html
+<button role="tab" aria-selected="false">Account</button>
+<button role="tab" id="demo-password" aria-selected="true">Password</button>
+<div role="tabpanel" aria-labelledby="demo-password">…</div>
+```
+
+<div class="mt-5 text-xl" style="color: #a6e3a1">✓ Password fokussiert · Password ausgewählt · Panel heißt Password</div>
+<div class="mt-3 text-lg">Der Test bleibt unverändert. Die Komponente erfüllt jetzt seine Erwartungen.</div>
+<div class="mt-3 text-base opacity-70">„Defekt aktiv“ ausschalten aktiviert in der Demo genau diesen Pfad: semanticName folgt selected.</div>
 
 ---
 layout: default
 class: talk-code
 ---
-# Tastatur, Bedeutung und Auswahl prüfen
+# Den Zusammenhang als ARIA-Snapshot prüfen
 
-```ts {1-3|4-10|11-12|all}
-await account.click()
-await userEvent.keyboard('{ArrowRight}')
-await expect.element(password).toHaveFocus()
-await expect.element(document.body).toMatchAriaInlineSnapshot(`
+```ts
+await expect.element(page.getByRole('tablist')).toMatchAriaInlineSnapshot(`
   - tablist "Manage your account":
     - tab "Account"
     - tab "Password" [selected]
-  - tabpanel "Password":
-    - paragraph: Change your password here. After saving, you'll be logged out.
 `)
-await expect.element(page.getByRole('tab', { selected: true }))
-  .toHaveLength(1)
+await expect.element(page.getByRole('tabpanel'))
+  .toHaveAccessibleName('Password')
 ```
+
+<div class="mt-8 text-xl">Der Snapshot hält fest, welcher Tab als ausgewählt gemeldet werden soll.</div>
+<div class="mt-4 text-xl">Im Defekt steht <code>[selected]</code> bei Account. Nach der Reparatur bei Password.</div>
 
 <style>
 pre code { white-space: pre-wrap; overflow-wrap: anywhere; }
 </style>
+
+---
+layout: default
+---
+# axe: automatische Regeln, echte Browserdaten
+
+<div class="mt-4">
+<img src="/memes/axe-browser-vs-jsdom.png" class="w-full" alt="Automatischer Ablauf: Komponente rendern, axe-Regeln prüfen, Ergebnis im Test prüfen. JSDOM unterstützt DOM-Regeln, aber kein echtes Layout: Der Kontrastcheck bleibt incomplete. Vitest Browser Mode liefert echtes Rendering mit Layout, Fonts und Farben: axe erkennt den Kontrastfehler. Manuelle Accessibility-Tests bleiben nötig." />
+</div>
+
+---
+layout: default
+class: talk-code
+zoom: 0.85
+---
+# axe automatisch im Browser-Test ausführen
+
+```ts
+// Claw & Chew · CheckoutForm.browser.test.ts (Auszug)
+import { expect, test } from 'vitest'
+import { render } from 'vitest-browser-vue'
+import axe from 'axe-core'
+import CheckoutForm from './CheckoutForm.vue'
+
+test('Checkout-Hinweis hat ausreichend Kontrast', async () => {
+  const screen = await render(CheckoutForm, { props: { total: 2250 } })
+  const notice = screen.getByText(/This is a demo shop\./)
+  await expect.element(notice).toBeVisible()
+  const results = await axe.run(notice.element(), { runOnly: ['color-contrast'] })
+  expect(results.violations.map(rule => rule.id)).toEqual([])
+  expect(results.incomplete).toEqual([])
+})
+```
+
+<div class="mt-4 text-lg"><code>pnpm test:browser</code> führt auch diesen Test aus – lokal und in CI.</div>
+<div class="mt-2 text-base"><span style="color: #a6e3a1">✓ Original grün</span> · <span style="color: #f38ba8">✕ Kontrast-Defekt: color-contrast</span> · in Chromium geprüft</div>
+<div class="mt-2 text-base opacity-80">Hier gezielt eine axe-Regel. Ohne <code>runOnly</code>: Standardregeln im gewählten DOM-Bereich. Tastatur und Tab-Bedeutung prüfen wir zusätzlich.</div>
 
 ---
 layout: statement
@@ -386,6 +548,37 @@ Nur die relevante Komponente.
 </div>
 
 ---
+layout: default
+---
+# Visual Tests bei jedem Pull Request
+
+<div class="mt-4">
+<img
+  src="/memes/visual-regression-pipeline.png"
+  alt="Ein Pull Request startet Vitest und Chromium in CI. Der aktuelle Screenshot wird mit der Referenz aus Git verglichen: Bei Übereinstimmung ist der Check grün, bei Abweichung werden Referenz, aktuelles Bild und Diff geprüft. Browser, Fonts und Viewport bleiben gleich."
+  class="w-full"
+/>
+</div>
+
+---
+layout: default
+---
+# Gewollte Änderung? Referenz bewusst aktualisieren
+
+<div class="grid grid-cols-3 gap-8 mt-10 text-xl">
+<div><h2 style="font-size: 1.5rem">1 · Manuell starten</h2><p><code>workflow_dispatch</code><br>auf dem Feature-Branch.</p></div>
+<div><h2 style="font-size: 1.5rem">2 · In CI erzeugen</h2><p>Dieselbe Umgebung wie beim normalen Vergleich.</p></div>
+<div><h2 style="font-size: 1.5rem">3 · Bilder reviewen</h2><p>Referenzen committen.<br>PR-Check erneut ausführen.</p></div>
+</div>
+
+```sh
+pnpm exec vitest run --project vrt --update
+```
+
+<div class="mt-7 text-xl">Ein roter Vergleich ist eine Review-Aufgabe, keine automatische Freigabe.</div>
+<div class="mt-4 text-lg opacity-80">Kein <code>--update</code> im normalen PR-Check. Keine lokalen Mac-Referenzen für den Linux-Vergleich.</div>
+
+---
 layout: center
 ---
 # Welche Darstellung sichern wir ab?
@@ -397,16 +590,6 @@ layout: center
 
 <div class="mt-8 text-xl">Keine Screenshot-Matrix für jeden Schritt jedes Ablaufs.</div>
 
----
-layout: default
-class: p-0
-hideFooter: true
----
-<img
-  src="/memes/hamcrab-three-component-contracts-v2.png"
-  alt="Drei Hamcrabs zeigen die Verträge Verhalten, Accessibility und Darstellung"
-  class="absolute inset-0 h-full w-full object-contain"
-/>
 
 ---
 layout: statement

@@ -2,7 +2,15 @@
 
 ## Current synthesis
 
-Latest editorial revision: resolve the blocked-button defect before naming contracts, continue the shop through behavior, accessibility and appearance, then summarize the contracts and apply them to test boundaries and AI instructions. Extra implementation examples move to backup. This supersedes earlier ordering and main-deck integration statements below. [Accepted shop-story revision](../raw/2026-09-12-shop-story-revision.md).
+An explanatory axe diagram precedes the runnable test: render, run rules, assert results. DOM checks are possible in JSDOM, but its unsupported contrast evaluation differs from the real browser rendering available in Browser Mode. [Diagram source evidence](../raw/2026-09-12-axe-jsdom-diagram-evidence.md).
+
+The A11y section now includes the existing Claw & Chew checkout axe test: explicit `axe.run` executes inside Browser Mode, with a green original and a verified red contrast defect. It complements keyboard and ARIA expectations; the excerpt scans one notice with one rule. The inspected Vitest source has no axe integration example. [Local source and execution evidence](../raw/2026-09-12-axe-browser-checkout-evidence.md).
+
+The visual-testing section now includes a short GitHub Actions workflow and deliberate baseline updates. Run a separate headless visual project with controlled browser, OS, fonts and viewport; compare committed references on PRs and review actual/diff artifacts. Generate intentional reference changes in the same CI environment via a manual feature-branch run, review and commit the images, then rerun the normal PR check. Never make `--update` part of the normal PR comparison. This is a teaching workflow, not CI enabled for this Slidev repository. [Current visual regression guide](../raw/2026-09-12-vitest-visual-regression-ci.md).
+
+The technical introduction now adds a shop-based locator comparison between the click round-trip and assertions. Keep locators for ordinary actions and assertions; `.element()` is synchronous and eagerly resolves a raw node, while awaited actions and `expect.element(locator).matcher()` preserve retrying. The next code slide connects target, action and expected state. [Locator comment and primary API evidence](../raw/browser-mode-locator-maintainer-comment.md).
+
+Latest editorial revision: resolve the blocked-button defect before naming contracts, continue the shop through behavior, accessibility and appearance, introduce the three-contract image immediately after the browser failure explanation and before the detailed behavior section, then apply the contracts to test boundaries and AI instructions. The image is no longer a closing summary; see the [latest brief decision](../brief.md#vertragsübersicht-vor-der-vertiefung). Extra implementation examples move to backup. This supersedes earlier ordering and main-deck integration statements below. [Accepted shop-story revision](../raw/2026-09-12-shop-story-revision.md).
 
 The opening now establishes the pyramid, Vue/React component scope and jsdom/Happy DOM execution before demonstrating the shop defect. Component tests can be isolated or integrated; DOM emulation is a separate environment choice. The opening illustration contrasts mounting a single Button with mounting Shop and rendering its real descendants, then checking a click updates both cart and badge. This is a teaching example, not an exact diagram of the demo source. The historical jsdom illustration bridges the overview and demonstration. Use “an established approach”; current majority adoption is not established by the inspected sources. [Accepted opening and source notes](../raw/2026-09-12-testing-basics-opening.md).
 
@@ -31,6 +39,8 @@ The inspected implementation provides a concise technical introduction after the
 The introduction must distinguish providers before tracing the Playwright click: `preview` runs in a real local browser without Playwright/WebdriverIO, but simulates interactions and rejects headless mode. The captured setup guide requires Playwright or WebdriverIO for CI and recommends either for local testing as well. Thus real browser rendering alone does not establish provider-backed actionability for the covered-button example. [Provider documentation](../raw/2026-08-18-vitest-4-1-11-browser-mode-documentation.md). Local verification also inspected `packages/browser-preview/src/preview.ts` and `locators.ts` at `9bd8d464e`; the latter overrides `click` with `userEvent.click(element)`.
 
 ## Claims and evidence
+
+- `locator.element()` returns a DOM element synchronously and throws if no element matches. Adding `await` does not introduce waiting. Vitest `userEvent.click` and `userEvent.type` accept locators, and `locator.click()` is the compact click form. Await DOM assertions through `expect.element(locator).matcher()`. [Locator comment and primary API evidence](../raw/browser-mode-locator-maintainer-comment.md).
 
 - A concise Vitest introduction can establish the runner, the `test` and `expect` API, Vite integration, and watch feedback before introducing environments such as JSDOM or Browser Mode. The 2022 LearnVue video demonstrates this teaching order, although its setup commands and Happy DOM example are historical. [The four-minute video moves from a one-sentence definition to code, watch feedback, and then Vue component tests.](../raw/2022-02-14-vitest-simplified.md)
 
@@ -92,6 +102,8 @@ The backup explains the advertised project ratios and timing as one PWA case stu
 
 ## Tensions and open questions
 
+- The supplied commenter identity and original URL remain unknown. Attribute the API behavior to official docs, not a named maintainer. Retry support does not guarantee every test is stable or every provider has identical actionability behavior. [Locator comment and primary API evidence](../raw/browser-mode-locator-maintainer-comment.md).
+
 - The recording uses Vitest 2.1 on its release day. Treat its setup details and API names as historical when the Vitest 4.1.11 documentation differs.
 - The live demo exposes rough edges in the new release. The generated example, `describe` block, file upload, and coverage flow each produce a problem. These failures are useful evidence for honest trade-offs, but they do not establish current defects.
 - The source claims that a browser component suite can run far more cases than an end-to-end suite in the same time. The talk still needs a current benchmark before it presents a numeric comparison.
@@ -111,6 +123,8 @@ The backup explains the advertised project ratios and timing as one PWA case stu
 
 ## Sources
 
+- [Locator comment and primary API evidence](../raw/browser-mode-locator-maintainer-comment.md)
+
 - [Vitest Browser Mode implementation inspection](../raw/2026-09-12-vitest-browser-internals.md)
 
 - [AI test contracts: accepted user direction](../raw/2026-09-12-ai-test-contracts.md).
@@ -127,3 +141,9 @@ The backup explains the advertised project ratios and timing as one PWA case stu
 - [Artem Zakharchenko's "Vitest Browser Mode vs Playwright"](../raw/2025-11-12-vitest-browser-mode-vs-playwright.md)
 - [Creator-provided transcript of "Test Angular Components Like a Real User with Vitest \"Full\" Browser Mode"](../raw/2026-02-12-test-angular-components-like-a-real-user.md)
 - [Vitest 4.1.11 Browser Mode documentation, pinned at commit `9bd8d464`](../raw/2026-08-18-vitest-4-1-11-browser-mode-documentation.md)
+
+- [Visual regression testing: CI and reference updates](../raw/2026-09-12-vitest-visual-regression-ci.md)
+
+- [axe Browser Mode checkout proof](../raw/2026-09-12-axe-browser-checkout-evidence.md)
+
+- [axe JSDOM and browser diagram evidence](../raw/2026-09-12-axe-jsdom-diagram-evidence.md)

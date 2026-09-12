@@ -114,3 +114,8 @@ The user explicitly requires the introduction to include Preview versus automati
 ## Implemented Browser Mode introduction, 2026-09-12
 
 Replaced the short architecture slide after Gandalf with five slides (12–16): definition, providers, execution locations, Playwright click round trip and retried assertions. The presenter guide allocates exactly five minutes to the introduction. Updated overall planning: 41 main slides, 26 backup; 39 minutes content, five minutes questions, one minute reserve. These are planning estimates, not rehearsal measurements.
+
+
+## Vertragsübersicht vor der Vertiefung
+
+Aktuelle Nutzerentscheidung: Das Hamcrab-Bild mit Verhalten, Accessibility und Darstellung steht direkt nach „Der Browser findet den Fehler“ und vor „Das Plüschtier landet im Warenkorb“. Es führt die drei folgenden Themen ein. Die bisherige Platzierung als Zusammenfassung nach den visuellen Tests entfällt. Diese Entscheidung ersetzt die frühere Reihenfolge an dieser Stelle.

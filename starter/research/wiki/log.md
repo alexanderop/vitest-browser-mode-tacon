@@ -153,3 +153,28 @@ Recorded the user's required provider distinction in the brief and browser-nativ
 ## 2026-09-12: Technical diagram images
 
 Replaced the five Browser Mode introduction slides with full-slide generated diagrams: definition, providers, execution boundaries, Playwright click sequence and assertion polling. Existing source-backed claims and five-minute presenter allocation retained. Images are explanatory illustrations, not runtime evidence.
+
+
+## 2026-09-12: Locator API teaching addition
+
+Preserved the user-supplied [maintainer comment](../raw/browser-mode-locator-maintainer-comment.md), including copy artifacts and unknown attribution. Added synchronous element resolution versus locator-backed actions to the browser-native topic and index. Added a shop code slide after the click round-trip and replaced the assertion image with target/action/assertion code. Presenter notes distinguish Vitest userEvent from Testing Library and explain raw-node escape hatches. One minute uses the previous reserve. No new runtime correctness or performance result is claimed.
+
+
+## 2026-09-12: Visual regression checks in GitHub Actions
+
+Captured the user-supplied guide through its [canonical Markdown endpoint](../raw/2026-09-12-vitest-visual-regression-ci.md). Added a compact PR workflow example and manual baseline-update explanation after the screenshot assertion slide. Highlights separate headless visual tests, controlled environments, reviewable images and updates in CI rather than on a developer's machine. Updated browser-native synthesis and index. The source is newer than the pinned 4.1.11 material; no dependency migration or actual workflow installation is implied. The example workflow is instructional and has not run in GitHub Actions.
+
+
+## 2026-09-12: Executable axe example in the A11y chapter
+
+Inspected local Vitest source and reused the existing shop checkout test. Captured [source and green/red Chromium evidence](../raw/2026-09-12-axe-browser-checkout-evidence.md). Added an explicit axe.run code slide after ARIA snapshots. No duplicate shop test or dependency was needed. The controlled defect failed on color-contrast; the temporary proof test was removed.
+
+
+## 2026-09-12: Explain axe before its test
+
+Added an Excalidraw-style generated diagram immediately before the axe test. It explains automatic rule execution and the specific color-contrast advantage of real rendering over JSDOM, preserving DOM-rule support and incomplete/manual-review boundaries. [Source evidence](../raw/2026-09-12-axe-jsdom-diagram-evidence.md).
+
+
+## Vertragsbild vor die Detailkapitel verschoben
+
+Auf Nutzerwunsch steht die bestehende Hamcrab-Übersicht jetzt nach der Erklärung des Browser-Fehlers und vor dem Verhaltensvertrag. Die bisherige Zusammenfassungsfolie am Ende der drei Kapitel entfällt. Brief und Presenter-Einstieg entsprechend angepasst; Bild unverändert.
