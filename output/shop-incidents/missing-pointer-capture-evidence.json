@@ -1,0 +1,54 @@
+{
+  "id": "missing-pointer-capture",
+  "recordedAt": "2026-09-12T10:59:25.751Z",
+  "url": "http://127.0.0.1:3080/",
+  "recorder": "agent-browser 0.37.0 record start/stop",
+  "sourceFile": "app/customizer/ShirtCustomizer.vue",
+  "sourceHash": "150d048b89ea73486478d054588a2e310d3bbff409822c6d51b3f82769ca46e3",
+  "brokenHash": "2f4beafb97b43fdb7d1f1484079692ee5282db2d31b29e2dac76537f1c3948a7",
+  "testHash": "bbd36780c5c3489bc4de748425b99e29ede7fa94268e9de6f3857afb7ec7b151",
+  "baseline": {
+    "position": "Position: 75%, 60%",
+    "expected": "Position: 75%, 60%",
+    "previewWidth": 396
+  },
+  "observed": {
+    "position": "Position: 50%, 45%",
+    "expected": "Position: 75%, 60%",
+    "previewWidth": 396
+  },
+  "restored": {
+    "position": "Position: 75%, 60%",
+    "expected": "Position: 75%, 60%",
+    "previewWidth": 396
+  },
+  "baselineTest": {
+    "status": "passed",
+    "passed": 1,
+    "failed": 0,
+    "command": "pnpm exec vitest run --project jsdom app/customizer/ShirtCustomizer.dom.test.ts",
+    "testName": "moves the print when a held pointer leaves the handle",
+    "report": "/Users/alexanderopalic/Projects/talks/vitest-browser-mode-tacon/output/shop-incidents/missing-pointer-capture-baseline-jsdom.json",
+    "startTime": 1789210741503
+  },
+  "result": {
+    "status": "passed",
+    "passed": 1,
+    "failed": 0,
+    "command": "pnpm exec vitest run --project jsdom app/customizer/ShirtCustomizer.dom.test.ts",
+    "testName": "moves the print when a held pointer leaves the handle",
+    "report": "/Users/alexanderopalic/Projects/talks/vitest-browser-mode-tacon/output/shop-incidents/missing-pointer-capture-broken-jsdom.json",
+    "startTime": 1789210757519
+  },
+  "restoredTest": {
+    "status": "passed",
+    "passed": 1,
+    "failed": 0,
+    "command": "pnpm exec vitest run --project jsdom app/customizer/ShirtCustomizer.dom.test.ts",
+    "testName": "moves the print when a held pointer leaves the handle",
+    "report": "/Users/alexanderopalic/Projects/talks/vitest-browser-mode-tacon/output/shop-incidents/missing-pointer-capture-restored-jsdom.json",
+    "startTime": 1789210758561
+  },
+  "video": "/shop/incidents/missing-pointer-capture.mp4",
+  "sha256": "ef43bf352dda965dc9cf0d95dddbc3de4ed6fad8b11485537dce8a32a437be29"
+}

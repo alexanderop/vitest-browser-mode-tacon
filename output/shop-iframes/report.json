@@ -1,0 +1,32 @@
+[
+  {
+    "slide": 3,
+    "url": "http://127.0.0.1:3080/demo/blocked-button",
+    "interaction": "passed",
+    "resultReveal": "passed"
+  },
+  {
+    "slide": 5,
+    "url": "http://127.0.0.1:3080/demo/missing-pointer-capture",
+    "interaction": "passed",
+    "resultReveal": "passed"
+  },
+  {
+    "slide": 6,
+    "url": "http://127.0.0.1:3080/demo/fixed-preview-width",
+    "interaction": "passed",
+    "resultReveal": "passed"
+  },
+  {
+    "slide": 7,
+    "url": "http://127.0.0.1:3080/demo/unscrollable-bag",
+    "interaction": "passed",
+    "resultReveal": "passed"
+  },
+  {
+    "slide": 8,
+    "url": "http://127.0.0.1:3080/demo/low-contrast-notice",
+    "interaction": "passed",
+    "resultReveal": "passed"
+  }
+]

@@ -1,5 +1,9 @@
 # Talk research workflow
 
+## Slide authoring
+
+- Do not add speaker notes to `slides.md` or future deck files. Keep presenter guidance in separate documentation when it is needed.
+
 This presentation includes a Karpathy-style LLM wiki. Use it whenever the user adds a source, asks an evidence question, explores the talk's argument, or edits slides that make factual claims.
 
 ## Research structure

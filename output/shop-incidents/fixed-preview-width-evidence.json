@@ -1,0 +1,54 @@
+{
+  "id": "fixed-preview-width",
+  "recordedAt": "2026-09-12T11:01:24.423Z",
+  "url": "http://127.0.0.1:3080/",
+  "recorder": "agent-browser 0.37.0 record start/stop",
+  "sourceFile": "app/customizer/ShirtCustomizer.vue",
+  "sourceHash": "150d048b89ea73486478d054588a2e310d3bbff409822c6d51b3f82769ca46e3",
+  "brokenHash": "051a8e29779161e1aa5d946bced4907ae4f0602573399c21bb32269b144a779b",
+  "testHash": "bbd36780c5c3489bc4de748425b99e29ede7fa94268e9de6f3857afb7ec7b151",
+  "baseline": {
+    "position": "Position: 75%, 60%",
+    "expected": "Position: 75%, 60%",
+    "previewWidth": 316
+  },
+  "observed": {
+    "position": "Position: 59%, 60%",
+    "expected": "Position: 75%, 60%",
+    "previewWidth": 316
+  },
+  "restored": {
+    "position": "Position: 75%, 60%",
+    "expected": "Position: 75%, 60%",
+    "previewWidth": 316
+  },
+  "baselineTest": {
+    "status": "passed",
+    "passed": 1,
+    "failed": 0,
+    "command": "pnpm exec vitest run --project jsdom app/customizer/ShirtCustomizer.dom.test.ts",
+    "testName": "uses the resized preview dimensions when dragging the print",
+    "report": "/Users/alexanderopalic/Projects/talks/vitest-browser-mode-tacon/output/shop-incidents/fixed-preview-width-baseline-jsdom.json",
+    "startTime": 1789210859220
+  },
+  "result": {
+    "status": "passed",
+    "passed": 1,
+    "failed": 0,
+    "command": "pnpm exec vitest run --project jsdom app/customizer/ShirtCustomizer.dom.test.ts",
+    "testName": "uses the resized preview dimensions when dragging the print",
+    "report": "/Users/alexanderopalic/Projects/talks/vitest-browser-mode-tacon/output/shop-incidents/fixed-preview-width-broken-jsdom.json",
+    "startTime": 1789210876006
+  },
+  "restoredTest": {
+    "status": "passed",
+    "passed": 1,
+    "failed": 0,
+    "command": "pnpm exec vitest run --project jsdom app/customizer/ShirtCustomizer.dom.test.ts",
+    "testName": "uses the resized preview dimensions when dragging the print",
+    "report": "/Users/alexanderopalic/Projects/talks/vitest-browser-mode-tacon/output/shop-incidents/fixed-preview-width-restored-jsdom.json",
+    "startTime": 1789210877330
+  },
+  "video": "/shop/incidents/fixed-preview-width.mp4",
+  "sha256": "a1bc31169e7fc12a1e02f792f588489d518f168f55071ab8aa50819a86fcd443"
+}

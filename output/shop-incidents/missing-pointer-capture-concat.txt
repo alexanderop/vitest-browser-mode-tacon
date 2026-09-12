@@ -1,0 +1,2 @@
+file '/Users/alexanderopalic/Projects/talks/vitest-browser-mode-tacon/output/shop-incidents/missing-pointer-capture-annotated.mp4'
+file '/Users/alexanderopalic/Projects/talks/vitest-browser-mode-tacon/output/shop-incidents/missing-pointer-capture-ending.mp4'

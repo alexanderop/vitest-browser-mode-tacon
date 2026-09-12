@@ -1,0 +1,272 @@
+[
+  {
+    "id": "blocked-button",
+    "recordedAt": "2026-09-12T10:59:01.153Z",
+    "url": "http://127.0.0.1:3080/",
+    "recorder": "agent-browser 0.37.0 record start/stop",
+    "sourceFile": "app/catalog/ProductCard.vue",
+    "sourceHash": "e7c8869b6813aa64ad1bd8806ae42ee0d1c4f927920a8720f882d2ea85949d0b",
+    "brokenHash": "d3455bacb2f6fe69ba5e0d46eb977dfd73633e1402d0ca1abe4501a4359c8ce8",
+    "testHash": "c703bea995bac7dcc7b105e4247337472f0f29cb2cbb491f8c45e87544917ed0",
+    "baseline": {
+      "bagCount": 1,
+      "hitTarget": "add-button"
+    },
+    "observed": {
+      "bagCount": 0,
+      "hitTarget": "product-decoration"
+    },
+    "restored": {
+      "bagCount": 1,
+      "hitTarget": "add-button"
+    },
+    "baselineTest": {
+      "status": "passed",
+      "passed": 1,
+      "failed": 0,
+      "command": "pnpm exec vitest run --project jsdom app/catalog/ProductCard.dom.test.ts",
+      "testName": "adds a plush to the bag through the product button",
+      "report": "/Users/alexanderopalic/Projects/talks/vitest-browser-mode-tacon/output/shop-incidents/blocked-button-baseline-jsdom.json",
+      "startTime": 1789210719516
+    },
+    "result": {
+      "status": "passed",
+      "passed": 1,
+      "failed": 0,
+      "command": "pnpm exec vitest run --project jsdom app/catalog/ProductCard.dom.test.ts",
+      "testName": "adds a plush to the bag through the product button",
+      "report": "/Users/alexanderopalic/Projects/talks/vitest-browser-mode-tacon/output/shop-incidents/blocked-button-broken-jsdom.json",
+      "startTime": 1789210735000
+    },
+    "restoredTest": {
+      "status": "passed",
+      "passed": 1,
+      "failed": 0,
+      "command": "pnpm exec vitest run --project jsdom app/catalog/ProductCard.dom.test.ts",
+      "testName": "adds a plush to the bag through the product button",
+      "report": "/Users/alexanderopalic/Projects/talks/vitest-browser-mode-tacon/output/shop-incidents/blocked-button-restored-jsdom.json",
+      "startTime": 1789210736202
+    },
+    "video": "/shop/incidents/blocked-button.mp4",
+    "sha256": "ed3085d775b98c9eb365e82b19c174d10db8aadbf554810503269167d3afd156"
+  },
+  {
+    "id": "missing-pointer-capture",
+    "recordedAt": "2026-09-12T10:59:25.751Z",
+    "url": "http://127.0.0.1:3080/",
+    "recorder": "agent-browser 0.37.0 record start/stop",
+    "sourceFile": "app/customizer/ShirtCustomizer.vue",
+    "sourceHash": "150d048b89ea73486478d054588a2e310d3bbff409822c6d51b3f82769ca46e3",
+    "brokenHash": "2f4beafb97b43fdb7d1f1484079692ee5282db2d31b29e2dac76537f1c3948a7",
+    "testHash": "bbd36780c5c3489bc4de748425b99e29ede7fa94268e9de6f3857afb7ec7b151",
+    "baseline": {
+      "position": "Position: 75%, 60%",
+      "expected": "Position: 75%, 60%",
+      "previewWidth": 396
+    },
+    "observed": {
+      "position": "Position: 50%, 45%",
+      "expected": "Position: 75%, 60%",
+      "previewWidth": 396
+    },
+    "restored": {
+      "position": "Position: 75%, 60%",
+      "expected": "Position: 75%, 60%",
+      "previewWidth": 396
+    },
+    "baselineTest": {
+      "status": "passed",
+      "passed": 1,
+      "failed": 0,
+      "command": "pnpm exec vitest run --project jsdom app/customizer/ShirtCustomizer.dom.test.ts",
+      "testName": "moves the print when a held pointer leaves the handle",
+      "report": "/Users/alexanderopalic/Projects/talks/vitest-browser-mode-tacon/output/shop-incidents/missing-pointer-capture-baseline-jsdom.json",
+      "startTime": 1789210741503
+    },
+    "result": {
+      "status": "passed",
+      "passed": 1,
+      "failed": 0,
+      "command": "pnpm exec vitest run --project jsdom app/customizer/ShirtCustomizer.dom.test.ts",
+      "testName": "moves the print when a held pointer leaves the handle",
+      "report": "/Users/alexanderopalic/Projects/talks/vitest-browser-mode-tacon/output/shop-incidents/missing-pointer-capture-broken-jsdom.json",
+      "startTime": 1789210757519
+    },
+    "restoredTest": {
+      "status": "passed",
+      "passed": 1,
+      "failed": 0,
+      "command": "pnpm exec vitest run --project jsdom app/customizer/ShirtCustomizer.dom.test.ts",
+      "testName": "moves the print when a held pointer leaves the handle",
+      "report": "/Users/alexanderopalic/Projects/talks/vitest-browser-mode-tacon/output/shop-incidents/missing-pointer-capture-restored-jsdom.json",
+      "startTime": 1789210758561
+    },
+    "video": "/shop/incidents/missing-pointer-capture.mp4",
+    "sha256": "ef43bf352dda965dc9cf0d95dddbc3de4ed6fad8b11485537dce8a32a437be29"
+  },
+  {
+    "id": "fixed-preview-width",
+    "recordedAt": "2026-09-12T11:01:24.423Z",
+    "url": "http://127.0.0.1:3080/",
+    "recorder": "agent-browser 0.37.0 record start/stop",
+    "sourceFile": "app/customizer/ShirtCustomizer.vue",
+    "sourceHash": "150d048b89ea73486478d054588a2e310d3bbff409822c6d51b3f82769ca46e3",
+    "brokenHash": "051a8e29779161e1aa5d946bced4907ae4f0602573399c21bb32269b144a779b",
+    "testHash": "bbd36780c5c3489bc4de748425b99e29ede7fa94268e9de6f3857afb7ec7b151",
+    "baseline": {
+      "position": "Position: 75%, 60%",
+      "expected": "Position: 75%, 60%",
+      "previewWidth": 316
+    },
+    "observed": {
+      "position": "Position: 59%, 60%",
+      "expected": "Position: 75%, 60%",
+      "previewWidth": 316
+    },
+    "restored": {
+      "position": "Position: 75%, 60%",
+      "expected": "Position: 75%, 60%",
+      "previewWidth": 316
+    },
+    "baselineTest": {
+      "status": "passed",
+      "passed": 1,
+      "failed": 0,
+      "command": "pnpm exec vitest run --project jsdom app/customizer/ShirtCustomizer.dom.test.ts",
+      "testName": "uses the resized preview dimensions when dragging the print",
+      "report": "/Users/alexanderopalic/Projects/talks/vitest-browser-mode-tacon/output/shop-incidents/fixed-preview-width-baseline-jsdom.json",
+      "startTime": 1789210859220
+    },
+    "result": {
+      "status": "passed",
+      "passed": 1,
+      "failed": 0,
+      "command": "pnpm exec vitest run --project jsdom app/customizer/ShirtCustomizer.dom.test.ts",
+      "testName": "uses the resized preview dimensions when dragging the print",
+      "report": "/Users/alexanderopalic/Projects/talks/vitest-browser-mode-tacon/output/shop-incidents/fixed-preview-width-broken-jsdom.json",
+      "startTime": 1789210876006
+    },
+    "restoredTest": {
+      "status": "passed",
+      "passed": 1,
+      "failed": 0,
+      "command": "pnpm exec vitest run --project jsdom app/customizer/ShirtCustomizer.dom.test.ts",
+      "testName": "uses the resized preview dimensions when dragging the print",
+      "report": "/Users/alexanderopalic/Projects/talks/vitest-browser-mode-tacon/output/shop-incidents/fixed-preview-width-restored-jsdom.json",
+      "startTime": 1789210877330
+    },
+    "video": "/shop/incidents/fixed-preview-width.mp4",
+    "sha256": "a1bc31169e7fc12a1e02f792f588489d518f168f55071ab8aa50819a86fcd443"
+  },
+  {
+    "id": "unscrollable-bag",
+    "recordedAt": "2026-09-12T11:01:50.272Z",
+    "url": "http://127.0.0.1:3080/",
+    "recorder": "agent-browser 0.37.0 record start/stop",
+    "sourceFile": "app/assets/main.css",
+    "sourceHash": "e188ff038d3a87b43e1cb729a56416409eee7579a39b04a3f63c7d8154148dab",
+    "brokenHash": "721066d4d26dc365d15db028a95a83bddd8ef4421f4ebef89cdddeb2ff446be0",
+    "testHash": "6fd09881dfcdae64703833935c59278fa35a8c461e2693f7698d90b9dcd21f74",
+    "baseline": {
+      "scrollTop": 699,
+      "containerBottom": 476,
+      "lastBottom": 432,
+      "overflow": "auto"
+    },
+    "observed": {
+      "scrollTop": 0,
+      "containerBottom": 476,
+      "lastBottom": 1131,
+      "overflow": "hidden"
+    },
+    "restored": {
+      "scrollTop": 699,
+      "containerBottom": 476,
+      "lastBottom": 432,
+      "overflow": "auto"
+    },
+    "baselineTest": {
+      "status": "passed",
+      "passed": 1,
+      "failed": 0,
+      "command": "pnpm exec vitest run --project jsdom app/cart/CartDrawer.dom.test.ts",
+      "testName": "scrolls to the last bag item and removes it",
+      "report": "/Users/alexanderopalic/Projects/talks/vitest-browser-mode-tacon/output/shop-incidents/unscrollable-bag-baseline-jsdom.json",
+      "startTime": 1789210884838
+    },
+    "result": {
+      "status": "passed",
+      "passed": 1,
+      "failed": 0,
+      "command": "pnpm exec vitest run --project jsdom app/cart/CartDrawer.dom.test.ts",
+      "testName": "scrolls to the last bag item and removes it",
+      "report": "/Users/alexanderopalic/Projects/talks/vitest-browser-mode-tacon/output/shop-incidents/unscrollable-bag-broken-jsdom.json",
+      "startTime": 1789210901619
+    },
+    "restoredTest": {
+      "status": "passed",
+      "passed": 1,
+      "failed": 0,
+      "command": "pnpm exec vitest run --project jsdom app/cart/CartDrawer.dom.test.ts",
+      "testName": "scrolls to the last bag item and removes it",
+      "report": "/Users/alexanderopalic/Projects/talks/vitest-browser-mode-tacon/output/shop-incidents/unscrollable-bag-restored-jsdom.json",
+      "startTime": 1789210902932
+    },
+    "video": "/shop/incidents/unscrollable-bag.mp4",
+    "sha256": "5a088597d85c8606a0f8425eef2b9d266aa60990031721aa531a19349e7f7b2d"
+  },
+  {
+    "id": "low-contrast-notice",
+    "recordedAt": "2026-09-12T11:02:12.284Z",
+    "url": "http://127.0.0.1:3080/",
+    "recorder": "agent-browser 0.37.0 record start/stop",
+    "sourceFile": "app/assets/main.css",
+    "sourceHash": "e188ff038d3a87b43e1cb729a56416409eee7579a39b04a3f63c7d8154148dab",
+    "brokenHash": "9d09fdc7afc13978f3fb687d12865a48ff3f38f45958f08248538fbdf9645db4",
+    "testHash": "ff15da6d83a8f1601df918bdb99faeec1bc49e5f81702ddcf349edde2bb08e10",
+    "baseline": {
+      "color": "rgb(170, 169, 163)",
+      "background": "rgb(29, 29, 29)",
+      "text": " This is a demo shop. No payment, shipping, or emails. Your details stay in this page. "
+    },
+    "observed": {
+      "color": "rgb(68, 68, 68)",
+      "background": "rgb(29, 29, 29)",
+      "text": " This is a demo shop. No payment, shipping, or emails. Your details stay in this page. "
+    },
+    "restored": {
+      "color": "rgb(170, 169, 163)",
+      "background": "rgb(29, 29, 29)",
+      "text": " This is a demo shop. No payment, shipping, or emails. Your details stay in this page. "
+    },
+    "baselineTest": {
+      "status": "passed",
+      "passed": 1,
+      "failed": 0,
+      "command": "pnpm exec vitest run --project jsdom app/checkout/CheckoutForm.dom.test.ts",
+      "testName": "reports no contrast violations in the checkout notice",
+      "report": "/Users/alexanderopalic/Projects/talks/vitest-browser-mode-tacon/output/shop-incidents/low-contrast-notice-baseline-jsdom.json",
+      "startTime": 1789210910652
+    },
+    "result": {
+      "status": "passed",
+      "passed": 1,
+      "failed": 0,
+      "command": "pnpm exec vitest run --project jsdom app/checkout/CheckoutForm.dom.test.ts",
+      "testName": "reports no contrast violations in the checkout notice",
+      "report": "/Users/alexanderopalic/Projects/talks/vitest-browser-mode-tacon/output/shop-incidents/low-contrast-notice-broken-jsdom.json",
+      "startTime": 1789210925052
+    },
+    "restoredTest": {
+      "status": "passed",
+      "passed": 1,
+      "failed": 0,
+      "command": "pnpm exec vitest run --project jsdom app/checkout/CheckoutForm.dom.test.ts",
+      "testName": "reports no contrast violations in the checkout notice",
+      "report": "/Users/alexanderopalic/Projects/talks/vitest-browser-mode-tacon/output/shop-incidents/low-contrast-notice-restored-jsdom.json",
+      "startTime": 1789210926284
+    },
+    "video": "/shop/incidents/low-contrast-notice.mp4",
+    "sha256": "58aeb2993aef7310704cd1e3f66c3511c185e589dd8f6fb465c8237208aeafc6"
+  }
+]

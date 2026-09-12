@@ -1,0 +1,13 @@
+diff --git a/dist/client.mjs b/dist/client.mjs
+index 1fc73b6ad0d67827de42aee2084f391cb7ca7352..100e02ea7b8affeb7261a7e9e15f2744505e280e 100644
+--- a/dist/client.mjs
++++ b/dist/client.mjs
+@@ -23,7 +23,7 @@ const TwoslashFloatingVue = { install: (app, options = {}) => {
+ 			const _component = app.component;
+ 			app.component = function(...rest) {
+ 				const comp = _component.apply(this, rest);
+-				if (rest.length >= 2 && rest[0] === "VMenu") try {
++				if (rest.length >= 2 && rest[0] === "VMenu" && rest[1].components?.Popper?.extends) try {
+ 					const PopperTs = rest[1].components.Popper.extends;
+ 					const _show = PopperTs.methods.show;
+ 					PopperTs.methods.show = function(...args) {

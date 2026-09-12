@@ -1,0 +1,54 @@
+{
+  "id": "low-contrast-notice",
+  "recordedAt": "2026-09-12T11:02:12.284Z",
+  "url": "http://127.0.0.1:3080/",
+  "recorder": "agent-browser 0.37.0 record start/stop",
+  "sourceFile": "app/assets/main.css",
+  "sourceHash": "e188ff038d3a87b43e1cb729a56416409eee7579a39b04a3f63c7d8154148dab",
+  "brokenHash": "9d09fdc7afc13978f3fb687d12865a48ff3f38f45958f08248538fbdf9645db4",
+  "testHash": "ff15da6d83a8f1601df918bdb99faeec1bc49e5f81702ddcf349edde2bb08e10",
+  "baseline": {
+    "color": "rgb(170, 169, 163)",
+    "background": "rgb(29, 29, 29)",
+    "text": " This is a demo shop. No payment, shipping, or emails. Your details stay in this page. "
+  },
+  "observed": {
+    "color": "rgb(68, 68, 68)",
+    "background": "rgb(29, 29, 29)",
+    "text": " This is a demo shop. No payment, shipping, or emails. Your details stay in this page. "
+  },
+  "restored": {
+    "color": "rgb(170, 169, 163)",
+    "background": "rgb(29, 29, 29)",
+    "text": " This is a demo shop. No payment, shipping, or emails. Your details stay in this page. "
+  },
+  "baselineTest": {
+    "status": "passed",
+    "passed": 1,
+    "failed": 0,
+    "command": "pnpm exec vitest run --project jsdom app/checkout/CheckoutForm.dom.test.ts",
+    "testName": "reports no contrast violations in the checkout notice",
+    "report": "/Users/alexanderopalic/Projects/talks/vitest-browser-mode-tacon/output/shop-incidents/low-contrast-notice-baseline-jsdom.json",
+    "startTime": 1789210910652
+  },
+  "result": {
+    "status": "passed",
+    "passed": 1,
+    "failed": 0,
+    "command": "pnpm exec vitest run --project jsdom app/checkout/CheckoutForm.dom.test.ts",
+    "testName": "reports no contrast violations in the checkout notice",
+    "report": "/Users/alexanderopalic/Projects/talks/vitest-browser-mode-tacon/output/shop-incidents/low-contrast-notice-broken-jsdom.json",
+    "startTime": 1789210925052
+  },
+  "restoredTest": {
+    "status": "passed",
+    "passed": 1,
+    "failed": 0,
+    "command": "pnpm exec vitest run --project jsdom app/checkout/CheckoutForm.dom.test.ts",
+    "testName": "reports no contrast violations in the checkout notice",
+    "report": "/Users/alexanderopalic/Projects/talks/vitest-browser-mode-tacon/output/shop-incidents/low-contrast-notice-restored-jsdom.json",
+    "startTime": 1789210926284
+  },
+  "video": "/shop/incidents/low-contrast-notice.mp4",
+  "sha256": "58aeb2993aef7310704cd1e3f66c3511c185e589dd8f6fb465c8237208aeafc6"
+}

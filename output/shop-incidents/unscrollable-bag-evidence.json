@@ -1,0 +1,57 @@
+{
+  "id": "unscrollable-bag",
+  "recordedAt": "2026-09-12T11:01:50.272Z",
+  "url": "http://127.0.0.1:3080/",
+  "recorder": "agent-browser 0.37.0 record start/stop",
+  "sourceFile": "app/assets/main.css",
+  "sourceHash": "e188ff038d3a87b43e1cb729a56416409eee7579a39b04a3f63c7d8154148dab",
+  "brokenHash": "721066d4d26dc365d15db028a95a83bddd8ef4421f4ebef89cdddeb2ff446be0",
+  "testHash": "6fd09881dfcdae64703833935c59278fa35a8c461e2693f7698d90b9dcd21f74",
+  "baseline": {
+    "scrollTop": 699,
+    "containerBottom": 476,
+    "lastBottom": 432,
+    "overflow": "auto"
+  },
+  "observed": {
+    "scrollTop": 0,
+    "containerBottom": 476,
+    "lastBottom": 1131,
+    "overflow": "hidden"
+  },
+  "restored": {
+    "scrollTop": 699,
+    "containerBottom": 476,
+    "lastBottom": 432,
+    "overflow": "auto"
+  },
+  "baselineTest": {
+    "status": "passed",
+    "passed": 1,
+    "failed": 0,
+    "command": "pnpm exec vitest run --project jsdom app/cart/CartDrawer.dom.test.ts",
+    "testName": "scrolls to the last bag item and removes it",
+    "report": "/Users/alexanderopalic/Projects/talks/vitest-browser-mode-tacon/output/shop-incidents/unscrollable-bag-baseline-jsdom.json",
+    "startTime": 1789210884838
+  },
+  "result": {
+    "status": "passed",
+    "passed": 1,
+    "failed": 0,
+    "command": "pnpm exec vitest run --project jsdom app/cart/CartDrawer.dom.test.ts",
+    "testName": "scrolls to the last bag item and removes it",
+    "report": "/Users/alexanderopalic/Projects/talks/vitest-browser-mode-tacon/output/shop-incidents/unscrollable-bag-broken-jsdom.json",
+    "startTime": 1789210901619
+  },
+  "restoredTest": {
+    "status": "passed",
+    "passed": 1,
+    "failed": 0,
+    "command": "pnpm exec vitest run --project jsdom app/cart/CartDrawer.dom.test.ts",
+    "testName": "scrolls to the last bag item and removes it",
+    "report": "/Users/alexanderopalic/Projects/talks/vitest-browser-mode-tacon/output/shop-incidents/unscrollable-bag-restored-jsdom.json",
+    "startTime": 1789210902932
+  },
+  "video": "/shop/incidents/unscrollable-bag.mp4",
+  "sha256": "5a088597d85c8606a0f8425eef2b9d266aa60990031721aa531a19349e7f7b2d"
+}

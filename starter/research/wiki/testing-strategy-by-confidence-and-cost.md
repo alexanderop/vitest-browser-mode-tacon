@@ -2,6 +2,16 @@
 
 ## Current synthesis
 
+Latest editorial revision: resolve the blocked-button defect before naming contracts, continue the shop through behavior, accessibility and appearance, then summarize the contracts and apply them to test boundaries and AI instructions. Extra implementation examples move to backup. This supersedes earlier ordering and main-deck integration statements below. [Accepted shop-story revision](../raw/2026-09-12-shop-story-revision.md).
+
+The talk starts with the classic testing pyramid as a basic vocabulary: unit, integration and end-to-end, with increasingly broad shop examples. This is a heuristic, not a prescribed test distribution. Vue and React components can be tested alone or in collaboration; they do not require an extra pyramid level. The later integration-heavy strategy builds on this distinction. [Accepted basics-first opening and inspected pyramid source](../raw/2026-09-12-testing-basics-opening.md).
+
+The current framing starts with AI writing the speaker’s code and tests: humans define the observable contract and test boundary first. Generated tests should protect distinct behavior, survive changes to private implementation and fail when that behavior is deliberately broken. This is an accepted editorial strategy and the speaker’s experience, not a measured AI-quality claim. The final example instruction makes these requirements concrete. [User direction and limits](../raw/2026-09-12-ai-test-contracts.md).
+
+The completed slide revision integrates cart scrolling and shirt-preview resizing into behavior, retains the Reka accessibility reconstruction as a clearly attributed customer-account scenario, and defers the SPA comparison until all three contracts are complete. [Accepted narrative and implementation.](../raw/2026-09-12-shop-first-narrative.md)
+
+The current talk order completes behavior, accessibility, and visuals in the shop before comparing architectures. The later SPA section embeds the actual Workout Tracker scroll-fade component with a talk-specific demonstration wrapper. This supersedes the earlier equal, interleaved walkthrough plan. [User direction and captured component.](../raw/2026-09-12-workout-scroll-component.md)
+
 The Testing Trophy is a heuristic for allocating test effort. It places static analysis at the base, unit tests above it, integration tests in the largest section, and end-to-end tests at the top. The drawing does not prescribe exact ratios. It asks teams to balance the confidence a test provides against the time required to write, run, and maintain it.
 
 The model treats confidence as the reason to test. Static analysis catches broad classes of simple mistakes at low cost. Unit tests remain useful for isolated logic and design feedback. End-to-end tests protect critical complete journeys. Integration tests take the largest share because they exercise meaningful business behavior without the full setup cost of end-to-end tests.
@@ -14,6 +24,15 @@ This model supplies the strategic reason for an integration-heavy Vitest Browser
 
 ## Claims and evidence
 
+- Git chronology refines the earlier reference-port suggestion: the first recorded setup commit (`bd93d9b1`, August 16) already includes inventory, AST parity and coverage tooling plus two Slider cases. Slider completion, Node extraction, useForwardExpose and Label trials precede the committed reusable prompts (`675792e3`). The first batch taught new rules; `8829a1bb` explicitly corrects a false portal-query rule in the prompt. Completion is recorded August 18 (`12d75a3b`), with 87 browser destinations and 10 Node files and retained originals. August 22 (`864db198`) removes the temporary compatibility adapter and adds stronger native interaction and semantic coverage. These are commit milestones, not measured effort. [Git evidence](../raw/2026-09-12-reka-migration-git-history.md).
+- The documented loop uses one-file implementers and independent reviewers with separate contexts, and T2 batches of roughly eight files with three agents running concurrently. The transferable interpretation is: build verification early, learn from representative ports, persist and correct prompts, then expand in bounded batches. The initial answer's single-template framing understated that process. [Prompt source](../raw/2026-09-12-reka-ai-migration.md) and [historical evolution](../raw/2026-09-12-reka-migration-git-history.md).
+
+- The Reka fork stores reusable implementer/reviewer prompts in `PORT-PROMPTS.md`. Its per-file loop separates implementation from review; structural checks compare test names and assertion counts, coverage checks identify lost reached lines, and targeted defect probes challenge whether tests can fail. These are documented workflow rules, not newly executed results or a measured AI speedup. [Captured local source](../raw/2026-09-12-reka-ai-migration.md).
+- Implemented closing tip on slides 39–41, following the existing AI test-writing brief: review one reference port, give AI that example plus explicit preservation rules, migrate one file per task, run both environments and review behavior before scaling. Preserve the main correctness thesis. Three Hamcrab workshop illustrations now carry the sequence, with source-specific speaker notes; the presenter guide budgets 2:30 for it. This is planned timing, not a rehearsal measurement.
+
+- The earlier strategy gave the SPA and Nuxt examples equal weight (the narrative order above supersedes that presentation choice): root mounts for domain workflows, focused components for public technical contracts, selected core UI states for visuals. A separate E2E runner is optional for SPA functional UI coverage; promised platform behavior still needs suitable checks. This is the user's strategy and editorial synthesis, not a universal measured result. [Accepted direction and source boundaries.](../raw/2026-09-12-spa-nuxt-testing-strategy.md)
+- The inspected SPA helper renders App.vue with its router, translations and runtime, substituting Memory History, IndexedDB and reload. The current repository also has Playwright E2E tests. The shop hydration test visits the running app and checks interaction before diagnostics. [Local source inspection.](../raw/2026-09-12-spa-nuxt-testing-strategy.md)
+
 - Dodds names development workflow and confidence as the two benefits of automated tests. The talk focuses on confidence that an application still meets its specification. [The argument begins at 01:48.](../raw/2018-03-05-kent-c-dodds-write-tests-not-too-many-mostly-integration.md)
 - Code coverage has diminishing returns. Dodds declines to recommend one application-wide percentage because the useful point depends on the cost of failure and the type of software. [The coverage discussion runs from 03:07 through 05:37.](../raw/2018-03-05-kent-c-dodds-write-tests-not-too-many-mostly-integration.md)
 - A test checks an implementation detail when it performs an action that a consumer cannot perform, such as calling a private function exposed for the test. Such tests can fail during a behavior-preserving refactor. [Dodds defines the problem from 05:45 through 07:03.](../raw/2018-03-05-kent-c-dodds-write-tests-not-too-many-mostly-integration.md)
@@ -24,6 +43,8 @@ This model supplies the strategic reason for an integration-heavy Vitest Browser
 
 ## Tensions and open questions
 
+- Equal test names, assertion counts and reached lines do not prove equivalent assertions. The Reka prompts explicitly require semantic review and targeted defect probes. The talk should present the workflow as practical support for migration, without promising automatic correctness or a measured time saving. [Prompt source](../raw/2026-09-12-reka-ai-migration.md).
+
 - The talk was published in 2018. Its examples use ESLint, Flow, Node.js tests, Cypress, and React shallow rendering from that period. The strategy remains relevant, but the examples do not establish the current cost or speed of browser integration tests.
 - "Integration test" has no precise boundary in the talk. Dodds explicitly calls the distinction between unit and integration tests fuzzy. The TACON talk must define what its browser integration tests include and which external systems they replace.
 - The recommendation to preserve reality does not mean that every dependency must remain live. The current TACON case study replaces APIs and IndexedDB at their boundaries. The talk should explain how this choice retains application behavior while avoiding the setup of a complete end-to-end journey.
@@ -31,5 +52,15 @@ This model supplies the strategic reason for an integration-heavy Vitest Browser
 - The claim that higher-level tests provide more confidence assumes that the test exercises representative behavior and remains reliable. Test level alone does not establish confidence.
 
 ## Sources
+
+- [Reka migration Git chronology and prompt corrections](../raw/2026-09-12-reka-migration-git-history.md).
+
+- [Reka AI migration prompts and operating-manual excerpts](../raw/2026-09-12-reka-ai-migration.md).
+
+- [AI test contracts: accepted user direction](../raw/2026-09-12-ai-test-contracts.md).
+
+- [Workout Tracker component and revised narrative.](../raw/2026-09-12-workout-scroll-component.md)
+
+- [Equal SPA and Nuxt cases and deliberate contracts.](../raw/2026-09-12-spa-nuxt-testing-strategy.md)
 
 - [Full automatic transcript of "Kent C. Dodds – Write tests. Not too many. Mostly integration."](../raw/2018-03-05-kent-c-dodds-write-tests-not-too-many-mostly-integration.md)

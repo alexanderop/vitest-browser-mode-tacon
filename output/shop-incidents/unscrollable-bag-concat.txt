@@ -1,0 +1,2 @@
+file '/Users/alexanderopalic/Projects/talks/vitest-browser-mode-tacon/output/shop-incidents/unscrollable-bag-annotated.mp4'
+file '/Users/alexanderopalic/Projects/talks/vitest-browser-mode-tacon/output/shop-incidents/unscrollable-bag-ending.mp4'

@@ -19,6 +19,8 @@ try {
       const bounds = layout.getBoundingClientRect()
       const overflow = [...layout.querySelectorAll('h1, h2, p, pre, table, img, video, li, .contract__title, .screenshot-comparison, .lab-example')]
         .filter((element) => {
+          // Visually clipped headings remain available to screen readers.
+          if (element.classList.contains('sr-only')) return false
           const rect = element.getBoundingClientRect()
           const fullBleed = element.tagName === 'IMG' && getComputedStyle(element).position === 'absolute'
           const bottom = fullBleed ? bounds.bottom + 2 : bounds.bottom - 28

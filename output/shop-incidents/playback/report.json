@@ -1,0 +1,62 @@
+[
+  {
+    "slide": 3,
+    "src": "http://localhost:3030/shop/incidents/blocked-button.mp4",
+    "duration": 15.166667,
+    "width": 1280,
+    "height": 820,
+    "controls": true,
+    "muted": true,
+    "autoplay": true,
+    "resultFrame": true,
+    "pausedOnExit": true
+  },
+  {
+    "slide": 4,
+    "src": "http://localhost:3030/shop/incidents/missing-pointer-capture.mp4",
+    "duration": 13.866667,
+    "width": 1280,
+    "height": 820,
+    "controls": true,
+    "muted": true,
+    "autoplay": true,
+    "resultFrame": true,
+    "pausedOnExit": true
+  },
+  {
+    "slide": 5,
+    "src": "http://localhost:3030/shop/incidents/fixed-preview-width.mp4",
+    "duration": 13.866016,
+    "width": 1280,
+    "height": 820,
+    "controls": true,
+    "muted": true,
+    "autoplay": true,
+    "resultFrame": true,
+    "pausedOnExit": true
+  },
+  {
+    "slide": 6,
+    "src": "http://localhost:3030/shop/incidents/unscrollable-bag.mp4",
+    "duration": 13.333333,
+    "width": 1280,
+    "height": 820,
+    "controls": true,
+    "muted": true,
+    "autoplay": true,
+    "resultFrame": true,
+    "pausedOnExit": true
+  },
+  {
+    "slide": 7,
+    "src": "http://localhost:3030/shop/incidents/low-contrast-notice.mp4",
+    "duration": 12.966016,
+    "width": 1280,
+    "height": 820,
+    "controls": true,
+    "muted": true,
+    "autoplay": true,
+    "resultFrame": true,
+    "pausedOnExit": true
+  }
+]

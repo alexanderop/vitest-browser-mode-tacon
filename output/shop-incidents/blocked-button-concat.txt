@@ -1,0 +1,2 @@
+file '/Users/alexanderopalic/Projects/talks/vitest-browser-mode-tacon/output/shop-incidents/blocked-button-annotated.mp4'
+file '/Users/alexanderopalic/Projects/talks/vitest-browser-mode-tacon/output/shop-incidents/blocked-button-ending.mp4'

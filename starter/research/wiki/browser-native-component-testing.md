@@ -2,6 +2,12 @@
 
 ## Current synthesis
 
+Latest editorial revision: resolve the blocked-button defect before naming contracts, continue the shop through behavior, accessibility and appearance, then summarize the contracts and apply them to test boundaries and AI instructions. Extra implementation examples move to backup. This supersedes earlier ordering and main-deck integration statements below. [Accepted shop-story revision](../raw/2026-09-12-shop-story-revision.md).
+
+The opening now establishes the pyramid, Vue/React component scope and jsdom/Happy DOM execution before demonstrating the shop defect. Component tests can be isolated or integrated; DOM emulation is a separate environment choice. The opening illustration contrasts mounting a single Button with mounting Shop and rendering its real descendants, then checking a click updates both cart and badge. This is a teaching example, not an exact diagram of the demo source. The historical jsdom illustration bridges the overview and demonstration. Use “an established approach”; current majority adoption is not established by the inspected sources. [Accepted opening and source notes](../raw/2026-09-12-testing-basics-opening.md).
+
+The talk now emphasizes correctness when AI writes the implementation and tests. Contract quality and environment fidelity are independent: the blocked-button JSDOM test is already a black-box test, while a real browser could still run assertions about private refs. Browser Mode reduces the need to mock browser geometry and available APIs, but provider-backed interaction and meaningful assertions remain necessary. External boundary mocks remain deliberate. [Accepted editorial framing](../raw/2026-09-12-ai-test-contracts.md); [paired-case mock caveats](../raw/2026-09-12-jsdom-teaser.md); [interaction distinction](../raw/2026-02-12-test-angular-components-like-a-real-user.md).
+
 Vitest Browser Mode runs component tests in a real browser while keeping the focused scope and fast feedback of a unit-style test. The sources present this as the middle of a testing strategy. Component tests cover UI behavior and variations in isolation. End-to-end tests retain the critical journeys that need the whole application, including server rendering and routing behavior.
 
 This model matters because browser behavior is part of the system under test. A DOM emulator cannot provide every browser API or match every browser constraint. Browser Mode removes that mismatch without requiring every interaction test to pay the setup and execution cost of a complete end-to-end journey.
@@ -19,6 +25,10 @@ The official documentation also expands Browser Mode beyond interaction tests. I
 Running the test in a browser does not guarantee that every interaction uses browser automation. Younes calls a test that queries the DOM and dispatches events inside the browser "partial browser mode." He calls a test that uses Vitest's `userEvent` adapter or `page` locators "full browser mode." These are the speaker's terms, not established Vitest API names. In the second path, Vitest sends the action to the provider. Playwright can then reject a click when another element covers the target.
 
 Alexander Opalic's Vue 3 case study pushes this middle layer further. His project uses browser integration tests as the base of the suite, with smaller groups of composable unit tests, accessibility checks, and visual snapshots. The strategy depends on application structure. Pure logic lives in composables, while browser tests render real Vue components with the router and store. Tests replace only external boundaries such as APIs and browser storage.
+
+The inspected implementation provides a concise technical introduction after the Gandalf meme: isolated test files execute in browser iframes; with the Playwright provider, a Vitest locator click sends `__vitest_click` through WebSocket RPC to Node, where the Playwright command calls the iframe locator's `click`. Ordinary DOM assertions via `expect.element` use `expect.poll`; task results return through RPC. This is static source evidence at commit `9bd8d464e`, not a newly executed regression test. [Source excerpts](../raw/2026-09-12-vitest-browser-internals.md).
+
+The introduction must distinguish providers before tracing the Playwright click: `preview` runs in a real local browser without Playwright/WebdriverIO, but simulates interactions and rejects headless mode. The captured setup guide requires Playwright or WebdriverIO for CI and recommends either for local testing as well. Thus real browser rendering alone does not establish provider-backed actionability for the covered-button example. [Provider documentation](../raw/2026-08-18-vitest-4-1-11-browser-mode-documentation.md). Local verification also inspected `packages/browser-preview/src/preview.ts` and `locators.ts` at `9bd8d464e`; the latter overrides `click` with `userEvent.click(element)`.
 
 ## Claims and evidence
 
@@ -66,9 +76,19 @@ Alexander Opalic's Vue 3 case study pushes this middle layer further. His projec
 
 ## Talk application
 
+The accepted opening revision makes the blocked button the main hook, moves the open question immediately after it, and retains the other four cases as short teasers. The JSDOM code now precedes the runtime explanation. This is an editorial choice recorded in the [talk brief](../brief.md#focused-opening-revision-2026-09-12), not new experimental evidence.
+
+The five opening cases now use interactive URLs rendering the real shop components, with per-instance defects, reset and working variants. The recorded test results remain available separately. [Iframe revision.](../raw/2026-09-12-shop-iframe-demos.md)
+
+The previous revision recorded videos in the real running Nuxt shop. Each reproduces a browser-visible defect while the unchanged paired JSDOM test passes. Baseline and restored browser behavior were also asserted; all 15 targeted JSDOM runs passed. The result card is generated from the real test report. The actual resized shop records 59%, 60%, distinct from the 53%, 60% fixture result. [Execution evidence and artifact hashes.](../raw/2026-09-12-shop-incident-recordings.md)
+
+The opening now shows the shop and five existing JSDOM cases before explaining Browser Mode. Contrast remains explicitly incomplete, and mock-dependent cases are not universal JSDOM claims. [Accepted teaser direction and inspected source.](../raw/2026-09-12-jsdom-teaser.md)
+
+The shop carries the three contracts; Workout Tracker follows as a SPA architecture comparison. Browser Mode can carry SPA functional UI workflows via App.vue. The shop's SSR/hydration path receives a running-application test. Public component contracts and selected core UI screenshots complement both. The separate Playwright runner is distinct from the Browser Mode provider; the current Workout Tracker itself retains E2E tests. The historical ratios and timing mentioned below now live in backup. [Accepted direction and source inspection.](../raw/2026-09-12-spa-nuxt-testing-strategy.md)
+
 The reviewed deck distinguishes black-box strategy from browser runtime: the semantically queried JSDOM test already follows black-box principles. The browser adds provider-controlled actionability, not black-box status. [The concrete comparison is recorded locally.](../raw/2026-09-11-claw-and-chew-talk-examples.md)
 
-The main talk now explains the advertised project ratios and timing as one PWA case study, and shows the real cart-line factory and page-object method. [The original case study supplies the figures.](../raw/2025-12-14-vue-3-testing-pyramid-vitest-browser-mode.md) [The local source record identifies the executable helpers.](../raw/2026-09-11-claw-and-chew-talk-examples.md)
+The backup explains the advertised project ratios and timing as one PWA case study. The main talk shows the real cart-line factory and page-object method alongside the SPA root mount and workflow. [The original case study supplies the figures.](../raw/2025-12-14-vue-3-testing-pyramid-vitest-browser-mode.md) [The local source record identifies the executable helpers.](../raw/2026-09-11-claw-and-chew-talk-examples.md)
 
 ## Tensions and open questions
 
@@ -90,6 +110,10 @@ The main talk now explains the advertised project ratios and timing as one PWA c
 - The current primary docs confirm the trace, retry, and headless options shown in the February 2026 video. The Angular CLI, Nx, and Analog integration steps still need a current source before the talk presents them as setup guidance.
 
 ## Sources
+
+- [Vitest Browser Mode implementation inspection](../raw/2026-09-12-vitest-browser-internals.md)
+
+- [AI test contracts: accepted user direction](../raw/2026-09-12-ai-test-contracts.md).
 
 - [Automatic transcript and presentation notes for "Vitest Simplified"](../raw/2022-02-14-vitest-simplified.md)
 
