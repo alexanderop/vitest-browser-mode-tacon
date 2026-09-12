@@ -72,3 +72,7 @@ The agent appends entries in this form:
 - Result: updated. Added a fast teaching sequence for introducing Vitest before test environments. Kept the 2022 setup and Happy DOM details historical.
 - Wiki: `research/wiki/browser-native-component-testing.md`
 - Deck: replaced the tool-history slide with a short Vitest explanation and added an audience check before it.
+
+## 2026-09-12 — Accepted talk review
+
+Revised the deck to distinguish black-box strategy from browser execution, include the advertised helper patterns and qualified PWA measurement, and label interactive reconstructions. Synchronized the presenter plan to 38 minutes plus questions and reserve. No raw sources changed.

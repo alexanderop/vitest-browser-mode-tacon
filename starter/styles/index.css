@@ -20,3 +20,20 @@
 .slidev-layout pre .line {
   filter: brightness(1.4);
 }
+
+.slidev-layout.talk-code pre {
+  font-size: 19px !important;
+  line-height: 1.4 !important;
+}
+
+.slidev-layout .slidev-code-dishonored {
+  opacity: .6 !important;
+}
+
+.slidev-layout .screenshot-comparison__image-frame {
+  min-height: 320px !important;
+}
+
+.slidev-layout .screenshot-comparison img {
+  height: 290px !important;
+}

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, nextTick, ref } from 'vue'
 
 const props = withDefaults(
   defineProps<{
@@ -14,6 +14,11 @@ const removed = ref(false)
 const reached = ref(false)
 const narrow = ref(false)
 const printPosition = ref('50%, 45%')
+const productButton = ref<HTMLButtonElement | null>(null)
+const preview = ref<HTMLElement | null>(null)
+const originalWidth = ref(0)
+const previewWidth = ref(400)
+const position = ref({ x: 50, y: 45 })
 const bag = ref<HTMLElement | null>(null)
 const lastItem = ref<HTMLElement | null>(null)
 const products = ['Little claw plush', 'Claw club tee', 'A little pinch mug', 'Tiny claws stickers']
@@ -52,6 +57,8 @@ function setBroken(value: boolean) {
   reached.value = false
   narrow.value = false
   printPosition.value = '50%, 45%'
+  position.value = { x: 50, y: 45 }
+  previewWidth.value = 400
   feedback.value = value ? 'Defect applied. Try the interaction.' : 'Working version. Try the interaction.'
   if (bag.value) bag.value.scrollTop = 0
 }
@@ -66,8 +73,7 @@ function blockedPointer() {
 }
 
 function directDomClick() {
-  count.value += 1
-  feedback.value = 'A direct DOM click added an item without hit testing.'
+  productButton.value?.click()
 }
 
 function observeScroll() {
@@ -77,14 +83,39 @@ function observeScroll() {
   reached.value = item.top >= container.top && item.bottom <= container.bottom
 }
 
-function resizePreview() {
+async function resizePreview() {
+  if (!preview.value) return
+  if (!narrow.value) originalWidth.value = preview.value.getBoundingClientRect().width
   narrow.value = true
-  feedback.value = 'Chromium measures the preview at 280 px.'
+  await nextTick()
+  previewWidth.value = preview.value.offsetWidth
+  feedback.value = `Measured preview width: ${previewWidth.value} px. Drag the mascot.`
+}
+
+function movePrint(clientX: number, clientY: number) {
+  if (!preview.value) return
+  const rect = preview.value.getBoundingClientRect()
+  const width = broken.value && narrow.value ? originalWidth.value : rect.width
+  const x = Math.max(0, Math.min(100, (clientX - rect.left) / width * 100))
+  const y = Math.max(0, Math.min(100, (clientY - rect.top) / rect.height * 100))
+  position.value = { x, y }
+  // Normalize subpixel noise before rounding percentages for the audience.
+  printPosition.value = `${Math.round(Number(x.toFixed(3)))}%, ${Math.round(Number(y.toFixed(3)))}%`
+  feedback.value = broken.value && narrow.value ? current.value.failure : 'Position calculated from the current browser geometry.'
 }
 
 function runDrag() {
-  printPosition.value = broken && narrow.value ? '53%, 60%' : '75%, 60%'
-  feedback.value = broken && narrow.value ? current.value.failure : 'The print lands at 75%, 60%.'
+  if (!preview.value) return
+  const rect = preview.value.getBoundingClientRect()
+  movePrint(rect.left + rect.width * 0.75, rect.top + rect.height * 0.6)
+}
+
+function startDrag(event: PointerEvent) {
+  if (event.currentTarget instanceof HTMLElement) event.currentTarget.setPointerCapture(event.pointerId)
+}
+
+function drag(event: PointerEvent) {
+  if (event.buttons === 1) movePrint(event.clientX, event.clientY)
 }
 </script>
 
@@ -109,7 +140,7 @@ function runDrag() {
         <div><small>Small claws. Real clicks.</small><strong>The little claw plush</strong><span>€28.00</span></div>
       </div>
       <div class="button-stack">
-        <button class="primary" @click="addItem">Add plush to demo bag</button>
+        <button ref="productButton" class="primary" @click="addItem">Add plush to demo bag</button>
         <span v-if="broken" class="decoration" aria-hidden="true" @click="blockedPointer" />
       </div>
       <output aria-label="Demo bag count">{{ count }} items in demo bag</output>
@@ -130,15 +161,15 @@ function runDrag() {
     </div>
 
     <div v-else-if="example === 'fixed-preview-width'" class="resize-demo">
-      <div class="preview" :class="{ narrow }">
+      <div ref="preview" class="preview" :class="{ narrow }">
         <div class="shirt" aria-hidden="true">T</div>
-        <img src="/shop/plush-card-actual.png" alt="Mascot print" :class="{ moved: printPosition === '75%, 60%', wrong: printPosition === '53%, 60%' }" />
+        <img src="/shop/plush-card-actual.png" alt="Mascot print" draggable="false" :style="{ left: `${position.x}%`, top: `${position.y}%` }" @pointerdown.prevent="startDrag" @pointermove="drag" />
       </div>
       <div class="resize-actions">
         <button class="secondary" @click="resizePreview">Resize preview</button>
-        <button class="primary" @click="runDrag">Drag to 75%, 60%</button>
+        <button class="primary" @click="runDrag">Calculate at 75%, 60%</button>
       </div>
-      <output>Preview: {{ narrow ? 280 : 400 }} px · Position: {{ printPosition }}</output>
+      <output>Preview: {{ previewWidth }} px · Position: {{ printPosition }}</output>
     </div>
 
     <div v-else class="hydration-demo">
@@ -181,10 +212,10 @@ output { display:block; margin:.7rem 0; text-align:center; color:#ddceb9; font-s
 .hydration-demo h3 { margin:0 0 .3rem; font-size:.76rem; }
 .hydration-demo span { color:#b7b5ae; font-size:.62rem; }
 .resize-demo { display:grid; justify-items:center; gap:.65rem; }
-.preview { position:relative; width:18rem; height:10rem; overflow:hidden; border:1px solid #555249; border-radius:.6rem; background:#20201f; transition:width .25s ease; }
-.preview.narrow { width:12.6rem; }
+.preview { position:relative; width:400px; height:160px; overflow:hidden; border:1px solid #555249; border-radius:.6rem; background:#20201f; }
+.preview.narrow { width:280px; }
 .shirt { position:absolute; inset:1rem 22%; display:grid; place-items:center; color:#444; background:#ddd2bf; border-radius:1rem 1rem .4rem .4rem; font-size:3rem; }
-.preview img { position:absolute; left:50%; top:45%; width:2.4rem; height:2.4rem; object-fit:cover; border-radius:50%; transform:translate(-50%,-50%); transition:left .25s ease,top .25s ease; }
+.preview img { position:absolute; width:2.4rem; height:2.4rem; object-fit:cover; border-radius:50%; transform:translate(-50%,-50%); touch-action:none; cursor:grab; }
 .preview img.moved { left:75%; top:60%; }
 .preview img.wrong { left:53%; top:60%; }
 .resize-actions { display:flex; gap:.5rem; width:100%; }

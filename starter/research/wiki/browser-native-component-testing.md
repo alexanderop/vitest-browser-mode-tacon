@@ -64,6 +64,12 @@ Alexander Opalic's Vue 3 case study pushes this middle layer further. His projec
 - Playwright-provider runs can produce traces for every test, retries, or failures. Vitest groups interactions and `expect.element` assertions by source location, and custom `page.mark` or locator markers can label higher-level flows. [The pinned official documentation includes the trace-view guide.](../raw/2026-08-18-vitest-4-1-11-browser-mode-documentation.md)
 - Browser Mode replaces native thread-blocking dialogs because `alert` and `confirm` would stop Vitest from communicating with the page. Native browser ESM also prevents `vi.spyOn` from patching an imported module namespace. The documented replacement is `vi.mock(path, { spy: true })`. [The pinned official documentation records both limitations.](../raw/2026-08-18-vitest-4-1-11-browser-mode-documentation.md)
 
+## Talk application
+
+The reviewed deck distinguishes black-box strategy from browser runtime: the semantically queried JSDOM test already follows black-box principles. The browser adds provider-controlled actionability, not black-box status. [The concrete comparison is recorded locally.](../raw/2026-09-11-claw-and-chew-talk-examples.md)
+
+The main talk now explains the advertised project ratios and timing as one PWA case study, and shows the real cart-line factory and page-object method. [The original case study supplies the figures.](../raw/2025-12-14-vue-3-testing-pyramid-vitest-browser-mode.md) [The local source record identifies the executable helpers.](../raw/2026-09-11-claw-and-chew-talk-examples.md)
+
 ## Tensions and open questions
 
 - The recording uses Vitest 2.1 on its release day. Treat its setup details and API names as historical when the Vitest 4.1.11 documentation differs.

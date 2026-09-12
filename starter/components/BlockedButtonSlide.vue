@@ -32,7 +32,7 @@
 
 .copy .lead {
   margin-top: 0;
-  color: color-mix(in srgb, var(--brand-text), transparent 48%);
+  color: color-mix(in srgb, var(--brand-text), transparent 20%);
   line-height: 1.35;
 }
 </style>

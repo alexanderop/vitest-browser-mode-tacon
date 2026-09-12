@@ -12,7 +12,6 @@ duration: 45min
 twoslash: false
 hideFooter: true
 ---
-
 <div class="max-w-3xl">
 
 # Frontend-Testing<br>neu gedacht
@@ -33,255 +32,39 @@ Wenn der Test sagt, dass ein Kunde ein Produkt kaufen kann, kann der Kunde es da
 -->
 
 ---
-layout: iframe
-url: https://claw-and-chew.vercel.app/
----
-
-<!--
-0:40 bis 1:40.
-
-Kurz durch den Shop klicken, das Plüschtier in den Warenkorb legen und den simulierten Checkout abschließen.
-
-Claw & Chew ist das Beispiel, das wir im gesamten Vortrag verwenden. Der Shop rekonstruiert die Testprobleme aus meiner produktiven Vue-PWA. Die Zahlen später im Vortrag stammen aus der PWA. Die ausführbaren Beispiele stammen aus diesem Shop.
-
-Nachdem der Fokus im Iframe liegt, im Presenter-Modus zur nächsten Folie wechseln.
-
-Quelle: /Users/alexanderopalic/Projects/opensource/claw-and-chew/talk/walkthrough.md
--->
-
----
 layout: default
 ---
 
-# Vue innerhalb von Nuxt
+# Unser Beispiel: Claw & Chew
 
-<ProjectArchitecture />
+<img src="/shop/storefront.jpg" alt="Claw & Chew: Demo-Shop mit Plüschtier und Warenkorb" class="w-full h-80 object-cover object-top" />
+
+<div class="text-xl">Demo-Shop · simulierter Checkout · Erfahrungen aus meiner produktiven Vue-PWA</div>
 
 <!--
-1:40 bis 2:15.
+0:40 bis 1:35.
 
-Unser Beispiel ist eine Nuxt-Anwendung. Wer Vue kennt, kennt bereits die Oberfläche mit Shop, Warenkorb und Checkout.
-
-[click] Nuxt organisiert daraus eine vollständige Webanwendung.
-
-[click] Dazu gehören Routing, Server-Rendering und Serverfunktionen.
-
-[click] Für die Teststrategie ist diese Grenze wichtig. Eine Vue-Komponente kann isoliert funktionieren, während die gebaute Nuxt-Anwendung trotzdem an Routing, Server-Rendering oder Hydration scheitert.
-
-Quellen:
-- /Users/alexanderopalic/Projects/opensource/claw-and-chew/README.md
-- research/wiki/browser-native-component-testing.md
+Ein Kunde legt ein Plüschtier in den Warenkorb und bestellt. Diesen Ablauf schützen wir heute.
+Der Shop rekonstruiert Probleme aus meiner PWA. Er ist eine Demo, kein produktiver Zahlungsdienst. Zahlen beziehen sich auf die PWA.
+Die lokale Aufnahme funktioniert ohne Konferenz-WLAN; die Shop-Tour ist optional vor dem Vortrag.
+Quelle: research/raw/2026-09-11-claw-and-chew-talk-examples.md
 -->
 
 ---
 layout: statement
 ---
-
-# Warum testen wir?
-
-<div class="mt-10 text-3xl">
-Wir wollen Änderungen ausliefern, ohne unbemerkt bestehendes Verhalten zu brechen.
-</div>
-
-<div v-click class="mt-12 text-2xl opacity-70">
-Ein guter Test warnt uns vor einer Regression, bevor sie den Kunden erreicht.
-</div>
+# Wer testet Komponenten mit JSDOM?
 
 <!--
-2:15 bis 2:45.
+1:35 bis 2:00.
 
-Automatisierte Tests geben einem Team Vertrauen bei Änderungen. Sie finden Regressionen früh und fördern klare Grenzen zwischen Logik, Komponenten und der vollständigen Anwendung.
-
-[click] Die Anzahl der Tests ist dabei nicht das Ziel. Ein Test verdient seinen Platz, wenn er ein relevantes Risiko zuverlässig und verständlich abdeckt.
-
-Quelle: research/wiki/testing-strategy-by-confidence-and-cost.md
--->
-
----
-layout: statement
----
-
-# Wer hat Vitest noch nie benutzt?
-
-<div class="mt-12 text-3xl opacity-70">
-Kurzes Handzeichen genügt.
-</div>
-
-<!--
-2:45 bis 3:00.
-
-Kurzes Handzeichen abfragen. Die Antwort ändert den Ablauf nicht. Ich erkläre Vitest jetzt einmal in 40 Sekunden, damit alle dieselbe Grundlage haben.
--->
-
----
-layout: two-cols-header
----
-
-# Vitest in 40 Sekunden
-
-::left::
-
-```ts {1|3-7|all}
-import { expect, test } from 'vitest'
-
-test('three plush toys ship free', () => {
-  const cost = calculateShipping(3)
-
-  expect(cost).toBe(0)
-})
-```
-
-::right::
-
-<div class="mt-4 text-2xl max-w-xl">
-
-Vitest findet und startet Tests.
-
-`test` beschreibt das Verhalten.
-
-`expect` prüft das Ergebnis.
-
-Beim Speichern laufen betroffene Tests erneut.
-
-</div>
-
-<div v-click class="mt-8 text-center text-2xl font-600">
-Vitest nutzt Vite, um Anwendungscode im Test zu laden.
-</div>
-
-<!--
-3:00 bis 3:40.
-
-[click] Vitest stellt den Test Runner und die vertraute Test-API bereit.
-
-[click] test benennt ein Verhalten. Die Funktion führt den Anwendungscode aus. expect vergleicht das beobachtete Ergebnis mit dem erwarteten Wert.
-
-[click] Im Watch Mode startet Vitest betroffene Tests nach einer Änderung erneut. Weil Vitest Vite verwendet, kann es TypeScript, Vue-Komponenten und die Projektkonfiguration über dieselbe Frontend-Infrastruktur laden.
-
-Quellen:
-- https://vitest.dev/guide/why.html
-- research/raw/2022-02-14-vitest-simplified.md
--->
-
----
-layout: two-cols-header
-zoom: 0.75
----
-
-# Welche Tests laufen wo?
-
-::left::
-
-```ts {3-5|6-8|9-17}
-test: {
-  projects: [
-    { test: {
-      name: 'unit',
-      environment: 'node',
-      include: ['**/*.unit.test.ts'],
-    } },
-    { test: {
-      name: 'jsdom',
-      environment: 'jsdom',
-      include: ['**/*.dom.test.ts'],
-    } },
-    { test: {
-      name: 'browser',
-      include: ['**/*.browser.test.ts'],
-      browser: {
-        enabled: true,
-        provider: playwright(),
-        instances: [{ browser: 'chromium' }],
-      },
-    } },
-  ],
-}
-```
-
-::right::
-
-<div class="mt-6 text-2xl max-w-xl">
-
-`*.unit.test.ts` -> Node
-
-`*.dom.test.ts` -> JSDOM
-
-`*.browser.test.ts` -> Chromium
-
-</div>
-
-<div v-click class="mt-12 text-2xl font-600">
-Die Config ordnet Testdateien einer Laufzeitumgebung zu.
-</div>
-
-<!--
-3:40 bis 4:10.
-
-Vitest wird in einer TypeScript-Datei konfiguriert. Über projects können wir mehrere benannte Testgruppen in derselben Suite definieren.
-
-[click] Reine Logik läuft in Node. Das ist die Standardumgebung, hier schreiben wir sie ausdrücklich hin.
-
-[click] Bestehende DOM-Tests können weiter in JSDOM laufen.
-
-[click] Für Browser Mode aktivieren wir browser, wählen Playwright als Provider und starten die Tests hier in Chromium. Die include-Muster ordnen jede Testdatei dem passenden Projekt zu.
-
-Das ist die zentrale Entscheidung: Nicht Vitest allein bestimmt die Realität des Tests, sondern die konfigurierte Laufzeitumgebung.
-
-Quellen:
-- /Users/alexanderopalic/Projects/opensource/claw-and-chew/vitest.config.ts
-- research/raw/2026-08-18-vitest-4-1-11-browser-mode-documentation.md
--->
-
----
-layout: center
-clicks: 3
----
-
-# Drei Testebenen für ein Frontend
-
-<RoughSvg :width="900" :height="250" :padding="24">
-  <RoughNode id="unit" :x="0" :y="70" label="Unit" sublabel="reine Logik" :step="1" />
-  <RoughNode id="component" :x="310" :y="70" label="Komponente" sublabel="Vue im Browser" variant="accent" :step="2" />
-  <RoughNode id="e2e" :x="620" :y="70" label="End-to-End" sublabel="gebaute Nuxt-App" variant="success" :step="3" />
-  <RoughEdge from="unit" to="component" :step="2" />
-  <RoughEdge from="component" to="e2e" :step="3" />
-</RoughSvg>
-
-<!--
-4:10 bis 4:30.
-
-Eine moderne Frontend-Suite verteilt Risiken auf drei Ebenen.
-
-[click] Unit-Tests prüfen kleine, isolierte Funktionen und Composables. Für reine Geschäftslogik brauchen wir keinen Browser.
-
-[click] Komponententests mounten Vue-Komponenten. Sie prüfen Props, sichtbare Zustände und Interaktionen. Sobald CSS, Fokus, Layout oder Browser-APIs zum Risiko gehören, laufen diese Tests in einem echten Browser.
-
-[click] End-to-End-Tests besuchen die gebaute Nuxt-Anwendung. Sie behalten die wenigen kritischen Abläufe, die Routing, Server-Rendering, Hydration, Assets oder echte Dienste brauchen.
-
-Jede Ebene schützt vor anderen Fehlern. Die Architektur und das Risiko bestimmen die Verteilung. Es gibt keine feste Prozentzahl für jedes Projekt.
-
-Quellen:
-- research/wiki/browser-native-component-testing.md
-- research/wiki/testing-strategy-by-confidence-and-cost.md
--->
-
----
-layout: statement
----
-
-# Kann der Kunde das Produkt wirklich kaufen?
-
-<!--
-4:30 bis 5:10.
-
-Ich beginne nicht mit einer Konfiguration. Wir probieren den Shop so aus, wie ein Kunde ihn benutzt.
+Kurz Hände ansehen. Die Beispiele sind Vue; das Prinzip gilt auch für andere UI-Frameworks. Danach direkt den Test zeigen.
 -->
 
 ---
 layout: default
 zoom: 0.9
 ---
-
 # Der echte JSDOM-Test
 
 ```ts
@@ -294,14 +77,17 @@ test('adds a plush to the bag through the product button', async () => {
   const user = userEvent.setup()
   render(ProductCardHost)
 
-  await user.click(screen.getByRole('button', { name: 'Add The little claw plush to bag' }))
+  const add = screen.getByRole('button', {
+    name: 'Add The little claw plush to bag',
+  })
+  await user.click(add)
 
   expect(screen.getByLabelText('Bag count')).toHaveTextContent('1 items in bag')
 })
 ```
 
 <!--
-5:10 bis 5:40.
+2:00 bis 2:55.
 
 Das ist der echte Test aus Claw & Chew. Er rendert die ProductCard, sucht den Button semantisch, klickt ihn mit user-event und prüft anschließend den sichtbaren Warenkorbstand.
 
@@ -309,117 +95,76 @@ Quelle: /Users/alexanderopalic/Projects/opensource/claw-and-chew/app/catalog/Pro
 -->
 
 ---
-layout: fact
+layout: default
 ---
-
-# PASS
-
-Der JSDOM-Test findet den Button, klickt ihn und sieht den neuen Warenkorbstand.
+<BlockedButtonSlide />
 
 <!--
-5:40 bis 6:00.
+2:55 bis 4:25.
 
-Zuerst führe ich den JSDOM-Test aus. Er ist vernünftig geschrieben. Er sucht den Button über Rolle und Namen, klickt ihn und prüft den sichtbaren Warenkorbstand.
-
-Live: pnpm exec vitest run --project jsdom app/catalog/ProductCard.dom.test.ts
+Zuerst in Working auf „Add plush to demo bag“ klicken: Zähler 1.
+Dann „Introduce defect“ wählen und denselben Button klicken: Zähler 0, die Dekoration fängt den Klick ab.
+„Dispatch a direct DOM click“ ruft tatsächlich button.click() auf: Der gleiche Handler erhöht den Zähler auf 1, obwohl die Ebene weiterhin darüber liegt.
+Das ist eine lokale, vereinfachte Demonstration desselben Defekts. Der folgende Testlauf stammt aus dem Shop.
+Quelle: research/raw/2026-09-11-claw-and-chew-talk-examples.md
 -->
 
 ---
 layout: default
 ---
 
-<BlockedButtonSlide />
+# Gleiche Assertion, anderer Klick
 
-<!--
-6:00 bis 7:50.
-
-Jetzt aktiviere ich den Defekt im echten Testing Lab. Die Dekoration erhält Pointer-Events und liegt über dem Button. Der JSDOM-Test bleibt grün. Im interaktiven Beispiel erreicht der Klick den Button nicht.
-
-Live auf der Folie: „Introduce defect“ wählen und anschließend „Add plush to demo bag“ klicken. Der Zähler bleibt bei null. Mit „Dispatch a direct DOM click“ steigt er trotzdem auf eins.
-
-Live: pnpm demo blocked-button
-Live: pnpm exec vitest run --project jsdom app/catalog/ProductCard.dom.test.ts
-
-Quelle: /Users/alexanderopalic/Projects/opensource/claw-and-chew/app/learn/LearningGuide.vue
-
-Falls die Live-Demo scheitert, nutze das gespeicherte Szenario aus artifacts/scenarios.
--->
-
----
-layout: two-cols-header
----
-
-# Grün ist nicht gleich grün
-
-::left::
-
-<div class="text-center">
-
-## JSDOM
-
-Der Code reagiert auf ein ausgelöstes Event.
-
+<div class="grid grid-cols-2 gap-10 mt-10">
+<div><h2>JSDOM: PASS</h2><p>Der Code reagiert auf das Event.</p></div>
+<div><h2>Browser Mode: FAIL</h2><p>Die Dekoration fängt den Klick ab.</p></div>
 </div>
 
-::right::
-
-<div class="text-center">
-
-## Chromium
-
-Der Nutzer kann das Event tatsächlich auslösen.
-
-</div>
+<div class="mt-10 text-2xl">product-decoration intercepts pointer events</div>
 
 <!--
-7:50 bis 9:20.
+4:25 bis 6:15.
 
-Browser Mode schlägt jetzt fehl. Playwright meldet, dass ein anderes Element den Pointer-Input abfängt.
-
-Der Unterschied liegt nicht in der Assertion. Beide Tests prüfen denselben Warenkorbstand. Der Unterschied liegt in der Interaktion.
-
-Live: pnpm exec vitest run --project browser app/catalog/ProductCard.browser.test.ts
-
+Nur diese eine Terminalsequenz live zeigen: Defekt einbauen, JSDOM-Test grün, Browser-Test rot, zurücksetzen, Browser-Test grün.
+Stoppe nach spätestens 90 Sekunden. Bei Verzögerung die vorbereitete Fehlermeldung auf der Folie erklären.
+Beide Tests prüfen denselben Warenkorbstand. Der Unterschied liegt in der Interaktion.
 Quelle: research/raw/2026-09-11-claw-and-chew-talk-examples.md
 -->
 
 ---
-layout: statement
+layout: default
+class: p-0
+hideFooter: true
 ---
-
-# Teste Verhalten, das Nutzer beobachten können
-
-<div v-click class="mt-12 text-2xl opacity-70">
-Nutze einen echten Browser, sobald Browser-Verhalten Teil des Risikos ist.
-</div>
+<img
+  src="/memes/hamcrab-three-component-contracts-v2.png"
+  alt="Drei Hamcrabs zeigen die Verträge Verhalten, Accessibility und Darstellung"
+  class="absolute inset-0 h-full w-full object-contain"
+/>
 
 <!--
-9:20 bis 11:00.
+6:15 bis 6:50.
 
-Das ist die zentrale Regel des Vortrags. Ein Black-Box-Test kennt die öffentliche Bedienung und das sichtbare Ergebnis. Er kennt keine privaten Refs oder Methoden.
+Nach dem False-Green-Beispiel das Modell für den restlichen Talk einführen.
 
-[click] Der zweite Satz entscheidet über die Umgebung. Reine Berechnungen brauchen keinen Browser. Ein Klick, Fokus, Layout oder eine Browser-API kann den Browser zum Teil des Systems machen.
-
-Quelle: research/wiki/testing-strategy-by-confidence-and-cost.md
+Ein einzelner Test muss nicht alle drei Fragen beantworten. Die Scorecard begleitet uns durch den Vortrag. Nach jedem Kapitel kommt ein geschützter Vertrag hinzu.
 -->
 
 ---
-layout: Section
+layout: default
 ---
-
-# Der Browser gehört zum System
+<PartSlide part="1" title="Verhalten" subtitle="Kann der Nutzer wirklich handeln?" />
 
 <!--
-11:00 bis 11:20.
+6:50 bis 7:10.
 
-Jetzt lösen wir auf, was Vitest Browser Mode an dieser Stelle verändert.
+Jetzt lösen wir auf, wie Vitest Browser Mode echte Nutzerhandlungen prüft.
 -->
 
 ---
 layout: center
 clicks: 2
 ---
-
 # Wo läuft der Test?
 
 <RoughSvg :width="760" :height="230" :padding="24">
@@ -431,7 +176,7 @@ clicks: 2
 </RoughSvg>
 
 <!--
-11:20 bis 12:40.
+7:10 bis 8:35.
 
 Der Test behält die Vitest-APIs.
 
@@ -443,31 +188,58 @@ Quelle: research/raw/2026-08-18-vitest-4-1-11-browser-mode-documentation.md
 -->
 
 ---
-layout: statement
+layout: default
 ---
 
-# Ein echter Browser reicht allein nicht
+# Black-Box beschreibt die Teststrategie
 
-<div v-click class="mt-10 text-2xl">Der Klick muss über den Browser-Provider laufen.</div>
+<div class="grid grid-cols-2 gap-8">
+<div>
+
+## Interner Zustand
+
+```ts
+expect(wrapper.vm.bagCount).toBe(1)
+```
+
+Kennt die Implementierung.
+
+</div>
+<div>
+
+## Sichtbares Verhalten
+
+```ts
+await expect.element(
+  screen.getByLabelText('Bag count'),
+).toHaveTextContent('1 items in bag')
+```
+
+Kennt den Vertrag.
+
+</div>
+</div>
+
+<div class="mt-8 text-2xl">Auch unser JSDOM-Test ist ein Black-Box-Test.</div>
 
 <!--
-12:40 bis 13:40.
+8:35 bis 10:05.
 
-Testcode kann auch im Browser direkt DOM-Events auslösen. Dann läuft der Test zwar in Chromium, umgeht aber weiterhin die Actionability-Prüfung.
-
-[click] Die Vitest-Locators schicken die Interaktion an den Provider. Playwright kann dann prüfen, ob das Ziel erreichbar ist.
-
-Quelle: research/raw/2026-02-12-test-angular-components-like-a-real-user.md
+Der linke Ausschnitt ist ein didaktisches Gegenbeispiel, kein Test aus dem Shop. Ein Refactoring kann bagCount entfernen, obwohl der Kunde weiterhin bestellen kann.
+Rechts bleibt das beobachtbare Ergebnis gleich.
+Beide Tests aus der Klick-Demo sind bereits Black-Box-Tests. Trotzdem fehlt einem davon das echte Browser-Verhalten. Strategie und Laufzeit sind zwei unabhängige Entscheidungen.
+Quellen: research/wiki/testing-strategy-by-confidence-and-cost.md; research/raw/2025-12-14-vue-3-testing-pyramid-vitest-browser-mode.md
 -->
 
 ---
 layout: two-cols-header
 zoom: 0.88
 ---
-
 # Gleiche Absicht, andere Ausführung
 
 ::left::
+
+## JSDOM
 
 ```ts
 const user = userEvent.setup()
@@ -485,6 +257,8 @@ expect(screen.getByLabelText('Bag count'))
 
 ::right::
 
+## Browser Mode
+
 ```ts
 const screen = await render(ProductCardHost)
 
@@ -500,53 +274,51 @@ await expect.element(
 ```
 
 <!--
-13:40 bis 15:10.
+10:05 bis 12:05.
 
 Links steht der JSDOM-Test. Rechts steht Browser Mode. Die Absicht ist gleich. Beide suchen semantisch, klicken und prüfen sichtbaren Text.
 
+render kommt aus vitest-browser-vue. page und userEvent kommen im Browser-Test aus vitest/browser; nicht aus @testing-library/user-event.
+
 Browser Mode rendert asynchron. Der Locator bleibt wiederverwendbar. expect.element wartet auf den sichtbaren Zustand.
+
+Entscheidend ist die Zeile mit `.click()`: Der Vitest-Locator schickt die Interaktion an den Browser-Provider. Ein direkt ausgelöstes DOM-Event würde die Actionability-Prüfung weiterhin umgehen.
 
 Quellen:
 - /Users/alexanderopalic/Projects/opensource/claw-and-chew/app/catalog/ProductCard.dom.test.ts
 - /Users/alexanderopalic/Projects/opensource/claw-and-chew/app/catalog/ProductCard.browser.test.ts
--->
-
----
-layout: fact
----
-
-# FAIL
-
-`<div class="product-decoration">` intercepts pointer events
-
-<!--
-15:10 bis 16:30.
-
-Diese Fehlermeldung beschreibt das Problem des Kunden und keine interne Methode.
-
-Ich setze das Szenario jetzt zurück. Der Browser-Test läuft danach grün.
-
-Live: pnpm demo reset
-Live: pnpm exec vitest run --project browser app/catalog/ProductCard.browser.test.ts
-
-Quelle: research/raw/2026-09-11-claw-and-chew-talk-examples.md
+- research/raw/2026-02-12-test-angular-components-like-a-real-user.md
 -->
 
 ---
 layout: center
-clicks: 4
 ---
+# Vertrag 1: Verhalten
 
+<ContractScorecard :achieved="['behavior']" />
+
+<!--
+12:05 bis 12:30.
+
+Der erste Vertrag ist sichtbar geschützt. Der Browser-Test scheitert an demselben Hindernis wie der Kunde.
+
+TRANSITION: Ein einzelner Klick ist ein guter Beweis. Jetzt skalieren wir dieselbe Idee auf einen vollständigen Kaufvorgang.
+-->
+
+---
+layout: center
+clicks: 3
+---
 # Ein vollständiger Kaufvorgang
 
 <Steps :steps="['Produkt', 'Warenkorb', 'Checkout', 'Bestätigung']" />
 
 <!--
-16:30 bis 18:10.
+12:30 bis 13:10.
 
 Der nächste Test folgt einem vollständigen Kaufvorgang innerhalb der gerenderten Vue-Anwendung.
 
-[click] Ein Kunde wählt das Plüschtier.
+Ein Kunde wählt das Plüschtier.
 
 [click] Der Kunde öffnet den Warenkorb.
 
@@ -556,16 +328,12 @@ Der nächste Test folgt einem vollständigen Kaufvorgang innerhalb der gerendert
 -->
 
 ---
-layout: code-editor
-project: claw-and-chew
-activeFile: purchase.browser.test.ts
-tabs: purchase.browser.test.ts
-files: |
-  talk/tacon/
-    purchase.browser.test.ts
+layout: default
+class: talk-code
 ---
+# Ein Test liest sich wie eine Bestellung
 
-```ts {all|4-7|8}
+```ts {all|5-8|9|all}
 import { expect, test } from 'vitest'
 import { renderShop } from './shop-page'
 
@@ -579,7 +347,7 @@ test('a customer can order a plush', async () => {
 ```
 
 <!--
-18:10 bis 19:50.
+13:10 bis 14:45.
 
 Der Test liest sich wie die Aufgabe des Kunden.
 
@@ -587,14 +355,79 @@ Der Test liest sich wie die Aufgabe des Kunden.
 
 [click] Die Assertion bleibt im Test. Ein Leser erkennt sofort, welches Ergebnis den Kaufvorgang beweist.
 
+[click] Zum Schluss den vollständigen Test wieder hell zeigen.
+
 Quelle: /Users/alexanderopalic/Projects/opensource/claw-and-chew/talk/tacon/purchase.browser.test.ts
+-->
+
+---
+layout: default
+---
+
+# Das Page Object bündelt Handlungen
+
+```ts
+async enterCustomer({ name, email }: {
+  name: string
+  email: string
+}) {
+  await screen.getByRole('textbox', {
+    name: 'Your name',
+  }).fill(name)
+  await screen.getByRole('textbox', {
+    name: 'Email address',
+  }).fill(email)
+}
+```
+
+<div class="mt-6 text-2xl">Die Handlungen im Helper. Die Assertion im Test.</div>
+
+<!--
+14:45 bis 16:30.
+
+Das ist die enterCustomer-Methode aus dem gerade verwendeten renderShop-Helper, nur umgebrochen.
+Der Helper bündelt wiederkehrende Rollenabfragen. Ändert sich eine Beschriftung, gibt es eine Stelle zum Anpassen.
+Er versteckt weder eine Wartezeit noch das erwartete Ergebnis. Ein Helper lohnt sich, wenn mehrere Tests dieselben Handlungen brauchen.
+Quelle: /Users/alexanderopalic/Projects/opensource/claw-and-chew/talk/tacon/shop-page.ts
+-->
+
+---
+layout: default
+---
+
+# Eine Factory macht den Unterschied sichtbar
+
+```ts
+export function aPlushLine({ quantity = 1 } = {}): CartLine {
+  const product = products.find((item) => item.id === 'plush')
+  if (!product) throw new Error('The talk fixture requires the plush product')
+  return {
+    key: 'plush-fixture', product,
+    variant: 'One size · 18 cm', print: null, quantity,
+  }
+}
+```
+
+```ts
+const lines = [aPlushLine({ quantity: 3 })]
+expect(summarize(lines).shipping).toBe(0)
+```
+
+<div class="mt-5 text-xl">Drei Plüschtiere → kostenloser Versand · reine Logik in Node</div>
+
+<!--
+16:30 bis 18:30.
+
+Oben steht die echte Factory aus cart-line.ts, nur kompakter formatiert. Unten ist die Versand-Assertion aus shipping.unit.test.ts auf ihren relevanten Teil gekürzt.
+Die Factory liefert gültige Standarddaten. Der Test nennt nur die für diese Regel wichtige Abweichung: quantity 3.
+Keine universelle Zufallsdaten-Fabrik bauen. Diese kleine Funktion beschreibt genau einen gültigen Warenkorbposten.
+Quellen: /Users/alexanderopalic/Projects/opensource/claw-and-chew/talk/tacon/cart-line.ts; /Users/alexanderopalic/Projects/opensource/claw-and-chew/talk/tacon/shipping.unit.test.ts
 -->
 
 ---
 layout: center
 clicks: 2
 ---
-
 # Was integriert dieser Test?
 
 <RoughSvg :width="820" :height="300" :padding="24">
@@ -612,7 +445,7 @@ Server, Zahlung und Versand bleiben außerhalb dieses Tests.
 </div>
 
 <!--
-19:50 bis 21:30.
+18:30 bis 19:35.
 
 Integration bedeutet hier nicht das komplette Produktionssystem.
 
@@ -624,261 +457,151 @@ Quelle: research/raw/2025-12-14-vue-3-testing-pyramid-vitest-browser-mode.md
 -->
 
 ---
-layout: two-cols-header
+layout: default
 ---
-
-# Testdaten brauchen eine Factory
-
-::left::
-
-```ts
-const lines = [
-  aPlushLine({ quantity: 3 }),
-]
-```
-
-::right::
-
-```ts
-export function aPlushLine(
-  { quantity = 1 } = {},
-): CartLine {
-  return {
-    key: 'plush-fixture',
-    product,
-    variant: 'One size · 18 cm',
-    print: null,
-    quantity,
-  }
-}
-```
+<PartSlide part="2" title="Accessibility" subtitle="Stimmen Bedeutung und Bedienung?" />
 
 <!--
-21:30 bis 23:50.
+19:35 bis 19:55.
 
-Factories lösen ein konkretes Problem. Tests brauchen kleine, gültige Daten mit wenigen relevanten Unterschieden.
+Accessibility ist der zweite Vertrag einer Komponente: Welche Bedeutung vermittelt sie, und kann ein Nutzer sie mit Tastatur und Fokus bedienen?
+-->
 
-Diese Factory ist bewusst eng. Sie erzeugt genau eine gültige Warenkorbzeile für das Plüschtier. Sie ist kein universeller Testdaten-Builder.
+---
+layout: default
+---
 
-Quelle: /Users/alexanderopalic/Projects/opensource/claw-and-chew/talk/tacon/cart-line.ts
+# Sichtbarer Inhalt und zugänglicher Zustand
+
+<TabsContractDemo />
+
+<!--
+19:55 bis 21:55.
+
+Wechsel vom Demo-Shop zur Component Library: Dieser Fall basiert auf einem absichtlich defekten Tab-Widget aus dem Reka-Vergleichskorpus. Es ist kein behaupteter Fehler der aktuellen Reka-Version.
+Hier zeigen wir eine vereinfachte interaktive Rekonstruktion. Zuerst Account fokussieren und ArrowRight drücken: Password ist sichtbar und gemeldet.
+Dann „Defekt einbauen“ klicken: Password bleibt sichtbar, ARIA meldet Account. Rechts stehen die aus den Attributen abgeleiteten Namen, kein Live-Screenreader.
+Quelle: /Users/alexanderopalic/Projects/reka-ui-bench-mark/MIGRATING-TO-BROWSER-MODE.md, Abschnitt Valid is not the same as correct
 -->
 
 ---
 layout: two-cols-header
 zoom: 0.9
 ---
-
-# Wiederholte Handlungen bekommen ein Page Object
+# Axe bleibt grün
 
 ::left::
 
-```ts
-await screen
-  .getByRole('button', {
-    name: 'Add The little claw plush to bag',
-  })
-  .click()
+## Sichtbarer Inhalt
 
-await screen
-  .getByRole('button', {
-    name: 'Open bag, 1 items',
-  })
-  .click()
+```text
+Password
+
+Change your password here.
 ```
 
 ::right::
 
-```ts
-const shop = await renderShop()
+## Accessibility-Modell
 
-await shop.addPlushAndCheckout()
-await shop.enterCustomer({
-  name: 'Claw Fan',
-  email: 'fan@example.com',
-})
-await shop.placeOrder()
+```text
+tab "Account" [selected]
+tabpanel "Account"
 ```
 
+<div v-click class="mt-10 text-center text-2xl">
+Jedes Attribut ist gültig. Die gemeinsame Bedeutung ist falsch.
+</div>
+
 <!--
-23:50 bis 26:10.
+21:55 bis 23:15.
 
-Ein Page Object bündelt wiederkehrende DOM-Interaktionen und ihre semantischen Locators.
+Axe meldet null Violations. Das ist kein Fehler von Axe. Ein Regelwerk weiß nicht, welchen Tab die Anwendung gerade auswählen wollte.
 
-Es darf die Sprache des Kunden verwenden. addPlushAndCheckout sagt mehr als clickFirstButton.
+[click] Erst der Zusammenhang ist falsch. Genau diesen Produktvertrag hält ein ARIA Snapshot fest.
 
-Quelle: /Users/alexanderopalic/Projects/opensource/claw-and-chew/talk/tacon/shop-page.ts
+Quellen:
+- /Users/alexanderopalic/Projects/reka-ui-bench-mark/MIGRATING-TO-BROWSER-MODE.md
+- /Users/alexanderopalic/Projects/reka-ui-bench-mark/A11Y-FINDINGS.md
 -->
 
 ---
-layout: statement
+layout: default
+class: talk-code
 ---
+# Tastatur, Bedeutung und Auswahl prüfen
 
-# Handlungen dürfen verschwinden
+```ts {1-3|4-10|11-12|all}
+await account.click()
+await userEvent.keyboard('{ArrowRight}')
+await expect.element(password).toHaveFocus()
+await expect.element(document.body).toMatchAriaInlineSnapshot(`
+  - tablist "Manage your account":
+    - tab "Account"
+    - tab "Password" [selected]
+  - tabpanel "Password":
+    - paragraph: Change your password here. After saving, you'll be logged out.
+`)
+await expect.element(page.getByRole('tab', { selected: true }))
+  .toHaveLength(1)
+```
 
-<div v-click class="mt-8 text-3xl">Die erwartete Wirkung bleibt im Test.</div>
+<style>
+pre code { white-space: pre-wrap; overflow-wrap: anywhere; }
+</style>
 
 <!--
-26:10 bis 27:10.
+23:15 bis 25:30.
 
-Das ist meine Grenze für Page Objects.
+Der Test beginnt mit echter Bedienung. ArrowRight bewegt Fokus und Auswahl.
 
-[click] Wiederholte Handlungen dürfen hinter einer verständlichen Methode verschwinden. Die Assertion bleibt sichtbar. Sonst muss ein Leser zwei Dateien öffnen, um die Aussage des Tests zu verstehen.
+[click] Der Snapshot prüft Rollen, berechnete Namen, Hierarchie und den ausgewählten Zustand als eine Bedeutung.
+
+[click] Die zusätzliche Rollenabfrage beweist, dass genau ein Tab ausgewählt ist.
+
+[click] Den vollständigen Ausschnitt wieder hell zeigen.
+
+Quelle: /Users/alexanderopalic/Projects/reka-ui-bench-mark/packages/core/src/Tabs/Tabs.aria.browser.test.ts
 -->
 
 ---
 layout: center
 ---
+# Vertrag 2: Accessibility
 
-# Die Verteilung in meiner PWA
-
-<div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4rem;margin-top:4rem;text-align:center">
-  <div><div style="font-size:5rem;font-weight:700">70%</div><div style="margin-top:1rem;font-size:1.4rem">Browser-Integration</div></div>
-  <div><div style="font-size:5rem;font-weight:700">20%</div><div style="margin-top:1rem;font-size:1.4rem">reine Logik</div></div>
-  <div><div style="font-size:5rem;font-weight:700">10%</div><div style="margin-top:1rem;font-size:1.4rem">visuell und Accessibility</div></div>
-</div>
-
-<div class="mt-14 text-center text-xl opacity-70">Eine Fallstudie. Keine allgemeine Formel.</div>
+<ContractScorecard :achieved="['behavior', 'accessibility']" />
 
 <!--
-27:10 bis 28:30.
+25:30 bis 26:00.
 
-Diese Verteilung beschreibt eine produktive lokale Vue-PWA. Sie entstand aus den Risiken und der Architektur dieses Projekts.
+Der zweite Vertrag ist geschützt. Axe prüft allgemeine Regeln. Der Snapshot hält die konkrete Bedeutung fest. Die Tastatureingabe und die Fokus-Assertion prüfen die Bedienung.
 
-Die Grafik ist keine neue Testpyramide. Eine serverlastige Anwendung kann mehr End-to-End-Tests benötigen. Eine Bibliothek kann mehr Unit-Tests benötigen.
-
-Quelle: research/raw/2025-12-14-vue-3-testing-pyramid-vitest-browser-mode.md
+Quelle: /Users/alexanderopalic/Projects/reka-ui-bench-mark/MIGRATING-TO-BROWSER-MODE.md
 -->
 
 ---
-layout: code-editor
-project: claw-and-chew
-activeFile: shipping.unit.test.ts
-tabs: shipping.unit.test.ts
-files: |
-  talk/tacon/
-    shipping.unit.test.ts
-    cart-line.ts
+layout: default
 ---
-
-```ts {all|5|6-11}
-import { expect, test } from 'vitest'
-import { summarize } from '../../app/cart/cart'
-import { aPlushLine } from './cart-line'
-
-test('three plush toys qualify for free shipping', () => {
-  const lines = [aPlushLine({ quantity: 3 })]
-  expect(summarize(lines)).toEqual({
-    subtotal: 8400,
-    count: 3,
-    shipping: 0,
-    total: 8400,
-  })
-})
-```
+<PartSlide part="3" title="Darstellung" subtitle="Sieht die Komponente richtig aus?" />
 
 <!--
-28:30 bis 30:00.
+26:00 bis 26:20.
 
-Versandkosten sind reine Berechnung. Ein Browser würde hier nur Laufzeit und Setup hinzufügen.
-
-[click] Die Factory erzeugt den relevanten Zustand.
-
-[click] Der Test prüft den vollständigen fachlichen Wert gegen ein literales Ergebnis.
-
-Quelle: /Users/alexanderopalic/Projects/opensource/claw-and-chew/talk/tacon/shipping.unit.test.ts
+Eine Komponente kann bedienbar und semantisch korrekt sein, aber sichtbar falsch aussehen.
 -->
 
 ---
 layout: two-cols-header
+class: visual-contract
 ---
-
-# Rollen und Namen werden Teil des Vertrags
-
-::left::
-
-```ts
-screen.getByRole('dialog', {
-  name: 'Checkout',
-})
-
-screen.getByRole('textbox', {
-  name: 'Email address',
-})
-```
-
-::right::
-
-<div class="text-2xl leading-relaxed">
-
-Der Test braucht eine erkennbare Rolle.
-
-Der Test braucht einen zugänglichen Namen.
-
-CSS-Klassen spielen keine Rolle.
-
-</div>
-
-<!--
-30:00 bis 31:40.
-
-Black-Box-Tests geben uns noch eine zweite Perspektive. Menschen finden Elemente nicht über Vue-Komponentennamen. Ein semantischer Locator fragt dieselben Informationen ab, die auch Hilfstechnologien aus dem Accessibility Tree erhalten.
-
-Das belohnt gutes Markup. Es beweist aber nicht, dass die gesamte Anwendung barrierefrei ist.
-
-Quelle: research/raw/2026-08-18-vitest-4-1-11-browser-mode-documentation.md
--->
-
----
-layout: image-right
-image: /shop/keyboard-focus.jpg
----
-
-# Der Fokus muss sichtbar weiterwandern
-
-Tab öffnet den Warenkorb.
-
-Escape schließt ihn.
-
-Der Fokus kehrt zum Auslöser zurück.
-
-<!--
-31:40 bis 33:00.
-
-Dieses Beispiel zeigt echte Tastaturbedienung und den sichtbaren Fokus. Wenn es zeitlich passt, spiele ich die lokale Aufnahme ab. Sonst bleibt das Standbild.
-
-Quelle: /Users/alexanderopalic/Projects/opensource/claw-and-chew/talk/videos/browser-mode/keyboard-focus.mp4
--->
-
----
-layout: statement
----
-
-# Keine Violations bedeutet nicht, dass jede Prüfung lief
-
-<div v-click class="mt-10 text-2xl opacity-70">
-JSDOM meldet den Farbkontrast als unvollständig. Chromium berechnet ihn.
-</div>
-
-<!--
-33:00 bis 34:30.
-
-Der vorbereitete Kontrastdefekt macht einen Hinweis auf dunklem Hintergrund unlesbar. Beide Tests führen dieselbe axe-Regel aus.
-
-[click] JSDOM meldet keine Verletzung, aber eine unvollständige Prüfung. Browser Mode berechnet die gerenderten Farben und findet den Fehler.
-
-Quelle: /Users/alexanderopalic/Projects/opensource/claw-and-chew/talk/testing.md
--->
-
----
-layout: two-cols-header
----
-
 # Ein Screenshot für einen konkreten Vertrag
 
 ::left::
 
 ```ts
-const screen = await render(ProductCardHost)
+const screen = await render(
+  ProductCardHost,
+)
 
 const artwork = screen
   .getByRole('img', {
@@ -895,7 +618,7 @@ await expect(screen.getByRole('article'))
 
 ::right::
 
-<div class="text-2xl leading-relaxed">
+<div class="pl-6 text-2xl leading-relaxed">
 
 Fester Viewport.
 
@@ -906,7 +629,7 @@ Nur die relevante Komponente.
 </div>
 
 <!--
-34:30 bis 36:30.
+26:20 bis 28:15.
 
 Ein funktionaler Test kann absichtlich blind für Gestaltung sein. Für ausgewählte visuelle Verträge brauchen wir einen anderen Test. Dieser Test wartet auf die variablen Eingaben. Danach vergleicht er nur die Produktkarte.
 
@@ -918,7 +641,6 @@ Quelle: /Users/alexanderopalic/Projects/opensource/claw-and-chew/talk/tacon/prod
 ---
 layout: center
 ---
-
 # Die Interaktion bleibt grün
 
 <ScreenshotComparison
@@ -930,7 +652,7 @@ layout: center
 />
 
 <!--
-36:30 bis 38:50.
+28:15 bis 30:15.
 
 Die absichtlich geänderte Buttonfarbe beeinflusst den Kaufvorgang nicht. Der funktionale Browser-Test bleibt grün. Der Screenshot-Test zeigt exakt die betroffene Fläche.
 
@@ -941,9 +663,34 @@ Quelle: research/raw/2026-09-11-claw-and-chew-talk-examples.md
 
 ---
 layout: center
+---
+# Drei Verträge, drei rote Tests
+
+<ContractScorecard :achieved="['behavior', 'accessibility', 'visual']" />
+
+<!--
+30:15 bis 30:45.
+
+Jeder rote Test beschreibt einen anderen gebrochenen Vertrag. Keiner ersetzt die beiden anderen.
+
+Der Browser stellt für alle drei dieselbe gerenderte Komponente bereit.
+-->
+
+---
+layout: default
+---
+<PartSlide part="4" title="Testgrenzen" subtitle="Welche Laufzeit enthält das echte Risiko?" />
+
+<!--
+30:45 bis 31:05.
+
+Die drei Verträge sind vollständig. Jetzt wechseln wir von der Frage, was wir prüfen, zur Frage, wo der jeweilige Test laufen soll.
+-->
+
+---
+layout: center
 clicks: 3
 ---
-
 # Welcher Test gehört wohin?
 
 <RoughSvg :width="800" :height="240" :padding="24">
@@ -959,7 +706,7 @@ Teste auf der kleinsten Ebene, die das echte Risiko noch enthält.
 </div>
 
 <!--
-38:50 bis 40:50.
+31:05 bis 33:00.
 
 Node prüft Berechnungen ohne DOM.
 
@@ -973,20 +720,78 @@ Quelle: research/wiki/browser-native-component-testing.md
 -->
 
 ---
-layout: two-cols-header
+layout: default
 ---
 
-# So beginnt die Umstellung
+# Meine PWA: ein Erfahrungswert
+
+<div class="grid grid-cols-3 gap-8 mt-10 text-center">
+<div><div class="text-5xl">≈ 70 %</div><p>Integration</p></div>
+<div><div class="text-5xl">≈ 20 %</div><p>Unit-Tests</p></div>
+<div><div class="text-5xl">≈ 10 %</div><p>Visuell und Accessibility</p></div>
+</div>
+
+<div class="mt-10 text-2xl">82 Tests: 53,72 s in JSDOM → 13,59 s im Browser</div>
+
+<div class="mt-5 text-xl">Projektmessung · beide Läufe mit vier Fehlern · kein allgemeiner Faktor vier</div>
+
+<!--
+33:00 bis 34:55.
+
+Diese Werte erklären die Ankündigung des Vortrags. Sie stammen aus meiner PWA, nicht aus dem Demo-Shop und nicht aus einem kontrollierten allgemeinen Benchmark.
+70/20/10 beschreibt die damalige Einteilung dieser Suite. Visuell und Accessibility sind Prüfziele, die auch in Integrationstests vorkommen können; die Kategorien sind keine universelle Taxonomie.
+Die Testing Trophy begründet Integration über Vertrauen und Wartungsaufwand, nicht über eine feste Quote. Messt eure eigene Suite und wählt Tests nach eurem Risiko.
+Quellen: research/raw/2025-12-14-vue-3-testing-pyramid-vitest-browser-mode.md; research/wiki/testing-strategy-by-confidence-and-cost.md
+-->
+
+---
+layout: default
+---
+
+# Browser Mode neben bestehenden Tests
+
+```ts
+import { playwright } from '@vitest/browser-playwright'
+
+// Browser-Projekt innerhalb von test.projects
+{
+  test: {
+    name: 'browser',
+    include: ['**/*.browser.test.ts'],
+    browser: {
+      enabled: true,
+      provider: playwright(),
+      instances: [{ browser: 'chromium' }],
+    },
+  },
+}
+```
+
+<div class="mt-4 text-xl">Node und vorhandene JSDOM-Projekte bleiben daneben.</div>
+
+<!--
+34:55 bis 36:15.
+
+Nur die relevanten Zeilen des Browser-Projekts zeigen. Vue-Plugin, übrige Projekte und Setup-Dateien stehen im verlinkten vollständigen Beispiel.
+Der Browser-Test importiert render aus vitest-browser-vue, page und userEvent aus vitest/browser.
+Die gezeigten Shop-Beispiele verwenden Vitest 5.0.0 und vitest-browser-vue 3.1.0. Versionen im Repository und dessen Lockfile sind maßgeblich.
+Quelle: /Users/alexanderopalic/Projects/opensource/claw-and-chew/vitest.config.ts
+-->
+
+---
+layout: two-cols-header
+---
+# Der erste Browser-Mode-Test
 
 ::left::
 
 <div class="text-6xl font-700">1</div>
 
-Verschiebe reine Logik nach Node.
+Wähle einen wichtigen Component Test.
 
 <div class="mt-8 text-6xl font-700">2</div>
 
-Migriere einen wichtigen Komponentenablauf.
+Portiere ihn neben den JSDOM-Test.
 
 ::right::
 
@@ -996,14 +801,14 @@ Nutze provider-gesteuerte Interaktionen.
 
 <div class="mt-8 text-6xl font-700">4</div>
 
-Entferne Browser-Mocks, die kein Szenario erzeugen.
+Baue einen echten Defekt ein.
 
 <!--
-40:50 bis 41:50.
+36:15 bis 37:10.
 
-Die Umstellung braucht keinen Big Bang. Beginnt mit einem wichtigen Ablauf, dessen Risiko JSDOM nicht gut abbildet.
+Die Umstellung braucht keinen Big Bang. Beginnt mit einem wichtigen Ablauf und lasst den vorhandenen JSDOM-Test zunächst daneben laufen.
 
-Mocks für fachliche Szenarien dürfen bleiben. Mocks, die Browser-Verhalten erfinden, verdienen besondere Skepsis.
+Nutzt provider-gesteuerte Interaktionen. Brecht danach bewusst das Verhalten, das der Test schützen soll. Ein beobachteter roter Test überzeugt stärker als ein Migrationsdokument.
 
 Quelle: research/raw/2026-02-12-test-angular-components-like-a-real-user.md
 -->
@@ -1011,38 +816,60 @@ Quelle: research/raw/2026-02-12-test-angular-components-like-a-real-user.md
 ---
 layout: statement
 ---
+# Drei Fragen vor dem Merge
 
-# Was soll der Test beweisen?
-
-<div v-click class="mt-10 text-3xl">Wähle danach die kleinste reale Umgebung.</div>
+<div class="mt-10 text-3xl">Kann der Nutzer handeln?</div>
+<div v-click class="mt-6 text-3xl">Stimmen Bedeutung und Bedienung?</div>
+<div v-click class="mt-6 text-3xl">Bleibt die Darstellung korrekt?</div>
 
 <!--
-41:50 bis 42:30.
+37:10 bis 37:40.
 
-Wenn ihr nur einen Satz mitnehmt, dann diese Frage. Was soll dieser Test beweisen?
+Diese Fragen machen die drei Verträge einer Komponente sichtbar.
 
-[click] Erst danach entscheidet ihr über Node, Browser Mode oder eine vollständige End-to-End-Anwendung.
+[click] Accessibility braucht Regeln, Bedeutung und reale Bedienung.
+
+[click] Visuelle Regression prüfen wir gezielt, wenn die Darstellung Teil des Vertrags ist.
+-->
+
+---
+layout: statement
+---
+# Browser Mode<br>für Component Tests
+
+Mein Default.
+
+Reine Logik läuft in Node. Die gebaute Anwendung prüft Playwright End-to-End.
+
+<!--
+37:40 bis 38:00.
+
+Wenn ihr nur einen Satz mitnehmt, dann diesen.
+
+Gerenderte Komponenten starten im Vitest Browser Mode. Wir begründen Abweichungen über die Testgrenze, nicht den Browser über ein außergewöhnliches Risiko.
+
+Vitest selbst empfiehlt Browser Mode für Component Testing. Unsere Reka-Migration erklärt, warum.
+
+Quelle: /Users/alexanderopalic/Projects/opensource/vitest-dev/vitest/docs/guide/browser/component-testing.md
 -->
 
 ---
 layout: end
 hideFooter: true
 ---
+# Welchen Test migriert ihr morgen?
 
-# Fragen?
-
-<div class="mt-10 text-xl opacity-70">alexop.dev</div>
+<div class="mt-10 text-xl opacity-70">Fragen · alexop.dev · Beispiele: claw-and-chew.vercel.app</div>
 
 <!--
-42:30 bis 45:00.
+38:00 bis 45:00.
 
-Danke. Jetzt bleiben zwei bis fünf Minuten für Fragen.
+Danke. Ab Minute 38 bleiben fünf Minuten für Fragen und zwei Minuten Reserve.
 -->
 
 ---
 layout: center
 ---
-
 <div class="text-center">
 
 <div style="font-size:6rem;font-weight:700;line-height:1">53,72 s → 13,59 s</div>
@@ -1064,7 +891,6 @@ Quelle: research/raw/2025-12-14-vue-3-testing-pyramid-vitest-browser-mode.md
 ---
 layout: two-cols-header
 ---
-
 # Pointer Capture
 
 ::left::
@@ -1093,7 +919,6 @@ Quelle: /Users/alexanderopalic/Projects/opensource/claw-and-chew/talk/testing.md
 layout: two-cols-header
 zoom: 0.82
 ---
-
 # Scrollbarer Warenkorb: dieselbe Absicht
 
 ::left::
@@ -1147,7 +972,6 @@ Quellen:
 layout: default
 zoom: 0.9
 ---
-
 # Der unerreichbare Warenkorb
 
 <TestingLabExample example="unscrollable-bag" />
@@ -1160,7 +984,6 @@ Im fokussierten Beispiel zuerst scrollen. Danach den Defekt aktivieren und erneu
 layout: two-cols-header
 zoom: 0.82
 ---
-
 # Responsive Preview: dieselbe Absicht
 
 ::left::
@@ -1216,20 +1039,21 @@ Quellen:
 layout: default
 zoom: 0.9
 ---
-
 # Resize vor dem Drag
 
 <TestingLabExample example="fixed-preview-width" />
 
 <!--
-Zuerst die Preview verkleinern und den Drag ausführen. Danach den Defekt aktivieren, erneut verkleinern und ziehen. Die falsche Berechnung landet bei 53%, 60% statt 75%, 60%.
+Zuerst „Resize preview“, dann „Calculate at 75%, 60%“: 75%, 60%. Alternativ das Maskottchen mit dem Pointer ziehen.
+Danach „Introduce defect“, erneut verkleinern und berechnen: 53%, 60%. Die Berechnung nutzt absichtlich die vor dem Resize gemessene Breite.
+Mit Working zurücksetzen und wiederholen. Die Simulation misst echte Browser-Geometrie, ist aber eine eigenständige Rekonstruktion des Shop-Defekts.
+Quelle: research/raw/2026-09-11-claw-and-chew-talk-examples.md
 -->
 
 ---
 layout: two-cols-header
 zoom: 0.84
 ---
-
 # Hydration braucht die gebaute Anwendung
 
 ::left::
@@ -1287,19 +1111,17 @@ Quellen:
 layout: default
 zoom: 0.9
 ---
-
-# Server und Client widersprechen sich
+# Hydration: die Grenze im Modell
 
 <TestingLabExample example="hydration-mismatch" />
 
 <!--
-Den Defekt aktivieren. Links bleibt nur das T-Shirt im Server-HTML. Rechts erwartet der Client weiterhin alle vier Produkte. Genau diese Grenze kann der direkt gemountete Komponententest nicht enthalten.
+Diese Folie illustriert den Unterschied; sie führt keine Nuxt-Hydration aus. Den Defekt aktivieren. Links bleibt nur das T-Shirt im Server-HTML. Rechts erwartet der Client weiterhin alle vier Produkte. Genau diese Grenze kann der direkt gemountete Komponententest nicht enthalten.
 -->
 
 ---
 layout: two-cols-header
 ---
-
 # Browser Mode ersetzt nicht alles
 
 ::left::
