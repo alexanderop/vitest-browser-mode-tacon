@@ -1,0 +1,22 @@
+.slidev-layout.bg-main {
+  background: var(--brand-bg) !important;
+}
+
+.slidev-layout pre {
+  font-size: 17px !important;
+  line-height: 1.45 !important;
+  background: color-mix(in srgb, var(--brand-bg), black 60%) !important;
+}
+
+.slidev-layout pre code {
+  font-size: inherit !important;
+  line-height: inherit !important;
+}
+
+.slidev-layout pre * {
+  background-color: transparent !important;
+}
+
+.slidev-layout pre .line {
+  filter: brightness(1.4);
+}

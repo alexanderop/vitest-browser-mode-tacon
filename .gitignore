@@ -34,3 +34,4 @@ Thumbs.db
 # Export outputs
 slides-export.pdf
 slides-export/
+artifacts/
