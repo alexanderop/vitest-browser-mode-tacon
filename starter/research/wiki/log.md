@@ -65,3 +65,10 @@ The agent appends entries in this form:
 - Result: new. Added the Testing Trophy as a confidence-versus-cost heuristic and separated that rationale from fixed suite ratios.
 - Wiki: `research/wiki/testing-strategy-by-confidence-and-cost.md`
 - Brief: connected the integration-heavy Browser Mode strategy to the Testing Trophy and recorded the unresolved boundary-mocking question.
+
+## [2026-09-12] ingest | Vitest Simplified
+
+- Raw: `research/raw/2022-02-14-vitest-simplified.md`
+- Result: updated. Added a fast teaching sequence for introducing Vitest before test environments. Kept the 2022 setup and Happy DOM details historical.
+- Wiki: `research/wiki/browser-native-component-testing.md`
+- Deck: replaced the tool-history slide with a short Vitest explanation and added an audience check before it.

@@ -22,6 +22,8 @@ Alexander Opalic's Vue 3 case study pushes this middle layer further. His projec
 
 ## Claims and evidence
 
+- A concise Vitest introduction can establish the runner, the `test` and `expect` API, Vite integration, and watch feedback before introducing environments such as JSDOM or Browser Mode. The 2022 LearnVue video demonstrates this teaching order, although its setup commands and Happy DOM example are historical. [The four-minute video moves from a one-sentence definition to code, watch feedback, and then Vue component tests.](../raw/2022-02-14-vitest-simplified.md)
+
 - The selected Claw & Chew demonstration now includes runnable factory, page-object, and screenshot examples. A deliberate button-color change failed the screenshot comparison while the interaction test passed. Both passed after restoration. The blocked-button verifier also confirmed its baseline, broken, and restored outcomes. [The local execution record names the source and evidence files.](../raw/2026-09-11-claw-and-chew-talk-examples.md)
 
 - The advertised TACON session promises a black-box testing strategy from a production Vue PWA, including data factories, page objects, screenshot comparisons, accessibility feedback, and a reported 70/20/10 suite distribution. These are commitments for the talk, not independent validation of the abstract's performance or accessibility claims. [The user supplied the original conference abstract.](../raw/tacon-2026-original-abstract.md)
@@ -82,6 +84,8 @@ Alexander Opalic's Vue 3 case study pushes this middle layer further. His projec
 - The current primary docs confirm the trace, retry, and headless options shown in the February 2026 video. The Angular CLI, Nx, and Analog integration steps still need a current source before the talk presents them as setup guidance.
 
 ## Sources
+
+- [Automatic transcript and presentation notes for "Vitest Simplified"](../raw/2022-02-14-vitest-simplified.md)
 
 - [Claw & Chew TACON example evidence](../raw/2026-09-11-claw-and-chew-talk-examples.md)
 

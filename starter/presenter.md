@@ -1,6 +1,6 @@
 # TACON presenter guide
 
-The deck is in German. Slides 1–29 contain 40 minutes of material and the question period. Slides 30–33 are backups. Every slide has speaker notes with timing and sources.
+The deck is in German. Slides 1–35 contain 43 minutes of material and the question period. Slides 36–39 are backups. Every slide has speaker notes with timing and sources.
 
 ## Start the presentation
 
@@ -24,15 +24,15 @@ The shop is at `http://127.0.0.1:3080`. The optional interactive testing lab is 
 
 | Slides | Minutes | Topic |
 | --- | --- | --- |
-| 1–3 | 0–4 | Shop and false confidence |
-| 4–6 | 4–9 | Black-box strategy and original case study |
-| 7–10 | 9–14 | Browser Mode and blocked-button demonstration |
-| 11–16 | 14–24 | Purchase flow, scope, validation, pure logic |
-| 17–20 | 24–30 | Factory and page object |
-| 21–23 | 30–34 | Accessible names, focus, contrast |
-| 24–26 | 34–37 | Screenshot comparison |
-| 27–29 | 37–40 | Application boundary and adoption |
-| 29 | 40–45 | Questions |
+| 1–4 | 0–2:45 | Shop, example project, and testing goal |
+| 5–8 | 2:45–4:30 | Audience check, Vitest foundation, configuration, and test levels |
+| 9–13 | 4:30–11 | False confidence and the black-box rule |
+| 14–18 | 11–16:30 | Browser Mode and the blocked-button explanation |
+| 19–25 | 16:30–30 | Purchase flow, scope, factories, page objects, and pure logic |
+| 26–28 | 30–34:30 | Accessible names, focus, and contrast |
+| 29–30 | 34:30–38:50 | Screenshot comparison |
+| 31–34 | 38:50–43 | Application boundary and adoption |
+| 35 | 43–45 | Questions |
 
 ## Preflight
 

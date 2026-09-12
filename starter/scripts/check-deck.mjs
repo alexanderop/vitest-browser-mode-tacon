@@ -9,7 +9,7 @@ const browser = await chromium.launch()
 const page = await browser.newPage({ viewport: { width: 1440, height: 810 } })
 const findings = []
 try {
-  for (let slide = 1; slide <= 33; slide++) {
+  for (let slide = 1; slide <= 35; slide++) {
     await page.goto(`${origin}/${slide}?clicks=99`, { waitUntil: 'networkidle' })
     await page.waitForTimeout(400)
     const result = await page.locator('.slidev-layout').evaluateAll((layouts) => {
@@ -27,7 +27,7 @@ try {
       return { title: layout.querySelector('h1')?.textContent, overflow, brokenImages }
     })
     findings.push({ slide, ...result })
-    if (slide === 22) {
+    if (slide === 24) {
       const video = page.locator('video:visible')
       await video.evaluate(async (element) => { element.muted = true; await element.play() })
       await page.waitForFunction(() => [...document.querySelectorAll('video')].some((video) => video.currentTime > 0))
@@ -35,9 +35,9 @@ try {
     }
     await page.screenshot({ path: `${output}/${slide}.png` })
   }
-  for (let start = 1; start <= 33; start += 6) {
+  for (let start = 1; start <= 35; start += 6) {
     const cards = []
-    for (let slide = start; slide < start + 6 && slide <= 33; slide++) {
+    for (let slide = start; slide < start + 6 && slide <= 35; slide++) {
       const data = await readFile(`${output}/${slide}.png`)
       cards.push(`<div><p>${slide}</p><img src="data:image/png;base64,${data.toString('base64')}" /></div>`)
     }

@@ -106,8 +106,35 @@ Horizontal step/roadmap indicator. Click-driven by default (`clicks: <steps - 1>
 <Steps :steps="['Problem', 'Idea', 'Build', 'Ship']" />
 ```
 
+### HistoryTimeline
+
+Horizontal timeline for short historical sequences. Pass an accessible `label` and an `items` array. Set `tone: 'accent'` on the item that needs emphasis.
+
+```md
+<HistoryTimeline
+  label="Framework history"
+  :items="[
+    { period: '2016', title: 'First release', description: 'The project becomes public.' },
+    { period: '2026', title: 'Today', description: 'The current system.', tone: 'accent' },
+  ]"
+/>
+```
+
 ### Comparison
 Two-panel before/after card with variant-colored borders and headers. Slots: `#left`, `#right` (markdown works — keep blank lines around content). Props: `leftTitle='Before'`, `rightTitle='After'`, `leftVariant='danger'`, `rightVariant='success'`.
+
+### ScreenshotComparison
+
+Three-panel comparison for visual regression output. Pass the expected screenshot, the actual screenshot, and the generated diff. Each image requires alternative text.
+
+```md
+<ScreenshotComparison
+  label="Product card visual comparison"
+  :expected="{ src: '/expected.png', alt: 'Expected product card' }"
+  :actual="{ src: '/actual.png', alt: 'Current product card' }"
+  :diff="{ src: '/diff.png', alt: 'Changed pixels in the product card' }"
+/>
+```
 
 ### VuePlayground
 Embedded Vue playground/REPL (`VuePlayground.vue`).
