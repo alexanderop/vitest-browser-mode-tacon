@@ -21,6 +21,7 @@ The advertised talk presents a black-box testing strategy from a production Vue 
 ## Supporting ideas
 
 - Demonstrate behavior assertions instead of internal refs or method calls.
+- Present the Testing Trophy as the strategic reason to favor integration tests. Treat it as a confidence-versus-cost heuristic, not a prescribed ratio.
 - Explain the project's reported 70 percent integration, 20 percent unit, and 10 percent visual/accessibility distribution as a case study.
 - Show data factories and page objects in a concrete test.
 - Include screenshot comparison for a design-system component and explain the limits of role-based queries for accessibility.
@@ -32,6 +33,7 @@ The advertised talk presents a black-box testing strategy from a production Vue 
 - Runnable factory, page-object, and screenshot examples now live under the shop's `talk/tacon/` directory with `talk/vitest.tacon.config.ts`. The three examples pass. The screenshot demo has baseline, deliberately changed, and diff images in the deck. The original app/tests suites remain separate.
 - The German deck is in `../slides.md`, with timed speaker notes. `../presenter.md` contains the rehearsal guide. Slides 1–29 include 40 minutes of content and questions, followed by four backup slides.
 - Can a controlled current benchmark substantiate the abstract's four-times speed claim? Existing wiki evidence does not establish a general multiplier.
+- Which external boundaries can the browser integration tests replace without creating the same gaps that the Testing Trophy warns about?
 - Does the organizer include questions in the 45-minute slot?
 
 ## Scope boundaries

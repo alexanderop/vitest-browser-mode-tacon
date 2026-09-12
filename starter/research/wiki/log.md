@@ -58,3 +58,10 @@ The agent appends entries in this form:
 - Result: updated. Prepared runnable factory, page-object, and screenshot examples. Verified blocked-button and hydration baseline, broken, and restored outcomes.
 - Wiki: `research/wiki/browser-native-component-testing.md`
 - Deck: `starter/slides.md` now contains the German talk and speaker notes. `starter/presenter.md` contains the rehearsal commands and timing.
+
+## [2026-09-12] ingest | Kent C. Dodds – Write tests. Not too many. Mostly integration.
+
+- Raw: `research/raw/2018-03-05-kent-c-dodds-write-tests-not-too-many-mostly-integration.md`
+- Result: new. Added the Testing Trophy as a confidence-versus-cost heuristic and separated that rationale from fixed suite ratios.
+- Wiki: `research/wiki/testing-strategy-by-confidence-and-cost.md`
+- Brief: connected the integration-heavy Browser Mode strategy to the Testing Trophy and recorded the unresolved boundary-mocking question.
