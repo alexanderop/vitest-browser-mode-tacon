@@ -1,8 +1,14 @@
 # TACON presenter guide
 
-42 Hauptfolien einschließlich Fragen, danach 26 Backup-Folien (43–68). Geplant: 40 Minuten Inhalt und fünf Minuten Fragen. Die zusätzliche Locator-Minute nutzt die bisherige Reserve. Die Browser-Mode-Einführung erhält sechs Minuten; sie ersetzt die bisherige kurze Architektur-Erklärung. Diese Zeiten sind keine gemessene Sprechprobe.
+75 Hauptfolien einschließlich Fragen, danach der Backup-Trenner und 30 Backup-Folien (76–106). Geplant: 40 Minuten Inhalt und fünf Minuten Fragen. Die zusätzliche Locator-Minute nutzt die bisherige Reserve. Die Browser-Mode-Einführung erhält sechs Minuten; sie ersetzt die bisherige kurze Architektur-Erklärung. Diese Zeiten sind keine gemessene Sprechprobe.
 
 Die Geschichte folgt dem Einkauf: Ich will das Plüschtier kaufen. Der Test ist grün, aber der Button funktioniert nicht. Wir erklären und reparieren diesen Widerspruch, prüfen danach den Kaufablauf, die Bedienung und die Darstellung. Nach der Erklärung des Button-Fehlers zeigen wir die drei Verträge als Überblick. Danach vertiefen wir Verhalten, Accessibility und Darstellung in dieser Reihenfolge. Testgrenzen und KI-Auftrag wenden das Gelernte an.
+
+## Einstieg in die drei Kapitel
+
+Zur Vertragsübersicht: „Drei Blickwinkel auf dieselbe Komponente. Für jeden legen wir fest, was ein grüner Test uns versprechen soll.“
+
+Jedes Kapitel beginnt mit Kapitelnummer, Hamcrab und Leitfrage, danach folgt eine kurze Definition am Shop-Beispiel. Die Kapitelfolien ersetzen die bisherigen Übergänge. Die Definitionen jeweils kurz einordnen und direkt zum Beispiel wechseln. Die Blickwinkel überschneiden sich, etwa bei Tastaturverhalten und sichtbarem Fokus.
 
 ## Start und Vorbereitung
 
@@ -14,18 +20,20 @@ Für die einzige Live-Testsequenz im Shop `/Users/alexanderopalic/Projects/opens
 
 | Folien | Zeit | Geschichte |
 | --- | --- | --- |
-| 1–5 | 0:00–3:00 | Testgrundlagen |
-| 6–9 | 3:00–6:00 | Kaputter Button, grüner Test |
-| 10–11 | 6:00–7:00 | Ursache und Gandalf |
-| 12–17 | 7:00–13:00 | Browser Mode formal und technisch einführen |
-| 18–19 | 13:00–16:00 | Browser rot, repariert grün; Verhalten benennen |
-| 20–21 | 16:00–18:30 | Ganzer Kaufablauf |
-| 22–26 | 18:30–23:30 | Tastatur und Bedeutung |
-| 27–31 | 23:30–28:00 | Darstellung und drei Verträge |
-| 32–36 | 28:00–33:00 | Testgrenzen |
-| 37–40 | 33:00–38:30 | KI-Auftrag und Migration |
-| 41 | 38:30–40:00 | Schluss |
-| 42 | 40:00–45:00 | Fünf Minuten Fragen |
+| 1–6 | 0:00–3:00 | Testgrundlagen |
+| 7–13 | 3:00–6:00 | Kaputter Button, grüner Test |
+| 14–17 | 6:00–7:00 | Ursache und Übergang zu Browser Mode |
+| 18–25 | 7:00–13:00 | Browser Mode und Vue-Setup |
+| 26–30 | 13:00–16:00 | Browser findet den Fehler; Verhalten benennen |
+| 31–36 | 16:00–18:30 | Ganzer Kaufablauf |
+| 37–48 | 18:30–23:30 | Tastatur, Bedeutung und axe |
+| 49–59 | 23:30–28:00 | Darstellung |
+| 60–64 | 28:00–33:00 | Hydration, automatische Fixture und Testgrenzen |
+| 65–72 | 33:00–37:00 | KI-Auftrag und sechs Migrationsschritte |
+| 73–74 | 37:00–40:00 | Klickkosten und Schluss |
+| 75 | 40:00–45:00 | Fünf Minuten Fragen |
+
+Die Tabelle enthält historische Foliennummern; maßgeblich sind die Folientitel und der folgende Testgrenzen-Abschnitt. Ältere Detailabschnitte vor den Testgrenzen verwenden teilweise historische Nummern; dort nach Folientitel navigieren. Der gekürzte Testgrenzen-Abschnitt mit Fixture-Tipp bleibt auf fünf Minuten begrenzt; kein zusätzlicher Live-Test.
 
 ## Folien 1–9: Die offene Frage
 
@@ -82,15 +90,19 @@ Die Handlungen im Helper nur in einem Satz erklären; die Assertion bleibt sicht
 
 Quellen im Shop: `talk/tacon/purchase.browser.test.ts`, `shop-page.ts`, `cart-line.ts`, `shipping.unit.test.ts`. Probe bei Bedarf mit `pnpm exec vitest run --config talk/vitest.tacon.config.ts --project browser` beziehungsweise `--project unit`.
 
-## Folien 22–26: Bedienung und Bedeutung
+## Bedienung und Bedeutung: interaktive Demo und ARIA-Snapshot
 
-Übergang auf Folie 22: „Mit unserem Kauf-Test kommen wir zur Bestätigung. Aber wir haben noch nicht geprüft, wie sich die Oberfläche mit der Tastatur bedienen lässt und was ein Screenreader über die Auswahl erfährt.“
+Die Folie „Sichtbar gewechselt. Falsch gemeldet.“ bleibt interaktiv: Tabs bedienen, Defekt umschalten und Knoten im Accessibility Tree inspizieren. Die Kundenkonto-Komponente ist eine Demo-Rekonstruktion, kein implementiertes Konto im Shop.
 
-Folie 23 führt ein ergänzendes Kundenkonto-Szenario ein: „Stellen wir uns vor, unser Shop bekommt ein Kundenkonto.“ Claw & Chew implementiert dieses Konto nicht. Die Tabs-Demo ist eine gekennzeichnete Rekonstruktion aus dem Reka-Vergleichskorpus.
+Die Demo startet mit sichtbarem Password und aktivem Defekt: Account ist als ausgewählt gemeldet. Account anklicken und mit ArrowRight zu Password wechseln. Im Tree den falschen Panel-Namen zeigen. „Defekt aktiv“ ausschalten und den reparierten Zustand zeigen. Danach direkt zum ARIA-Snapshot übergehen.
 
-Account anklicken, dann ArrowRight: Password-Inhalt und Bedeutung stimmen überein. Defekt einbauen: Inhalt bleibt Password, ARIA meldet Account. Die neue Folie „axe automatisch im Browser-Test ausführen“ zeigt den echten Checkout-Test; die Tabs-Demo selbst startet keinen axe-Audit. Folie 25 ergänzt die Erwartungen für Tastatur, Fokus, Bedeutung und Auswahl.
+„Den A11y-Tree als Erwartung speichern“: „Diesen Baum können wir Vitest als Erwartung geben. Rollen, Namen und Zustände werden zu einem lesbaren Snapshot.“ Links steht der geprüfte Sollzustand, rechts die gleiche Tab-Liste als Snapshot. Der Snapshot wird zunächst erzeugt und überprüft; bei späteren Läufen vergleicht Vitest damit. Inline steht er im Test, mit `toMatchAriaSnapshot()` liegt er in einer `.snap`-Datei. Experimentell ab Vitest 4.1.4, laut [offizieller Dokumentation](https://vitest.dev/guide/browser/aria-snapshots).
 
-Folie 26 benennt das Gelernte: den Accessibility-Vertrag dieser Tabs. Keine pauschale Zusage von Barrierefreiheit. axe, Rollenabfragen und ARIA-Snapshots ersetzen keinen vollständigen Audit.
+„Der Snapshot erkennt die falsche Auswahl“: „Wir erwarten Password mit selected. Im Defekt fehlt genau dieser Zustand. Nach der Reparatur erfüllt dieselbe Komponente dieselbe Erwartung.“ Der Ausschnitt setzt den vorher gezeigten Tastaturwechsel voraus und prüft nur die Tab-Liste. Fokus mit `toHaveFocus()` und Panel-Name mit `toHaveAccessibleName('Password')` bleiben zusätzliche Prüfungen. Vollständiger Test und einzelne Assertions stehen im Backup.
+
+Nicht jede Snapshot-Änderung einfach mit `-u` übernehmen: zuerst entscheiden, ob sich die gewünschte Bedeutung geändert hat. Ein erzeugter Snapshot ist nicht automatisch eine korrekte Erwartung. HTML-Wrapper dürfen sich ändern, solange die geprüften semantischen Erwartungen weiter erfüllt sind. Der Snapshot ist ein aus dem DOM abgeleitetes semantisches Modell, keine Screenreader-Aufzeichnung und kein vollständiger Audit. Browser Mode entdeckt den ARIA-Fehler nicht automatisch; auch JSDOM kann diese Attribute prüfen. Details und Quelle: [Research-Synthese](research/wiki/browser-native-component-testing.md), [Guide-Capture](research/raw/2026-09-13-aria-snapshots-guide.md).
+
+Anschließend bleibt der axe-Abschnitt erhalten. Die Tabs-Demo startet keinen axe-Audit. axe, Rollenabfragen und Snapshots ersetzen keinen vollständigen Accessibility-Audit.
 
 ## Folien 27–31: Darstellung und gemeinsames Modell
 
@@ -102,76 +114,72 @@ Folie 30 begrenzt die Auswahl: eigene Core-UI-Zustände und fachliche Kompositio
 
 Folie 31 führt die Namen zusammen: „Wir haben drei verschiedene Erwartungen geprüft: handeln können, richtige Bedeutung und Bedienung, richtige Darstellung.“ Das Bild fasst bekannte Beispiele zusammen. Es eröffnet kein neues Kapitel.
 
-## Folien 32–36: Die Grenze unseres Beweises
+## Testgrenzen: Hydration und automatische Prüfung · fünf Minuten
 
-Folie 32: „Ist damit der ganze Shop getestet?“ Folie 33 zeigt, was der Mount tatsächlich integriert: echte Komponenten und Client-Zustand. Server, Zahlung und Versand bleiben außerhalb.
+Nach Folientiteln navigieren; die folgende Abfolge ersetzt die frühere Erklärung in sieben Schritten.
 
-Folie 34: Unser Nuxt-Shop liefert HTML vom Server. Server-HTML, Hydration und anschließende Interaktion brauchen einen Test der laufenden Anwendung. Der konkrete Hydration-Code steht im Backup.
+**Der Shop ist sichtbar. Jetzt übernimmt Vue. · 1:00:** „Unser Test hat Shop.vue mit seinen echten Komponenten gerendert. Unsere Nutzer öffnen eine URL.“ [Klick 1] „SSR heißt: Der Server erzeugt HTML; der Browser kann den Shop schon anzeigen.“ [Klick 2] „Vue verbindet dieses vorhandene HTML mit Zustand und Event-Handlern. Das nennt man Hydration. Der erste Client-Render muss zum Server-HTML passen.“ [Klick 3] „Unser direkter Mount überspringt diesen Übergang.“ Native Links oder Formulare können vor Hydration funktionieren; keine allgemeine Unbedienbarkeit behaupten.
 
-Folie 35: Nur ein kurzer Transfer zur SPA: Dort kann App.vue die Grenze eines funktionalen UI-Tests sein. Kein zweiter App-Rundgang. Playwright als Browser-Provider ist vom separaten E2E-Runner zu unterscheiden. Reload, Offline-Verhalten, Persistenz und ausgelieferter Build brauchen bei entsprechenden Zusagen passende Prüfungen. Der tatsächliche Workout Tracker hat weiterhin E2E-Tests.
+**Server und Browser müssen zusammenpassen · 0:50:** „Server: Wearables. Client: All the good stuff. Zwei unterschiedliche Startkategorien.“ [Klick] „Der direkte Mount sieht nur den Client-Zustand. Der App-Test öffnet die URL und prüft zusätzlich auf Hydration-Mismatches.“ Rot ist die Diagnostic-Assertion, nicht notwendigerweise der Kauf. Das ist das Erklärmodell des vorbereiteten Defekts, kein neuer Live-Testlauf.
 
-Folie 36 kehrt zum Shop zurück: Browser-Layout, Interaktion und verfügbare Browser-APIs echt lassen, externe Antworten, Zeit und Testdaten gezielt kontrollieren. Übergang: „Diese Entscheidungen kann ich jetzt in einen konkreten Auftrag übersetzen.“
+**Tipp: Hydration-Fehler automatisch prüfen · 1:30:** „Die Seite kann funktionieren und trotzdem einen Mismatch melden. Deshalb höre ich die Konsole mit.“ Fixture in einem Satz definieren: gemeinsamer Aufbau und Abschluss eines Tests. Drei Stellen zeigen: Listener registrieren, `await use()` führt den eigentlichen Test aus, danach gesammelte Meldungen prüfen. `auto: true` aktiviert den Guard für jeden Test, der unser erweitertes `test` importiert; niemand muss die Liste ausdrücklich anfordern. Der Code ist absichtlich auf Vue/Nuxt-Konsole begrenzt. React-Meldungen und `pageerror` wären weitere Signale.
 
-## Folien 37–42: KI-Auftrag und Rückkehr zur Leitfrage
+Vor `page.goto` registrieren. Im Test auf ein verlässliches Client-Bereitschaftssignal warten und einen interaktiven Effekt prüfen. Ein sichtbarer SSR-Titel, `domcontentloaded` oder eine fixe Pause allein beweist keine abgeschlossene Hydration. Bei der Shop-Anwendung den vorhandenen Kaufablauf samt Warenkorb-Assertion verwenden. Später hydrierende Widgets müssen innerhalb des Testablaufs aktiviert und geprüft werden. Im Artikel ist `waitUntil: 'hydration'` Teil eines projektspezifischen goto-Helpers, keine Standardoption von Playwright. Der Beispielcode im Hauptteil wurde nicht als neuer Shop-E2E-Lauf ausgeführt.
 
-Folie 37 liest sich als Auftrag für genau unseren Button: echte Komponenten, Rollen und Namen, provider-gesteuerter Klick, sichtbares Ergebnis, begründete Mocks. Die entscheidende Kontrolle: Button verdecken muss rot werden, Wiederherstellung wieder grün. Ein Browser allein garantiert keine guten Assertions.
+**Dafür behalten wir Playwright-E2E · 1:00:** Drei Beispiele: Serverübergabe; geschützte URL mit Login und Rückkehr; echter Reload mit persistentem Warenkorb und ausgeliefertem Build. Das sind Prüffragen, keine Behauptung, der Demo-Shop besitze bereits eine Anmeldung. „Diese Wege brauchen die laufende Anwendung. Playwright ist unser Werkzeug dafür.“ Auch eine SPA kann zusätzliche Tests für direkte URLs, Persistenz und Offline-Start benötigen. Playwright als Vitest-Provider von seinem separaten E2E-Runner unterscheiden. Nicht die iframe-Isolation zur Ursache der Testlücke erklären.
 
-Übergang zu Folie 38: „Für einen neuen Test kann ich das so formulieren. Und wenn ich eine bestehende Suite migriere?“ Die drei Werkstattbilder erzählen die Anwendung dieses Prinzips: Pilot prüfen, unabhängig reviewen, Anleitung verbessern. Je Bild etwa eine Minute; keine weitere Tool-Einführung.
+**Was bleibt für unseren Shop echt? · 0:40:** Reale Komponenten, Zustand, Layout und Browser-Interaktion; kontrollierte externe Antworten, Zeit und Testdaten. Übergang zum KI-Auftrag.
 
-Folie 41: Zurück zum Plüschtier. „Wir haben festgelegt, was der Klick bewirken muss, die passende Laufzeit gewählt und mit einem Defekt geprüft, ob der Test anschlägt. Diese Struktur gebe ich der KI.“ Die drei Schlusszeilen mit dem bekannten Beispiel verbinden.
+Quellen: [vollständiger Artikel](research/raw/2026-09-13-hydration-playwright-user-article.md), [offizielle Verifikation und Grenzen](research/raw/2026-09-13-hydration-fixture-verification.md), [vorbereiteter Shop-Defekt](research/raw/2026-09-13-nuxt-test-boundaries.md). Die Behauptung, jede ungeprüfte SSR-App habe bereits einen Produktionsfehler, wird nicht übernommen. Offen bleibt ein projektspezifisches Bereitschaftssignal für jede zusätzlich getestete Route.
 
-Folie 42 öffnet die Fragen: „Was soll euer nächster Test beweisen?“
+## Folien 64–70: KI-Auftrag und Rückkehr zur Leitfrage
 
-## Migration: Evidenz und genaue Sprechhinweise
+Folie 64 liest sich als Auftrag für genau unseren Button: echte Komponenten, Rollen und Namen, provider-gesteuerter Klick, sichtbares Ergebnis, begründete Mocks. Die entscheidende Kontrolle: Button verdecken muss rot werden, Wiederherstellung wieder grün. Ein Browser allein garantiert keine guten Assertions.
 
-### Folie 38
+Übergang zu Folie 65: „Für einen neuen Test kann ich das so formulieren. Und wenn ich eine bestehende Suite migriere?“ Die drei Werkstattbilder erzählen die Anwendung dieses Prinzips: Pilot prüfen, unabhängig reviewen, Anleitung verbessern. Je Bild etwa eine Minute; keine weitere Tool-Einführung.
 
-Dauer: etwa 50 Sekunden. Übergang: Und wenn ihr schon viele jsdom-Tests habt?
-In meinem Reka-UI-Fork habe ich zuerst Browser Mode neben jsdom eingerichtet und Vergleichsprüfungen gebaut. Dann drei unterschiedliche Dateien verstanden: Slider, useForwardExpose und Label. Das sind drei Pilotdateien, nicht nur drei einzelne it-Blöcke.
-Der Slider ist der konkrete Beleg: setPointerCapture entfernen. Laut historischem Commit wird der Browser-Test rot, während der jsdom-Test grün bleibt. Anschließend den Defekt zurücknehmen. Die Zeichnung übersetzt diesen Versuch in ein sichtbares Kabel; sie zeigt keinen tatsächlichen Testlauf.
-Die einfachen Tests ohne DOM gingen nach Node. Bestehende jsdom-Dateien blieben zum Vergleich erhalten.
-Quellen: research/raw/2026-09-12-reka-migration-git-history.md; Commits bd93d9b1, f050ec36, cb8fd28c, 657fb236, 9d66767d. Historische Ergebnisse, heute nicht erneut ausgeführt.
+Folie 68 ordnet die lokalen Klickkosten ein. Die zusätzliche Arbeit eines echten Klicks erklären; die Zahlen nicht als allgemeinen Benchmark verwenden.
 
-### Folie 39
+Folie 69: Zurück zum Plüschtier. „Wir haben festgelegt, was der Klick bewirken muss, die passende Laufzeit gewählt und mit einem Defekt geprüft, ob der Test anschlägt. Diese Struktur gebe ich der KI.“ Die drei Schlusszeilen mit dem bekannten Beispiel verbinden.
 
-Dauer: etwa 50 Sekunden.
-Ein Agent bekam genau eine Datei. Ein zweiter bekam Original und Port, ohne vorher die Erklärung des ersten zu lesen. Sein Auftrag: Prüft der Test noch dasselbe Verhalten? Welche Assertion wurde schwächer? Würde der Test auch ohne funktionierendes Feature bestehen?
-Checkliste, Testnamen und Assertion-Anzahl sowie Coverage wurden automatisch verglichen. Diese Prüfungen erkennen bestimmte Verluste, aber gleiche Zahlen beweisen keine gleich starken Assertions. Deshalb unabhängiges Review und gezielte Defekte.
-Das fehlende Puzzleteil ist eine didaktische Metapher für den dokumentierten Fehlermodus, kein Screenshot eines konkreten Agentenfehlers. Keine pauschale Aussage über alle KI-Tests.
-Quellen: research/raw/2026-09-12-reka-ai-migration.md, PORT-PROMPTS.md Implementer und Reviewer; research/raw/2026-09-12-reka-migration-git-history.md, Commit 675792e3.
+Folie 70 öffnet die Fragen: „Was soll euer nächster Test beweisen?“
 
-### Folie 40
+## Migration: sechs Schritte im Code-Editor
 
-Dauer: etwa 50 Sekunden.
-Die wiederverwendbaren Aufträge habe ich nach den ersten Versuchen in PORT-PROMPTS.md festgehalten. Neue Erkenntnisse kamen in die Prompts und AGENTS.md. Der nächste Agent erhielt diese Dateien als Kontext; das ist keine automatische Änderung des Modells.
-Auch die Anleitung wurde überprüft: Eine Behauptung über Teleport-Abfragen war falsch und wurde nach einem späteren Batch korrigiert. Regeln brauchen Belege.
-Kleine Batches, laut PORTING.md drei gleichzeitig arbeitende Agenten. Abschluss der Migration: 87 Browser-Zieldateien und 10 Node-Dateien. Danach folgte eine eigene Qualitätsphase mit stärkeren echten Interaktionen. Kein Versprechen über Zeitersparnis.
-Merksatz: Ich gebe der KI eine geprüfte Anleitung, einen kleinen Auftrag und eine unabhängige Kontrolle.
-Quellen: research/raw/2026-09-12-reka-migration-git-history.md; Commits 675792e3, 8829a1bb, 12d75a3b, 864db198. research/raw/2026-09-12-reka-ai-migration.md.
+Folie 66 zeigt zuerst die Übersicht: 97 Dateien, zwei Testziele, Migration mit Review und Projekt-Memory. Den Loop betonen: Erkenntnisse in AGENTS.md und Prompts festhalten; der nächste Agent liest und nutzt sie. Verbessert werden die gespeicherten Anweisungen und der Arbeitsablauf, nicht automatisch die Modellgewichte. Dann folgen die Code-Editoren auf 67–72, zusammen etwa drei Minuten. Pro Schritt einen kurzen Gedanken erklären. Die Ausschnitte sind für die Folien gekürzt und nicht als vollständige Dateien ausführbar. Auf 67 ergänzt ein Klick das Browser-Projekt; auf 68 wechselt ein Klick vom Original zum Browser-Test einschließlich aktivem Tab. Auf 69–71 heben weitere Klicks die relevanten Zeilen hervor. Auf 72 steht eine redaktionelle Inventar-Zusammenfassung, keine Terminalaufnahme.
+
+1. **Browser Mode parallel einrichten:** Reka-UI-Fork mit 97 jsdom-Testdateien. Bereits beim Setup gab es Inventar, Strukturvergleich und Coverage-Prüfung. Commit `bd93d9b1`.
+2. **Slider migrieren:** 39 Tests portiert, Browser-Mocks entfernt. Beim gezielten Entfernen von `setPointerCapture` wurde der Browser-Test rot, während der jsdom-Test grün blieb. Commit `f050ec36`.
+3. **Reine Logik nach Node:** Zehn Dateien ohne DOM erhielten ein eigenes Node-Projekt. Danach weitere Pilotdateien: useForwardExpose und Label. Commits `cb8fd28c`, `657fb236`, `9d66767d`.
+4. **Migration und Review:** Ein Agent pro Datei, unabhängiger Reviewer mit Original und Port. Gleiche Test- und Assertion-Zahlen beweisen keine gleich starken Erwartungen; deshalb zusätzlich Review und gezielte Defekte.
+5. **Anleitung verbessern:** Nach ersten Versuchen und Batches wiederverwendbare Prompts festgehalten. Erkenntnisse und Korrekturen in die Anweisungen übernommen, darunter die falsche Teleport-Regel. Commits `675792e3`, `8829a1bb`.
+6. **Ergebnis:** 87 Browser-Gegenstücke und zehn Node-Dateien. jsdom-Originale als Vergleich behalten. Nach dem Migrationsabschluss folgte weitere Qualitätsarbeit. Commits `12d75a3b`, `864db198`.
+
+Quellen: [Git-Chronologie](research/raw/2026-09-12-reka-migration-git-history.md) und [Prompts und Prüfablauf](research/raw/2026-09-12-reka-ai-migration.md). Checkout und Git am 13. September erneut gelesen. Historische Testergebnisse nicht erneut ausgeführt. Keine Aussage über aktive Arbeitsdauer oder KI-Zeitersparnis.
 
 ## Backup nach Frage auswählen
 
 | Folien | Vertiefung |
 | --- | --- |
-| 43 | Backup-Trenner |
-| 44 | Page Object: Handlungen bündeln, Assertion im Test |
-| 45–47 | Scroll-Codevergleich, unerreichbarer Warenkorb, Resize-Demo |
-| 48 | Fachlicher Ablauf und öffentlicher Komponentenvertrag |
-| 49 | Nuxt-Test vom Server-HTML zum Warenkorb |
-| 50–51 | SPA-Root-Mount und echte Workout-Scroll-Komponente |
-| 52–53 | Entscheidungsmodell und drei Review-Fragen |
-| 54 | Historische PWA-Zeitmessung, kein allgemeiner Benchmark |
-| 55–58 | Weitere vorbereitete Shop-Defekte |
-| 59–61 | Private Refs, Factory und überlappende Erwartungen |
-| 62–63 | Pointer Capture und Resize-Codevergleich |
-| 64–66 | Hydration-Vergleich, Rekonstruktion und Browser-Mode-Grenzen |
-| 67–68 | JSDOM/Browser-API-Vergleich und Konfiguration |
+| 71 | Backup-Trenner |
+| 72–77 | Drei Verträge und vollständige ARIA-Beispiele |
+| 78–80 | Scroll-Codevergleich, unerreichbarer Warenkorb, Resize-Demo |
+| 81 | Fachlicher Ablauf und öffentlicher Komponentenvertrag |
+| 82 | Nuxt-Test vom Server-HTML zum Warenkorb |
+| 83–84 | SPA-Root-Mount und echte Workout-Scroll-Komponente |
+| 85–86 | Entscheidungsmodell und drei Review-Fragen |
+| 87 | Historische PWA-Zeitmessung, kein allgemeiner Benchmark |
+| 88–91 | Weitere vorbereitete Shop-Defekte |
+| 92–94 | Private Refs, Factory und überlappende Erwartungen |
+| 95–96 | Pointer Capture und Resize-Codevergleich |
+| 97–99 | Hydration-Vergleich, Rekonstruktion und Browser-Mode-Grenzen |
+| 100–101 | JSDOM/Browser-API-Vergleich und Konfiguration |
 
 Die Workout-Demo verwendet die lokal kopierte `src/components/ScrollFadeContainer.vue`: zum Ende scrollen, zurück zum Anfang, dann verbreitern. Verläufe verschwinden ohne Überlauf. Die Resize-Rekonstruktion ergibt im funktionierenden Zustand 75%, 60%, mit Defekt 53%, 60%; die echte Shop-Aufnahme hat andere Geometrie. Rekonstruktion und Aufnahme nicht gleichsetzen.
 
 ## Kürzen bei Zeitverlust
 
-Den Button immer vollständig auflösen. Danach zuerst Erläuterungen zur Screenshot-Auswahl und den SPA-Vergleich kürzen. Keine Backup-Demos spontan in den Hauptteil ziehen. Spätestens Minute 32 zum KI-Auftrag wechseln. Die drei Migrationsbilder lassen sich auf je einen Satz kürzen. Fragen möglichst bei Minute 39, spätestens bei Minute 40 öffnen.
+Den Button immer vollständig auflösen. Danach zuerst Erläuterungen zur Screenshot-Auswahl und den SPA-Vergleich kürzen. Keine Backup-Demos spontan in den Hauptteil ziehen. Spätestens Minute 33 zum KI-Auftrag wechseln. Die sechs Migrationsschritte lassen sich auf je einen Satz kürzen. Fragen möglichst bei Minute 39, spätestens bei Minute 40 öffnen.
 
 ## Quellen und Illustrationen
 
@@ -181,7 +189,7 @@ Die Aufzeichnungen nennen für die Shop-Beispiele Vitest 5.0.0 und vitest-browse
 
 Sprechhinweise und detaillierte Quellen stehen in diesem Dokument, nicht in `slides.md`. Hamcrab-Bilder sind Illustrationen, keine Ausführungsergebnisse. Shop-Screenshot-Diffs stammen aus dem vorbereiteten Versuch.
 
-Bildprompts: `../output/imagegen/testing-basics-prompts.json`, `frontend-components-one-mount-prompt.md`, `plush-purchase-intro-prompt.md` und `hamcrab-migration-prompts.json` im selben Verzeichnis. Folie 3 zeigt einen didaktischen Komponentenbaum, keine exakte Demo-Implementierung. Die Pfeile zeigen den Verhaltensfluss über gemeinsamen Zustand. Folie 6 illustriert die Kaufabsicht anhand einer Shop-Referenz. Folien 38–40 zeigen die Migration als Metapher; „lernt mit“ bedeutet verbesserte Projektanweisungen, kein Modelltraining.
+Bildprompts: `../output/imagegen/testing-basics-prompts.json`, `frontend-components-one-mount-prompt.md`, `plush-purchase-intro-prompt.md` und `hamcrab-migration-prompts.json` im selben Verzeichnis. Folie 3 zeigt einen didaktischen Komponentenbaum, keine exakte Demo-Implementierung. Die Pfeile zeigen den Verhaltensfluss über gemeinsamen Zustand. Folie 6 illustriert die Kaufabsicht anhand einer Shop-Referenz. Die Migrationsfolien enthalten jetzt ausschließlich editierbaren Text.
 
 
 ## Ergänzung im Visual-Teil: GitHub Actions (ca. 60–90 Sekunden)
@@ -194,3 +202,46 @@ Nach „Ein Screenshot für einen konkreten Vertrag“ die beiden CI-Folien zeig
 ## axe-Codefolie: Checkout statt Tabs
 
 Nach dem ARIA-Snapshot den vorhandenen Checkout-Test zeigen. axe wird explizit importiert und aufgerufen; pnpm test:browser führt den Check automatisch mit aus. Browser-Setup lädt die echte Shop-CSS. Im gezeigten Auszug ist color-contrast bewusst die einzige Regel. Das Original prüft zusätzlich, dass diese Regel tatsächlich Knoten ausgewertet hat. Der aktuelle lokale Chromium-Lauf war grün; mit injiziertem low-contrast-notice-Defekt meldete dieselbe Assertion color-contrast. Keine Behauptung eines vollständigen Audits oder eines bereits ausgeführten Hosted-CI-Laufs. Tastatur, Fokus und produktspezifische Tab-Bedeutung bleiben eigene Assertions.
+
+## Was kostet ein echter Klick?
+
+Platzierung: nach „Der nächste Agent lernt mit“, vor „Wir definieren, was grün bedeutet“. Etwa eine Minute.
+
+„Bei element.click() in jsdom löse ich direkt ein Klick-Event aus. Dafür muss keine Maus den Button erreichen. Playwright prüft beim locator.click(): Ist der Button sichtbar und aktiviert? Empfängt er Mausereignisse oder liegt etwas darüber? Bewegt er sich noch? Für die Stabilität müssen Position und Größe in zwei aufeinanderfolgenden Animationsframes gleich bleiben. Diese Wartezeit vergeht auch auf einem schnellen Rechner. In meiner Messung waren das ungefähr 18 Millisekunden. Danach werden Mausbewegung, Drücken und Loslassen über den Browser gesteuert. Die Kommunikation mit dem Browserprozess und die Verarbeitung der Eingaben kosten ebenfalls Zeit. Insgesamt waren es ungefähr 26 Millisekunden pro Klick. Viele Interaktionen summieren sich: Meine gesamte Suite brauchte etwa 13 Prozent länger.“
+
+Quelle: [lokal erfasste PERFORMANCE.md](research/raw/2026-09-13-reka-click-performance.md), Abschnitte 1–4. Historische Messung, hier nicht wiederholt: M4 Pro, Chromium headless, Vitest 4.1.10. Suite: Median aus drei Läufen; 87 jsdom-Dateien gegenüber 87 Portierungen plus zwei Browser-Harness-Dateien. Die Mikrobenchmarks nutzen Schleifen mit 20–50 Operationen. jsdom-Vergleich ausdrücklich element.click(), nicht Testing Library userEvent.click(). Die 18 ms sind die gemessene Differenz zwischen normalem und erzwungenem Klick; force überspringt mehrere Actionability-Prüfungen, die Zuordnung zur Stabilität wird durch die separate Zwei-Frame-Messung gestützt. force ist hier ein Diagnosevergleich, keine Empfehlung zum Beschleunigen der Tests. Geringere Setup-Kosten gleichen einen Teil der teureren Interaktionen aus; die 13 Prozent lassen sich nicht allein aus einem Klick hochrechnen.
+
+
+## Black-Box-Einschub nach der Verhalten-Definition (ca. 30 Sekunden)
+
+„Mit Black Box meine ich: Mein Test bedient die Komponente von außen. Er klickt auf ‚In den Warenkorb‘ und prüft, ob das Plüschtier dort erscheint. Ob intern ein ref, ein Store oder eine andere Funktion dahintersteckt, ist für diesen Test egal. So kann ich die Implementierung umbauen, solange das erwartete Verhalten gleich bleibt.“
+
+White-Box-Gegenpol nur mündlich: „Wenn ich direkt addToCart() aufrufe, weiß ich noch nicht, ob der Button überhaupt funktioniert.“ Übergang: „Dasselbe Prinzip gilt für die ganze Bestellung.“
+
+Quelle: [eigener Blogartikel](research/raw/2025-04-19-stop-white-box-testing-vue.md). Black Box beschreibt die Teststrategie; auch der frühere JSDOM-Test arbeitet von außen. Die neue Folie ergänzt die obige, noch nicht neu eingeprobte Zeitplanung um etwa 30 Sekunden.
+
+
+## Editor-Sequenz: Bestellung → Page Object → Factory
+
+Nach „Vom Klick zur ganzen Bestellung“, etwa 2–3 Minuten.
+
+1. **Direkter Test:** Die Bestellung einmal lesen. Erster Klick markiert die beiden Kundeneingaben: „Diese Schritte gehören zusammen.“ Zweiter Klick markiert die Assertion: „Dieses Ergebnis muss beim Umbau gleich bleiben.“
+2. **Page Object:** Erster Klick bündelt die Eingaben in `enterCustomer()`. Zweiter Klick zeigt die weiteren Handlungen und den Bestätigungs-Locator. „Ein Page Object bündelt die Bedienung. Eine Klasse brauchen wir dafür nicht.“ Der Ausschnitt verwendet den `render`-Import aus `shop-page.ts`.
+3. **Factory:** Rendern und Rückgabe erklären; dann zum Test wechseln. „Eine Factory ist eine Funktion, die ein Objekt erzeugt und zurückgibt. Hier bereitet `renderShop()` die Oberfläche und ihre Bedienung vor.“ Das ist eine Setup-Factory; eine Testdaten-Factory wäre ein separater Anwendungsfall.
+4. **Fertiger Test:** Handlungskette, dann Assertion hervorheben. „Wir ändern die Struktur. Die Bestellung und das erwartete Ergebnis bleiben gleich.“ Lesbarkeit und Wiederverwendung verbessern sich; die Assertion bestimmt weiterhin, welches Verhalten abgesichert wird.
+
+Die Editor-Schritte sind vorbereitete Code-Ausschnitte, keine ausführbare Testumgebung. Sie zerlegen den bestehenden `talk/tacon/shop-page.ts` aus Claw & Chew didaktisch in `createShopPage(screen)` und `renderShop()`. Button-Namen, Handlungen und Assertion bleiben gleich. Die frühere Page-Object-Backupfolie ist in diese Hauptsequenz integriert.
+
+
+## Was prüft axe?
+
+Direkt nach „axe: automatische Regeln, echte Browserdaten“. axe-core ist die Regelbibliothek; Vitest führt den Test aus. Namen, Labels und gültige ARIA-Attribute brauchen oft nur den DOM. Farbkontrast benötigt echte Renderingdaten und geladene Styles. Das ist kein exklusives Vitest-Feature: axe kann auch in anderen echten Browser-Testumgebungen laufen. JSDOM ist nur eingeschränkt unterstützt; die Tabelle zeigt Beispiele, keine vollständige Kompatibilitätsliste.
+
+Referenz: Reka UI AlertDialog. Der dokumentierte JSDOM-Audit prüft reale Knoten (unter anderem Dialog- und Buttonnamen). Chromium findet zusätzlich den Kontrastfehler des Aktionsbuttons. Die Migrationsnotizen nennen 4,07:1 gegenüber 4,5:1. Diese historischen Messwerte wurden für diese Folie nicht erneut ausgeführt. Fehlende Kontrastbefunde sind kein bestandener Kontrastcheck: je nach Zustand steht die Regel in incomplete oder inapplicable. Auch im Browser können Befunde unentscheidbar bleiben. Eigene Tastatur-, Fokus- und Zustandsassertions ergänzen axe.
+
+Quellen: [Recherche und lokale Belege](research/raw/2026-09-13-axe-rule-scope.md), [axe-core](https://github.com/dequelabs/axe-core), [Regelübersicht](https://github.com/dequelabs/axe-core/blob/develop/doc/rule-descriptions.md).
+
+
+## Ergänzung: Button-Varianten gemeinsam absichern
+
+Nach „Ein Screenshot für einen konkreten Vertrag“ folgen drei Folien: Galerie, Fixture/Test, fehlende Variante. Etwa 90 Sekunden: „Unsere eigenen Basis-Komponenten haben viele Varianten. Ich rendere eine bewusst ausgewählte Matrix und fotografiere den gesamten Container. Verschwindet der bereits freigegebene Outline-Button im Disabled-Zustand, weicht das Bild ab. Eine nie eingetragene Variante kann dieser Test nicht erraten.“ Die drei Ansichten sind als schematischer Vergleich gekennzeichnet, keine aufgezeichnete Vitest-Ausgabe. Das Vue-Beispiel kürzt Beschriftungen und Layout; BaseButton steht für die eigene Designsystem-Komponente. Der gezeigte Matcher braucht das bereits erklärte Browser-Projekt mit Playwright und festem Viewport. Vitest 5 übernimmt Aufnahme und Bildvergleich; der alte Artikel brauchte dafür einen Base64-Workaround. Erstes Referenzbild prüfen und committen; Updates bleiben bewusste Reviews. Quellen: [API und redaktionelle Grenzen](research/raw/2026-09-13-vitest-5-button-variants.md). Die zusätzliche Zeit ist noch nicht durch eine Sprechprobe bestätigt.

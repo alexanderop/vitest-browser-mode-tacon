@@ -178,3 +178,110 @@ Added an Excalidraw-style generated diagram immediately before the axe test. It 
 ## Vertragsbild vor die Detailkapitel verschoben
 
 Auf Nutzerwunsch steht die bestehende Hamcrab-Übersicht jetzt nach der Erklärung des Browser-Fehlers und vor dem Verhaltensvertrag. Die bisherige Zusammenfassungsfolie am Ende der drei Kapitel entfällt. Brief und Presenter-Einstieg entsprechend angepasst; Bild unverändert.
+
+## 2026-09-13 — Blocked-button diff and terminal playback
+
+Added the editable CSS diff, actual timed JSDOM process recording with the defect active in an isolated copy, and fictional 02:00 oncall illustration. Source: [recording evidence](../raw/2026-09-13-blocked-button-terminal.md).
+
+## [2026-09-13] maintenance | Interactive Vue Browser Mode setup
+
+- Raw: `research/raw/2026-09-13-vue-browser-setup.md`
+- Result: updated. Added three interactive setup slides after the provider diagram; verified the final example in a fresh Vue/Vite project with Chromium.
+- Wiki: `research/wiki/browser-native-component-testing.md`
+
+## [2026-09-13] ingest | Browser Mode source audit
+
+- Raw: `research/raw/2026-09-13-vitest-source-audit.md`
+- Result: updated. Confirmed architecture and provider/locator semantics; corrected text matcher, awaited SPA render, image type narrowing and overlay alt text. Recorded the pinned version and newer live-documentation boundary.
+- Wiki: `research/wiki/browser-native-component-testing.md`, `research/wiki/index.md`
+
+
+## 2026-09-13: Einheitliche Vertragskapitel
+
+Akzeptierte Gliederung in `slides.md` umgesetzt: jedes Vertragskapitel beginnt mit Kapitel und Definition, gefolgt von den bestehenden Shop-Beispielen. Übergangsfragen integriert und Kapitelanzeige ergänzt. Begriffe und Evidenz bleiben bei der bestehenden Synthese in [Browser-native component testing](browser-native-component-testing.md). Entscheidung im [Brief](../brief.md#kapitelstruktur-2026-09-13) festgehalten.
+
+## [2026-09-13] ingest | Claw & Chew Browser UI screenshot
+
+- Raw: `research/raw/2026-09-13-browser-ui-screenshot.md`
+- Result: updated. User references led to a real Chromium run and Browser UI screenshot, now shown after the architecture diagram.
+- Wiki: `research/wiki/browser-native-component-testing.md`
+
+## [2026-09-13] ingest | Reka UI click performance
+
+- Raw: `research/raw/2026-09-13-reka-click-performance.md`
+- Result: updated. Added local slowdown counterexample and click stability explanation after migration.
+- Wiki: `research/wiki/browser-native-component-testing.md`
+
+
+## 2026-09-13: Black-box behavior interlude
+
+Ingested the author-supplied article from its matching local blog MDX source. Added a one-slide cart interaction / opaque component / observable cart result explanation immediately after the behavior definition. Keep refactoring claims conditional on an unchanged contract; do not equate black-box testing with Browser Mode or mandatory mocks. Open question: no canonical public URL was verified.
+
+
+## 2026-09-13 — Purchase test editor sequence
+
+- Result: editorial update using existing sources. Added prepared editor steps from direct browser actions through a page object and setup factory to the unchanged purchase assertion. Moved the backup explanation into the main sequence.
+- Rechecked the local shop helper named in [the execution record](../raw/2026-09-11-claw-and-chew-talk-examples.md); this change adds no new execution claim.
+
+## 2026-09-13 — Visual Tabs explanation
+
+Preserved the interactive tabs demo and accessibility tree. Replaced the following five code-heavy slides with four editable diagrams and one assertion excerpt; moved original code examples into backup. Recorded the accepted scope and runtime caveat in [the brief](../brief.md#visuelle-tabs-erklärung-2026-09-13). No new factual claims or source ingestion.
+
+## 2026-09-13 — Restore ARIA snapshots to the main story
+
+Ingested the [complete official guide](../raw/2026-09-13-aria-snapshots-guide.md) corresponding to the user's excerpt. Added a tree-to-snapshot diagram and compact tabs snapshot to the main accessibility chapter, replacing the three-assertion slide (now in backup). Kept the live tabs/tree component and four visual explanations intact. Updated the browser-native synthesis with the experimental 4.1.4 label, review workflow, focus/panel scope, and DOM-derived tree caveat. New value: explicitly teach how Vitest stores and compares the semantic expectation. No unresolved source question blocks the basic example; detailed matching and retry semantics remain version-sensitive and outside the main slides.
+
+
+## 2026-09-13 — Explain Nuxt test entry points through one shop story
+
+- Raw: `research/raw/2026-09-13-nuxt-test-boundaries.md`
+- Result: updated. Replaced two abstract comparison slides with five connected explanations, generated one recurring Hamcrab illustration, and kept labels and paths editable.
+- Inspected the prepared category mismatch and E2E diagnostic assertion in the shop without modifying it. Clearly separated the explanatory model from live test evidence.
+- Updated presenter guidance for slides 56–70 and retained five minutes for test boundaries.
+
+
+## 2026-09-13 — Compare jsdom debugging with the Browser UI
+
+Added one slide immediately after the Claw & Chew Browser UI screenshot, with `screen.debug()`, an illustrative DOM excerpt and `screen.logTestingPlaygroundURL()`. Verified the official API documentation and published markup-export implementation. Preserved the distinction between Playground HTML preview/query help and a running Vue component with application CSS. Evidence: [debugging verification](../raw/2026-09-13-testing-library-debugging.md).
+
+
+## 2026-09-13 — Show the Browser Mode test and actual click failure
+
+Added two slides after the browser-finds-the-error explanation: the current ProductCard test and a shortened existing Chromium failure. Captured the original test and ANSI-cleaned log in [local evidence](../raw/2026-09-13-blocked-button-browser-error.md). Explicitly distinguished recorded evidence from a new execution.
+
+
+## 2026-09-13 — axe rule scope
+
+Added one explanatory slide after the axe diagram. Captured official axe scope documentation and local Reka AlertDialog migration records in [axe rule scope](../raw/2026-09-13-axe-rule-scope.md). Distinguished DOM rules, rendering-dependent contrast and explicit interaction assertions; no migration tests rerun.
+
+
+## 2026-09-13 — Button variants in one visual reference
+
+Ingested the user-supplied visual regression article and checked the current official matcher documentation. Retained the story-gallery idea, replaced the historical Base64 approach with native screenshot comparison, and added three slides after the ProductCard example. The editable Vue gallery and schematic comparison explain missing captured variants and the limits of fixture coverage. [Evidence](../raw/2026-09-13-vitest-5-button-variants.md).
+
+
+## 2026-09-13 — Shorten Nuxt boundaries and automate hydration diagnostics
+
+Ingested the complete user manuscript [Hydration errors in Playwright](../raw/2026-09-13-hydration-playwright-user-article.md). Replaced seven boundary slides with four: SSR/hydration, prepared defect, automatic fixture, further E2E examples. Kept the shop illustration and mismatch; added fixture lifecycle and readiness guidance to the presenter guide. Verified official Playwright automatic-fixture and hydration guidance. Omitted unsupported prevalence and exhaustive-coverage claims. No new run of the external shop defect.
+
+Validation: `pnpm research:check` and `pnpm build` passed. Chromium deck check on the production preview completed for all 102 slides with no reported layout problems. Interactive demo checks passed on the same preview. Inspected the four changed slides visually. The initial demo check on the shared development server timed out during resize; the completed preview run passed. The isolated fixture probe passed without diagnostics and deliberately failed in teardown when a Vue hydration message was emitted.
+
+## 2026-09-13 — Replace Reka migration illustrations with steps
+
+Rechecked the local Reka checkout at `ab4207bf`, the migration commit sequence, and `PORTING.md` against the existing [Git capture](../raw/2026-09-12-reka-migration-git-history.md). No material new factual evidence. Replaced three image slides with six plain text steps at the user’s request and updated the synthesis and presenter guidance. Historical Reka test results were not rerun.
+
+## 2026-09-13 — Show the migration in the existing editor
+
+Replaced the six bullet layouts with the deck’s code editor at the user’s request. Rechecked `packages/core/vite.config.ts`, `Slider.test.ts` and `Slider.browser.test.ts` in the Reka checkout. Shortened excerpts demonstrate parallel projects, mount/render and the default-value assertion, then Node extraction. Existing documented commands and prompts support the last steps. The inventory is explicitly a summary. No Reka test execution or new performance claim.
+
+## 2026-09-13 — Add a migration overview before the editors
+
+Added an editable SVG overview in a hand-drawn style, requested by the user. It shows the 97-file starting point, 87 browser destinations, ten Node files, independent review and feedback into the instructions. Uses the existing [migration evidence](../raw/2026-09-12-reka-migration-git-history.md); no new factual claim or execution result.
+
+## 2026-09-13 — Emphasize project memory in the migration loop
+
+Added six small editable outline icons and made the feedback loop explicit: review findings enter project memory (`AGENTS.md` and prompts); subsequent agents read and apply the improved instructions. This describes persisted context and workflow improvements, not automatic model training.
+
+## 2026-09-13 — Introduce Reka UI before the migration
+
+Preserved the [user-supplied screenshot](../raw/2026-09-13-reka-ui-overview-image.md) and added an image slide immediately before the migration overview. No material new research claims; the image supports the presenter’s introduction of Reka UI.

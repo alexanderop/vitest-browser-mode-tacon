@@ -15,7 +15,7 @@ try {
     await page.goto(`${origin}/${slide}?clicks=99`, { waitUntil: 'networkidle' })
     await page.waitForTimeout(500)
     await page.evaluate(() => document.fonts.ready)
-    const result = await page.locator(`[data-slidev-no="${slide}"] .slidev-layout`).evaluate((layout) => {
+    const result = await page.locator(`[data-slidev-no="${slide}"] :is(.slidev-layout, .editor-window)`).evaluate((layout) => {
       const bounds = layout.getBoundingClientRect()
       const overflow = [...layout.querySelectorAll('h1, h2, p, pre, table, img, video, li, .contract__title, .screenshot-comparison, .lab-example')]
         .filter((element) => {

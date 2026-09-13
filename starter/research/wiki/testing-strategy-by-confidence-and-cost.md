@@ -2,6 +2,14 @@
 
 ## Current synthesis
 
+A hand-drawn-style overview now precedes the Reka editors: 97 originals split into 87 browser destinations via migration and review, and ten Node files; review findings feed corrected instructions for the next port. The originals remain as a comparison corpus. This is an editable schematic of the documented workflow, not a captured execution.
+
+The Reka migration section now uses six editable code-editor slides at the user’s request: parallel setup and early checks; the Slider pilot; Node extraction and further trials; per-file migration with independent review; persisted and corrected instructions; complete browser/Node destinations with originals retained. The existing editor layout now shows abbreviated configuration and Slider code, check commands, translated prompt excerpts and an explicitly summarized inventory. Clicks switch the Slider file tab and highlight the relevant lines. This replaces the three illustrated metaphors and supersedes the initial plain bullet layout. Git HEAD `ab4207bf` and the milestone commit messages were rechecked locally on 2026-09-13; historical test results were not rerun. [Chronology](../raw/2026-09-12-reka-migration-git-history.md) and [documented prompts](../raw/2026-09-12-reka-ai-migration.md).
+
+The Nuxt section now uses four slides: explain SSR and hydration, demonstrate the prepared category mismatch, show an automatic Playwright fixture, then give additional running-application checks (authentication redirects, direct URLs, reload and built assets). This supersedes the five-step startup explanation. The useful distinction is the test entry point, not iframe versus real browser. [User-supplied article](../raw/2026-09-13-hydration-playwright-user-article.md) and [prepared shop defect](../raw/2026-09-13-nuxt-test-boundaries.md).
+
+The article contributes console collection and reusable fixtures. The slide adapts this into an automatic fixture with a teardown assertion, scoped explicitly to Vue/Nuxt diagnostic strings. Tests must import the extended test and await meaningful app readiness/interaction. A visible SSR heading or DOMContentLoaded alone does not prove hydration finished. Do not copy the article's claims that most bugs have particular causes, every settings combination was tested, or every unchecked SSR app already has a production defect; these are not established here. Recovery from a mismatch is framework-dependent and need not replace the whole page. [Verification and adaptation](../raw/2026-09-13-hydration-fixture-verification.md).
+
 Latest editorial revision: resolve the blocked-button defect before naming contracts, continue the shop through behavior, accessibility and appearance, then summarize the contracts and apply them to test boundaries and AI instructions. Extra implementation examples move to backup. This supersedes earlier ordering and main-deck integration statements below. [Accepted shop-story revision](../raw/2026-09-12-shop-story-revision.md).
 
 The talk starts with the classic testing pyramid as a basic vocabulary: unit, integration and end-to-end, with increasingly broad shop examples. This is a heuristic, not a prescribed test distribution. Vue and React components can be tested alone or in collaboration; they do not require an extra pyramid level. The later integration-heavy strategy builds on this distinction. [Accepted basics-first opening and inspected pyramid source](../raw/2026-09-12-testing-basics-opening.md).
@@ -53,6 +61,8 @@ This model supplies the strategic reason for an integration-heavy Vitest Browser
 
 ## Sources
 
+- [Nuxt startup path and prepared hydration mismatch](../raw/2026-09-13-nuxt-test-boundaries.md).
+
 - [Reka migration Git chronology and prompt corrections](../raw/2026-09-12-reka-migration-git-history.md).
 
 - [Reka AI migration prompts and operating-manual excerpts](../raw/2026-09-12-reka-ai-migration.md).
@@ -64,3 +74,6 @@ This model supplies the strategic reason for an integration-heavy Vitest Browser
 - [Equal SPA and Nuxt cases and deliberate contracts.](../raw/2026-09-12-spa-nuxt-testing-strategy.md)
 
 - [Full automatic transcript of "Kent C. Dodds – Write tests. Not too many. Mostly integration."](../raw/2018-03-05-kent-c-dodds-write-tests-not-too-many-mostly-integration.md)
+
+- [Hydration Playwright article supplied by the user](../raw/2026-09-13-hydration-playwright-user-article.md).
+- [Official fixture and hydration guidance](../raw/2026-09-13-hydration-fixture-verification.md).

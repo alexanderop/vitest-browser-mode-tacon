@@ -256,8 +256,9 @@ useMutationObserver(editorCodeRef, () => {
   transition: opacity 0.3s ease, background 0.3s ease;
 }
 
-/* Only band the highlighted lines when others are dimmed (skip the `all` state) */
-.editor-code :deep(.slidev-code:has(.slidev-code-dishonored) .slidev-code-highlighted) {
+/* Only band whole lines when others are dimmed (skip the `all` state).
+   Magic Move highlights individual tokens, which must not get a left border. */
+.editor-code :deep(.slidev-code:has(.slidev-code-dishonored) .line.slidev-code-highlighted) {
   background: rgba(255, 107, 237, 0.07);
   box-shadow: inset 2px 0 0 rgba(255, 107, 237, 0.55);
 }

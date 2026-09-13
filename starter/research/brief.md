@@ -119,3 +119,40 @@ Replaced the short architecture slide after Gandalf with five slides (12–16): 
 ## Vertragsübersicht vor der Vertiefung
 
 Aktuelle Nutzerentscheidung: Das Hamcrab-Bild mit Verhalten, Accessibility und Darstellung steht direkt nach „Der Browser findet den Fehler“ und vor „Das Plüschtier landet im Warenkorb“. Es führt die drei folgenden Themen ein. Die bisherige Platzierung als Zusammenfassung nach den visuellen Tests entfällt. Diese Entscheidung ersetzt die frühere Reihenfolge an dieser Stelle.
+
+## Interactive setup after the providers, 2026-09-13
+
+The user requests a short, step-by-step Browser Mode setup immediately after the provider diagram. Three slides use the existing terminal and code-editor components: fresh Vue/Vite project and packages; Magic Move from the existing Vite config to a merged Vitest config with Playwright and Chromium; first counter test and run commands. [Execution and sources](raw/2026-09-13-vue-browser-setup.md). This brings configuration into the main introduction and supersedes its backup-only placement. Allow roughly two minutes; no spoken rehearsal was measured.
+
+
+## Kapitelstruktur, 2026-09-13
+
+Nach der Vertragsübersicht folgen Verhalten, Accessibility und Darstellung jeweils mit einer Kapitelfolie und einer kurzen Definition am Shop-Beispiel. Die Übergangsfragen gehören zur Kapitelfolie. Die Detailfolien zeigen die Kapitelnummer zur Orientierung. Darstellung bleibt der Vertragsname, visuelle Regressionstests benennen die Prüfmethode. Die drei Verträge sind überlappende Blickwinkel auf dieselbe Komponente.
+
+
+## Page Object editor sequence (2026-09-13)
+
+Accepted presentation direction: explain the purchase test through prepared editor steps before showing the final abstraction. Start with inline browser actions, extract a page object, explain `renderShop()` as a setup factory, then return to the same behavior assertion. This is an editorial decomposition of the existing shop helper, not a new testing result. Keep data factories distinct from this setup factory.
+
+## Visuelle Tabs-Erklärung (2026-09-13)
+
+Accepted direction: preserve the interactive TabsContractDemo including the defect switch and inspectable accessibility tree. Replace only the five explanation slides immediately after it with four editable graphical explanations and one compact three-assertion slide. Sequence: visible/semantic mismatch, text-only test blind spot, focus/selection/panel-name expectations, shared selection driving both outputs. Move the five original code slides to backup. This is an editorial simplification of the existing example, not a new test result. Retain the caveat that JSDOM can assert these ARIA attributes and Browser Mode does not detect the defect automatically.
+
+## ARIA-Snapshots wieder im Hauptteil (2026-09-13)
+
+The follow-up explicitly restores ARIA snapshots as the convenient Vitest Browser Mode mechanism after the four visual explanations. Replace the compact three-assertion slide with a visual tree-to-snapshot mapping and one focused inline-snapshot code slide. Move the previous three assertions to backup; retain focus/panel checks in the spoken explanation and full test. The interactive demo remains intact. Teach generation, review and comparison rather than the full reference syntax. Source: [official guide capture](raw/2026-09-13-aria-snapshots-guide.md). This supersedes the preceding decision to keep all snapshot content in backup.
+
+
+## Nuxt explanation revision, 2026-09-13
+
+The accepted boundary section now uses five connected slides: direct Shop.vue mount, user URL entry and hydration, test entry points, a concrete mismatch and the SPA transfer. Use one recurring Hamcrab illustration with editable labels. The mismatch result refers to the explicit diagnostic assertion, not a failed purchase claim. Keep this section within its five-minute budget; presenter guidance stays in presenter.md. [Source and accepted direction](raw/2026-09-13-nuxt-test-boundaries.md).
+
+## Nuxt condensation and practical tip, 2026-09-13
+
+Use four slides for SSR/hydration, the existing category mismatch, an automatic diagnostic fixture, and additional running-app examples. Explain the test entry point rather than treating iframes as the limitation. This supersedes the five-slide boundary sequence. Preserve the five-minute budget including mock boundaries. The full supplied manuscript and verification are linked from the testing-strategy wiki.
+
+## Plain-text Reka migration, 2026-09-13
+
+The user replaces the three migration illustrations with simple step-by-step slides explaining their actual work. Six editable text slides follow the inspected Git chronology: setup, Slider, Node extraction, migration/review, instruction updates, and completion. This supersedes the illustrated migration decision above. Preserve the short closing section; no new live demo.
+
+The follow-up visual direction uses the existing code-editor layout for these six steps, with short code excerpts and click highlights. No images. Preserve explanations alongside the code; prompts are shortened translations and the inventory is a summary, not captured terminal output.

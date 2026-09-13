@@ -2,6 +2,22 @@
 
 ## Current synthesis
 
+The visual chapter extends ProductCard with a curated BaseButton gallery: three variants and four size/state cases share one reference. Vitest 5 teaching code uses awaited Vue rendering and native `toMatchScreenshot`; the supplied article's path truthiness/base64 workaround is historical. The missing-variant comparison is explicitly schematic. A baseline detects changes to captured content, not variants never included in the fixture. [Current API verification and editorial scope](../raw/2026-09-13-vitest-5-button-variants.md); [original supplied article](../raw/visual-regression-testing-vue-vitest-user-article.md).
+
+The axe scope slide follows the existing diagram: DOM-based names, labels and ARIA validity are representative JSDOM checks; text contrast needs real rendering. The Reka AlertDialog migration records non-vacuous DOM audits in JSDOM and an additional contrast violation in Chromium. These are inspected historical findings, not a fresh test run. Intended keyboard behavior and tab meaning remain explicit assertions. [Scope sources and Reka excerpts](../raw/2026-09-13-axe-rule-scope.md).
+
+The blocked-button explanation now includes the actual ProductCard Browser Mode test and a shortened recorded Chromium error. The explicit 1500 ms click timeout reports that `product-decoration` intercepts pointer events; the bag assertion is not reached. This is an inspected existing run, not a new execution. [Test and original failure log](../raw/2026-09-13-blocked-button-browser-error.md).
+
+The Browser UI screenshot now leads into a jsdom debugging comparison: `screen.debug()` prints DOM and `screen.logTestingPlaygroundURL()` exports markup for query exploration. This export does not carry the running Vue component or external app CSS. The DOM excerpt is illustrative; avoid denying Testing Playground an HTML preview. [Verified APIs and implementation](../raw/2026-09-13-testing-library-debugging.md).
+
+ARIA snapshots return to the main accessibility chapter directly after the interactive tabs demo, which replaces the four repetitive visual explanations: map the inspected roles, names and selected state to a readable snapshot, then show a focused `toMatchAriaInlineSnapshot` against the tab list. The official guide labels the API experimental since 4.1.4 and documents generated inline/file expectations, review/update workflow and semantic matching. This tab-list snapshot detects Password missing its expected selected state; focus and panel name remain separate assertions. [Official guide capture](../raw/2026-09-13-aria-snapshots-guide.md).
+
+The guide's accessibility-tree language is a conceptual explanation. The inspected 4.1.11 implementation derives its tree from DOM semantics with Ivya, rather than recording a screen reader. Do not imply that DOM snapshots are incapable of exposing ARIA attribute changes, or that an ARIA snapshot proves complete accessibility. [Implementation evidence](../raw/2026-09-13-vitest-source-audit.md). The guide's regex and child-matching details stay out of the main talk; default contain matching allows additional children, so a focused template is not an exact inventory of the whole tree. [Guide matching section](../raw/2026-09-13-aria-snapshots-guide.md).
+
+The behavior definition now leads into a short black-box explanation: click the cart button, treat component internals as hidden, and check that the plush appears in the cart. The author's article contrasts direct internal method/ref access with DOM interaction and observable outcomes. Its refactoring claim applies while the tested public contract stays the same. [Author-supplied article](../raw/2025-04-19-stop-white-box-testing-vue.md).
+
+The local Vitest 4.1.11 source audit confirms the iframe, provider, locator and retry explanations. Corrected the text matcher, awaited the SPA mount, and narrowed the screenshot image type. A persistent overlay fails through Playwright actionability waiting and timeout. ARIA snapshots use a DOM-derived Ivya tree; regular screenshot assertions have their own asynchronous implementation. Keep this pinned implementation distinct from newer live docs and the Vitest 5 setup experiment. [Source audit and excerpts](../raw/2026-09-13-vitest-source-audit.md).
+
 An explanatory axe diagram precedes the runnable test: render, run rules, assert results. DOM checks are possible in JSDOM, but its unsupported contrast evaluation differs from the real browser rendering available in Browser Mode. [Diagram source evidence](../raw/2026-09-12-axe-jsdom-diagram-evidence.md).
 
 The A11y section now includes the existing Claw & Chew checkout axe test: explicit `axe.run` executes inside Browser Mode, with a green original and a verified red contrast defect. It complements keyboard and ARIA expectations; the excerpt scans one notice with one rule. The inspected Vitest source has no axe integration example. [Local source and execution evidence](../raw/2026-09-12-axe-browser-checkout-evidence.md).
@@ -39,6 +55,11 @@ The inspected implementation provides a concise technical introduction after the
 The introduction must distinguish providers before tracing the Playwright click: `preview` runs in a real local browser without Playwright/WebdriverIO, but simulates interactions and rejects headless mode. The captured setup guide requires Playwright or WebdriverIO for CI and recommends either for local testing as well. Thus real browser rendering alone does not establish provider-backed actionability for the covered-button example. [Provider documentation](../raw/2026-08-18-vitest-4-1-11-browser-mode-documentation.md). Local verification also inspected `packages/browser-preview/src/preview.ts` and `locators.ts` at `9bd8d464e`; the latter overrides `click` with `userEvent.click(element)`.
 
 ## Claims and evidence
+
+- The local Reka migration benchmark recorded 10.75s jsdom versus 12.10s Chromium (three-run medians; 87 paired files plus two browser harness files). A direct jsdom `element.click()` cost 0.03ms versus 26.2ms for a provider `locator.click()`. The measured difference with a forced click was 18.2ms, consistent with the two-frame stability wait; real input processing adds further cost. These historical local measurements do not establish a universal speed ratio. [Captured benchmark and method](../raw/2026-09-13-reka-click-performance.md). The deck places this tradeoff after the migration block, before the conclusion.
+
+
+- The local Claw & Chew ProductCard test passed in Chromium, and its real Vitest 5 Browser UI retained the rendered product card alongside the test list and passing report. The deck now shows that captured interface after the runtime diagram. [Execution and screenshot provenance](../raw/2026-09-13-browser-ui-screenshot.md).
 
 - `locator.element()` returns a DOM element synchronously and throws if no element matches. Adding `await` does not introduce waiting. Vitest `userEvent.click` and `userEvent.type` accept locators, and `locator.click()` is the compact click form. Await DOM assertions through `expect.element(locator).matcher()`. [Locator comment and primary API evidence](../raw/browser-mode-locator-maintainer-comment.md).
 
@@ -86,6 +107,10 @@ The introduction must distinguish providers before tracing the Playwright click:
 
 ## Talk application
 
+Immediately after the provider diagram, three interactive slides introduce Browser Mode in a fresh Vue/Vite project: dependency installation, an animated Vitest configuration that merges the existing Vite config, and the starter counter test. The final example passed in Chromium with current dependencies. Terminal snippets display commands; they are not an embedded shell. [Setup references and execution evidence](../raw/2026-09-13-vue-browser-setup.md).
+
+The opening now follows the broken shop with the one-line CSS diff, existing JSDOM test code, a locally playable recording of the passing test with the defect active, and a fictional 02:00 oncall scene. [Recording method and limits](../raw/2026-09-13-blocked-button-terminal.md).
+
 The accepted opening revision makes the blocked button the main hook, moves the open question immediately after it, and retains the other four cases as short teasers. The JSDOM code now precedes the runtime explanation. This is an editorial choice recorded in the [talk brief](../brief.md#focused-opening-revision-2026-09-12), not new experimental evidence.
 
 The five opening cases now use interactive URLs rendering the real shop components, with per-instance defects, reset and working variants. The recorded test results remain available separately. [Iframe revision.](../raw/2026-09-12-shop-iframe-demos.md)
@@ -100,7 +125,11 @@ The reviewed deck distinguishes black-box strategy from browser runtime: the sem
 
 The backup explains the advertised project ratios and timing as one PWA case study. The main talk shows the real cart-line factory and page-object method alongside the SPA root mount and workflow. [The original case study supplies the figures.](../raw/2025-12-14-vue-3-testing-pyramid-vitest-browser-mode.md) [The local source record identifies the executable helpers.](../raw/2026-09-11-claw-and-chew-talk-examples.md)
 
+The accepted editor sequence now introduces the purchase test before its abstractions: inline actions → page object → setup factory → final test. The page object keeps the existing browser interactions and exposes the confirmation locator; the assertion remains in the test. For teaching, the existing combined `renderShop()` helper is split into rendering and `createShopPage(screen)`. This is a presentation refactoring, not a new test result. A setup factory should be distinguished from the data factories discussed in the article. [Inspected shop helper](../raw/2026-09-11-claw-and-chew-talk-examples.md). [Factory and page-object concepts](../raw/2025-12-14-vue-3-testing-pyramid-vitest-browser-mode.md).
+
 ## Tensions and open questions
+
+The author's article uses strong advocacy for Testing Library and blanket mock advice. The slide adopts the outside-in testing principle, not a requirement to use one library or mock every store/router. Its own Vue Test Utils click example also demonstrates black-box testing. The existing distinction between test strategy and browser runtime still applies. [Article](../raw/2025-04-19-stop-white-box-testing-vue.md).
 
 - The supplied commenter identity and original URL remain unknown. Attribute the API behavior to official docs, not a named maintainer. Retry support does not guarantee every test is stable or every provider has identical actionability behavior. [Locator comment and primary API evidence](../raw/browser-mode-locator-maintainer-comment.md).
 
@@ -122,6 +151,10 @@ The backup explains the advertised project ratios and timing as one PWA case stu
 - The current primary docs confirm the trace, retry, and headless options shown in the February 2026 video. The Angular CLI, Nx, and Analog integration steps still need a current source before the talk presents them as setup guidance.
 
 ## Sources
+
+- [Vitest ARIA Snapshots guide, captured 2026-09-13](../raw/2026-09-13-aria-snapshots-guide.md).
+
+- [Stop White Box Testing Vue Components Use Testing Library Instead](../raw/2025-04-19-stop-white-box-testing-vue.md)
 
 - [Locator comment and primary API evidence](../raw/browser-mode-locator-maintainer-comment.md)
 
@@ -147,3 +180,5 @@ The backup explains the advertised project ratios and timing as one PWA case stu
 - [axe Browser Mode checkout proof](../raw/2026-09-12-axe-browser-checkout-evidence.md)
 
 - [axe JSDOM and browser diagram evidence](../raw/2026-09-12-axe-jsdom-diagram-evidence.md)
+
+- [Browser Mode slide audit against local Vitest source](../raw/2026-09-13-vitest-source-audit.md)

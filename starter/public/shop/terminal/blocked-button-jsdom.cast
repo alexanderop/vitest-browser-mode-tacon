@@ -1,0 +1,11 @@
+{"version":2,"width":100,"height":15,"timestamp":1789287864,"title":"JSDOM: blocked button, test passes","env":{"TERM":"xterm-256color"}}
+[0,"o","$ pnpm exec vitest run --project jsdom app/catalog/ProductCard.dom.test.ts --reporter=default\r\n"]
+[1.439,"o","\r\n"]
+[1.439,"o","\u001b[1m\u001b[30m\u001b[46m RUN \u001b[49m\u001b[39m\u001b[22m \u001b[36mv5.0.0 \u001b[39m\u001b[90m/private/demo/claw-and-chew\u001b[39m\r\n\r\n"]
+[2.309,"o"," \u001b[32m✓\u001b[39m \u001b[30m\u001b[45m jsdom \u001b[49m\u001b[39m app/catalog/ProductCard.dom.test.ts \u001b[2m(\u001b[22m\u001b[2m1 test\u001b[22m\u001b[2m)\u001b[22m\u001b[32m 64\u001b[2mms\u001b[22m\u001b[39m\r\n"]
+[2.31,"o","\r\n"]
+[2.31,"o","\u001b[2m Test Files \u001b[22m \u001b[1m\u001b[32m1 passed\u001b[39m\u001b[22m\u001b[90m (1)\u001b[39m\r\n"]
+[2.311,"o","\u001b[2m      Tests \u001b[22m \u001b[1m\u001b[32m1 passed\u001b[39m\u001b[22m\u001b[90m (1)\u001b[39m\r\n\u001b[2m   Start at \u001b[22m 10:24:23\r\n"]
+[2.311,"o","\u001b[2m   Duration \u001b[22m 869ms\u001b[2m (environment 49%, transform 18%, setup 17%, import 8%, tests 8%)\u001b[22m\r\n"]
+[2.311,"o","\r\n"]
+[5.311,"o","\r\n$ "]

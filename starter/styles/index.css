@@ -37,3 +37,17 @@
 .slidev-layout .screenshot-comparison img {
   height: 290px !important;
 }
+
+/* The button-gallery fixture and test need equal, bounded code columns. */
+.slidev-layout:has(.button-gallery-code) .two-cols-header {
+  column-gap: 24px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+.slidev-layout:has(.button-gallery-code) .col-left,
+.slidev-layout:has(.button-gallery-code) .col-right {
+  min-width: 0;
+}
+.slidev-layout:has(.button-gallery-code) .slidev-code {
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+}

@@ -1,0 +1,6 @@
+# isolated component testing
+
+Tool: built-in image_gen.
+Reference: starter/public/memes/frontend-components-building-blocks.png
+
+Create a 16:9 German presentation slide as a direct visual sequel to the reference shop building-block image. Keep exact dark navy, white toy construction bricks with studs, magenta button, periwinkle labels, polished restrained 3D. Headline "Komponenten isoliert testen". Left third: small dimmed but recognizable overview of the SAME shop from reference (header, search, sneaker/backpack/headphone product cards, cart), a magenta highlight on the sneaker card's Kaufen button. A thin extraction guide leads to a LARGE standalone magenta construction brick in center labeled "Button" above and "Kaufen" on its face, matching reference's detached brick. Enclose ONLY this standalone button in a fine rounded outline labeled "mount(Button)" at top. White mouse cursor visibly clicks Kaufen. Arrow from button to a clear external small result card reading "click-Event" with a check mark. Result card must sit outside the mount outline. Footer large exact "Ein Baustein. Sein Verhalten im Test." Minimal strong hierarchy. No integrated testing, no cart updates, no code snippets beyond mount(Button). Clearly only button is under test; overview is context. Text spacious and legible.

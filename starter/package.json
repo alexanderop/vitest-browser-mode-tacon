@@ -15,7 +15,8 @@
   },
   "dependencies": {
     "@alexop/slidev-addon-utils": "workspace:*",
-    "@alexop/slidev-theme-brand": "workspace:*"
+    "@alexop/slidev-theme-brand": "workspace:*",
+    "asciinema-player": "^3.17.0"
   },
   "devDependencies": {
     "@slidev/cli": "^52.19.1",
