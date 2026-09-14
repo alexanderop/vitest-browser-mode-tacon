@@ -1231,19 +1231,29 @@ hideFooter: true
     <a class="thanks-article" href="https://alexop.dev/posts/vue3_testing_pyramid_vitest_browser_mode/">Vue 3 Testing Pyramid:<br>A Practical Guide with<br>Vitest Browser Mode</a>
     <p class="thanks-topics">Logik · Integration · Accessibility · Visual Regression</p>
   </div>
-  <a href="https://alexop.dev/posts/vue3_testing_pyramid_vitest_browser_mode/" aria-label="Blogartikel zur Teststrategie öffnen">
-    <img src="/qr/testing-strategy-blog.png" alt="QR-Code zum Blogartikel über die Teststrategie mit Vitest Browser Mode" width="240" height="240" />
+  <a class="thanks-qr" href="https://alexop.dev/posts/vue3_testing_pyramid_vitest_browser_mode/" aria-label="Blogartikel zur Teststrategie öffnen">
+    <span>Blogartikel</span>
+    <img src="/qr/testing-strategy-blog.png" alt="QR-Code zum Blogartikel über die Teststrategie mit Vitest Browser Mode" width="195" height="195" />
+  </a>
+  <a class="thanks-qr" href="https://vitest-browser-mode-tacon.vercel.app" aria-label="Folien zum Talk öffnen">
+    <span>Folien mitnehmen</span>
+    <img src="/qr/tacon-slides.png" alt="QR-Code zu den Folien dieses Talks" width="195" height="195" />
   </a>
 </div>
+
+<a class="thanks-slides-link" href="https://vitest-browser-mode-tacon.vercel.app">vitest-browser-mode-tacon.vercel.app</a>
 
 <style>
 .talk-thanks h1 { font-size: 60px; margin-bottom: 16px; }
 .talk-thanks .thanks-message { font-size: 26px; margin: 0; }
-.talk-thanks .thanks-grid { display: grid; grid-template-columns: 1fr 240px; gap: 48px; align-items: center; margin-top: 42px; }
+.talk-thanks .thanks-grid { display: grid; grid-template-columns: 1fr 195px 195px; gap: 28px; align-items: center; margin-top: 34px; }
+.talk-thanks .thanks-qr { display: grid; gap: 14px; border: 0; text-align: center; font-size: 21px; font-weight: 600; }
+.talk-thanks .thanks-qr img { width: 195px; height: 195px; }
+.talk-thanks .thanks-slides-link { display: inline-block; margin-top: 26px; font-size: 18px; }
 .talk-thanks .thanks-blog { font-size: 44px; font-weight: 600; }
 .talk-thanks .thanks-intro { font-size: 19px; opacity: .75; margin: 22px 0 10px; }
 .talk-thanks .thanks-article { font-size: 24px; line-height: 1.35; }
-.talk-thanks .thanks-topics { font-size: 16px; opacity: .7; margin-top: 18px; }
+.talk-thanks .thanks-topics { font-size: 16px; opacity: .7; margin-top: 18px; max-width: 350px; }
 </style>
 
 ---
