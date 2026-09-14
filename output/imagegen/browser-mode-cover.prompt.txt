@@ -1,0 +1,10 @@
+Use case: stylized-concept
+Asset type: right-side hero illustration for a German Slidev conference title slide, square format.
+Primary request: A beautiful premium 3D illustration teasing Vitest Browser Mode and the Claw & Chew ecommerce demo. One slightly tilted desktop browser window with a dark ecommerce product page and an oversized adorable hamster plush wearing a bright red crab costume emerging in front of its left edge. Follow the supplied reference for the plush character identity: cream and golden fur, round ears, glossy black eyes, pink nose, red fluffy crab hood with two antennae, red claws and cream belly.
+Composition: one coherent compact square composition, all objects fully inside frame with generous outer margins. Browser is behind the plush, product details visible on right; a large white mouse cursor touches the purchase button. A small floating rounded badge below the window contains the recognizable Vitest green check/yellow lightning logo and the words "Vitest" and "Browser Mode".
+Text inside browser only: "Claw & Chew", "Hamcrab", "29,90 €", "Add to bag". No other text, no title or footer. Browser chrome with three little window dots and a minimal address bar. Product button pink, Vitest badge green and yellow.
+Scene/backdrop: uniform deep navy #202431 at all outer edges so the asset blends into a dark slide, subtle localized green glow behind browser, no horizon line.
+Style: polished tactile 3D product illustration, soft studio lighting, soft realistic plush fur, clean graphic browser UI, crisp readable restrained typography, sophisticated and playful. No busy background, no extra mascots, no test results, no failure spoilers.
+Input image is a character and palette reference only; do not reproduce its layout or title.
+
+Generated with the built-in image_gen tool.

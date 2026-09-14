@@ -2,6 +2,10 @@
 
 ## Current synthesis
 
+The backup now starts with grouped Claw & Chew pointer-capture, scrolling and resize examples, including actual recorded browser failure excerpts and the corresponding passing JSDOM results. Existing baseline and restored logs pass in both environments; these are inspected recordings, not fresh executions. Reka UI follows, then the collected hydration section. [Local source and logs](../raw/2026-09-14-claw-chew-backup-comparisons.md).
+
+The visual chapter ends with a QR code linking to Alexander Opalic’s [published article](../raw/2025-02-22-alexop-visual-regression-blog.md), expanding the button-variant example. The article dates from 2025; the deck retains its already verified native Vitest 5 matcher.
+
 The visual chapter extends ProductCard with a curated BaseButton gallery: three variants and four size/state cases share one reference. Vitest 5 teaching code uses awaited Vue rendering and native `toMatchScreenshot`; the supplied article's path truthiness/base64 workaround is historical. The missing-variant comparison is explicitly schematic. A baseline detects changes to captured content, not variants never included in the fixture. [Current API verification and editorial scope](../raw/2026-09-13-vitest-5-button-variants.md); [original supplied article](../raw/visual-regression-testing-vue-vitest-user-article.md).
 
 The axe scope slide follows the existing diagram: DOM-based names, labels and ARIA validity are representative JSDOM checks; text contrast needs real rendering. The Reka AlertDialog migration records non-vacuous DOM audits in JSDOM and an additional contrast violation in Chromium. These are inspected historical findings, not a fresh test run. Intended keyboard behavior and tab meaning remain explicit assertions. [Scope sources and Reka excerpts](../raw/2026-09-13-axe-rule-scope.md).
@@ -56,7 +60,9 @@ The introduction must distinguish providers before tracing the Playwright click:
 
 ## Claims and evidence
 
-- The local Reka migration benchmark recorded 10.75s jsdom versus 12.10s Chromium (three-run medians; 87 paired files plus two browser harness files). A direct jsdom `element.click()` cost 0.03ms versus 26.2ms for a provider `locator.click()`. The measured difference with a forced click was 18.2ms, consistent with the two-frame stability wait; real input processing adds further cost. These historical local measurements do not establish a universal speed ratio. [Captured benchmark and method](../raw/2026-09-13-reka-click-performance.md). The deck places this tradeoff after the migration block, before the conclusion.
+- The main-deck comparison groups the Reka migration benefits into three editable illustrated comparisons (mocks, input, and visible results), revealed in two click steps. Accessibility and the scoped runtime measurement remain below the comparisons. It summarizes: fewer emulation mocks, provider-backed input, rendered geometry and screenshots, additional accessibility checks, and visible debugging. It displays the measured suite runtime tradeoff (10.75s to 12.10s, about 13%) with date and scope, without claiming a universal ratio or absence of other limitations. [Rechecked evidence and comparison scope](../raw/2026-09-14-browser-mode-jsdom-comparison.md).
+
+- The local Reka migration benchmark recorded 10.75s jsdom versus 12.10s Chromium (three-run medians; 87 paired files plus two browser harness files). A direct jsdom `element.click()` cost 0.03ms versus 26.2ms for a provider `locator.click()`. The measured difference with a forced click was 18.2ms, consistent with the two-frame stability wait; real input processing adds further cost. These historical local measurements do not establish a universal speed ratio. [Captured benchmark and method](../raw/2026-09-13-reka-click-performance.md). The main-deck comparison now places this tradeoff after the three-contract recap, before the test-strategy recommendation.
 
 
 - The local Claw & Chew ProductCard test passed in Chromium, and its real Vitest 5 Browser UI retained the rendered product card alongside the test list and passing report. The deck now shows that captured interface after the runtime diagram. [Execution and screenshot provenance](../raw/2026-09-13-browser-ui-screenshot.md).

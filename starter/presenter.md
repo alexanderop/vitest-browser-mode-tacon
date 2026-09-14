@@ -1,8 +1,8 @@
 # TACON presenter guide
 
-75 Hauptfolien einschließlich Fragen, danach der Backup-Trenner und 30 Backup-Folien (76–106). Geplant: 40 Minuten Inhalt und fünf Minuten Fragen. Die zusätzliche Locator-Minute nutzt die bisherige Reserve. Die Browser-Mode-Einführung erhält sechs Minuten; sie ersetzt die bisherige kurze Architektur-Erklärung. Diese Zeiten sind keine gemessene Sprechprobe.
+66 Hauptfolien einschließlich Dankesfolie, danach der Backup-Trenner (67) und 46 Backup-Folien (68–113). Geplant: 36 Minuten Inhalt, fünf Minuten Fragen und vier Minuten Reserve. Die überarbeitete Schlusssequenz ersetzt den Reka-Migrationsblock im Hauptteil. Diese Zeiten sind keine gemessene Sprechprobe.
 
-Die Geschichte folgt dem Einkauf: Ich will das Plüschtier kaufen. Der Test ist grün, aber der Button funktioniert nicht. Wir erklären und reparieren diesen Widerspruch, prüfen danach den Kaufablauf, die Bedienung und die Darstellung. Nach der Erklärung des Button-Fehlers zeigen wir die drei Verträge als Überblick. Danach vertiefen wir Verhalten, Accessibility und Darstellung in dieser Reihenfolge. Testgrenzen und KI-Auftrag wenden das Gelernte an.
+Die Geschichte folgt dem Einkauf: Ich will das Plüschtier kaufen. Der Test ist grün, aber der Button funktioniert nicht. Wir erklären und reparieren diesen Widerspruch, prüfen danach den Kaufablauf, die Bedienung und die Darstellung. Nach der Erklärung des Button-Fehlers zeigen wir die drei Verträge als Überblick. Danach vertiefen wir Verhalten, Accessibility und Darstellung in dieser Reihenfolge. Nach Visual Regression fassen wir die drei Verträge zusammen und empfehlen eine Teststrategie, mit npmx.dev als Praxisbeispiel. Testgrenzen und KI-Auftrag wenden das Gelernte an. Die Reka-Migration folgt ausschließlich im Backup.
 
 ## Einstieg in die drei Kapitel
 
@@ -27,11 +27,12 @@ Für die einzige Live-Testsequenz im Shop `/Users/alexanderopalic/Projects/opens
 | 26–30 | 13:00–16:00 | Browser findet den Fehler; Verhalten benennen |
 | 31–36 | 16:00–18:30 | Ganzer Kaufablauf |
 | 37–48 | 18:30–23:30 | Tastatur, Bedeutung und axe |
-| 49–59 | 23:30–28:00 | Darstellung |
-| 60–64 | 28:00–33:00 | Hydration, automatische Fixture und Testgrenzen |
-| 65–72 | 33:00–37:00 | KI-Auftrag und sechs Migrationsschritte |
-| 73–74 | 37:00–40:00 | Klickkosten und Schluss |
-| 75 | 40:00–45:00 | Fünf Minuten Fragen |
+| 49–60 | 23:30–28:00 | Darstellung und Blog-Link |
+| 61–64 | 28:00–31:00 | Fazit, Browser Mode vs. jsdom, Strategie und npmx-Pyramide |
+| 65 | 31:00–32:30 | Ein Feature, drei Testfragen |
+| 66 | 32:30–33:00 | Danke und weiterführender Blogartikel |
+| 66 | 33:00–38:00 | Fragen; Dankesfolie stehen lassen |
+| — | 38:00–45:00 | Reserve |
 
 Die Tabelle enthält historische Foliennummern; maßgeblich sind die Folientitel und der folgende Testgrenzen-Abschnitt. Ältere Detailabschnitte vor den Testgrenzen verwenden teilweise historische Nummern; dort nach Folientitel navigieren. Der gekürzte Testgrenzen-Abschnitt mit Fixture-Tipp bleibt auf fünf Minuten begrenzt; kein zusätzlicher Live-Test.
 
@@ -84,7 +85,7 @@ Folie 19 schließt die Frage aus Folie 9: „Der Kunde kann das Plüschtier hinz
 
 ## Folien 20–21: Vom Button zur Bestellung
 
-Übergang: „Ein Artikel im Warenkorb ist noch keine Bestellung. Dieselbe Idee können wir auf den ganzen Ablauf anwenden.“ Produkt, Warenkorb, Checkout, Bestätigung zeigen und anschließend den Test lesen.
+Zur Folie „Der Klick funktioniert. Klappt auch die Bestellung?“: „Bisher haben wir geprüft, ob das Produkt im Warenkorb landet. Jetzt gehen wir weiter: Produkt auswählen, Kundendaten eingeben, Bestellung abschicken. Dafür testen wir die Komponenten gemeinsam.“ Der Ablauf ist vollständig sichtbar; anschließend mit `Shop.vue` zeigen, wie die Komponenten zusammenspielen.
 
 Die Handlungen im Helper nur in einem Satz erklären; die Assertion bleibt sichtbar im Test. Page-Object-Code und Factory stehen im Backup. Der Test mountet echte Vue-Komponenten; Server, Zahlung und Versand sind damit nicht bewiesen. Diese Grenze nach den drei Beispielen gemeinsam erklären.
 
@@ -205,7 +206,7 @@ Nach dem ARIA-Snapshot den vorhandenen Checkout-Test zeigen. axe wird explizit i
 
 ## Was kostet ein echter Klick?
 
-Platzierung: nach „Der nächste Agent lernt mit“, vor „Wir definieren, was grün bedeutet“. Etwa eine Minute.
+Backup-Folie 81: nach den sechs Reka-Migrationsschritten. Nur bei einer Frage zu Laufzeitkosten zeigen; etwa eine Minute.
 
 „Bei element.click() in jsdom löse ich direkt ein Klick-Event aus. Dafür muss keine Maus den Button erreichen. Playwright prüft beim locator.click(): Ist der Button sichtbar und aktiviert? Empfängt er Mausereignisse oder liegt etwas darüber? Bewegt er sich noch? Für die Stabilität müssen Position und Größe in zwei aufeinanderfolgenden Animationsframes gleich bleiben. Diese Wartezeit vergeht auch auf einem schnellen Rechner. In meiner Messung waren das ungefähr 18 Millisekunden. Danach werden Mausbewegung, Drücken und Loslassen über den Browser gesteuert. Die Kommunikation mit dem Browserprozess und die Verarbeitung der Eingaben kosten ebenfalls Zeit. Insgesamt waren es ungefähr 26 Millisekunden pro Klick. Viele Interaktionen summieren sich: Meine gesamte Suite brauchte etwa 13 Prozent länger.“
 
@@ -245,3 +246,42 @@ Quellen: [Recherche und lokale Belege](research/raw/2026-09-13-axe-rule-scope.md
 ## Ergänzung: Button-Varianten gemeinsam absichern
 
 Nach „Ein Screenshot für einen konkreten Vertrag“ folgen drei Folien: Galerie, Fixture/Test, fehlende Variante. Etwa 90 Sekunden: „Unsere eigenen Basis-Komponenten haben viele Varianten. Ich rendere eine bewusst ausgewählte Matrix und fotografiere den gesamten Container. Verschwindet der bereits freigegebene Outline-Button im Disabled-Zustand, weicht das Bild ab. Eine nie eingetragene Variante kann dieser Test nicht erraten.“ Die drei Ansichten sind als schematischer Vergleich gekennzeichnet, keine aufgezeichnete Vitest-Ausgabe. Das Vue-Beispiel kürzt Beschriftungen und Layout; BaseButton steht für die eigene Designsystem-Komponente. Der gezeigte Matcher braucht das bereits erklärte Browser-Projekt mit Playwright und festem Viewport. Vitest 5 übernimmt Aufnahme und Bildvergleich; der alte Artikel brauchte dafür einen Base64-Workaround. Erstes Referenzbild prüfen und committen; Updates bleiben bewusste Reviews. Quellen: [API und redaktionelle Grenzen](research/raw/2026-09-13-vitest-5-button-variants.md). Die zusätzliche Zeit ist noch nicht durch eine Sprechprobe bestätigt.
+
+
+## Aktueller Schluss nach Visual Regression · Folien 61–71
+
+Diese Reihenfolge ersetzt frühere Hauptteil-Angaben zur Reka-Migration in diesem Dokument. Reka-Screenshot, Übersicht, sechs Schritte und Laufzeitvergleich stehen zusammen auf Backup-Folien 73–81. Die Accessibility-Beispiele im Hauptteil bleiben Teil der Shop-Geschichte.
+
+- **61 · Fazit:** „Wir haben dieselbe UI aus drei Blickwinkeln geprüft: Kann ich bestellen? Kann ich sie per Tastatur bedienen und stimmen die zugänglichen Informationen? Bleibt die freigegebene Darstellung erhalten? Kein einzelner Check beantwortet alle drei Fragen.“
+- **62 · Meine Empfehlung:** „So würde ich unsere Tests heute aufbauen: reine Logik schnell in Node; den Schwerpunkt unserer UI-Tests auf echte Komponenten im Zusammenspiel legen. Im Browser ergänze ich Tastatur, Fokus, axe und bewusst gewählte visuelle Referenzen. Playwright prüft die kritischen Wege durch die laufende Anwendung. Typprüfung und Linting laufen daneben als Grundlage.“ Keine feste Prozentverteilung nennen. Accessibility und Darstellung sind Blickwinkel auf Tests, keine zusätzlichen Stufen der Pyramide.
+- **63 · npmx.dev:** „Diese Aufteilung findet ihr auch in einem echten Open-Source-Projekt. npmx trennt Node-Tests, Nuxt-Komponenten im Browser Mode und Playwright gegen die App. Dazu gibt es axe, Hydration-Tests und Bildvergleiche für die erzeugten Open-Graph-Bilder. Diese Aufteilung würde ich übernehmen.“ Die OG-Bilder werden als PNG-Antworten mit Playwright verglichen; kein Beleg für Vitest-Screenshots jeder Komponente. Der Schwerpunkt auf Nutzerabläufen ist meine Empfehlung, keine gemessene Verteilung bei npmx. Die Nuxt-Tests verwenden teilweise Vue Test Utils; nicht behaupten, dass alle Interaktionen dort bereits Provider-Locators verwenden.
+- **Übergang zu 64:** „Warum behalten wir dafür einen eigenen E2E-Runner? Unser Shop beginnt auf dem Server. Schauen wir uns genau diesen Übergang an.“
+- **64–68:** Bestehende Hydration-Erklärung und Mock-Grenzen kompakt zeigen.
+- **69–71:** „Mit dieser Strategie kann ich auch der KI einen konkreten Auftrag geben.“ Bestehenden Testauftrag und Schluss verwenden, dann Fragen.
+
+Quelle: [npmx.dev, gepinnte Konfiguration und Testbeispiele](research/raw/2026-09-14-npmx-testing-strategy.md). Quelltext geprüft; npmx-Suite nicht ausgeführt. Offen bleibt, welche konkrete Verteilung sich für das jeweilige Produkt bewährt; das Repository belegt die Aufteilung, keine allgemeine Quote oder Geschwindigkeitsgarantie.
+
+
+### npmx-Folie 63: visuelle Fassung
+
+Links die drei Testebenen von unten nach oben erklären; rechts zeigt der gelieferte Screenshot, was npmx.dev ist: ein Browser für npm-Pakete, hier Vitest. Die Pyramidenflächen geben keine Testanzahl vor. OG-Bildvergleiche und API-Fixtures bleiben im mündlichen Kontext; die Folie konzentriert sich auf die drei Laufzeitgrenzen.
+
+
+## Neue Folie 64 · Ein Feature, drei Testfragen
+
+Nach der npmx-Pyramide, etwa 60–90 Sekunden. Diese Ergänzung verschiebt alle folgenden Folien um eins; frühere Bereichsangaben ab 64 sind historisch. Für die zusätzliche Erklärung die Reserve nutzen.
+
+„Ich möchte das Paket mit meinem Paketmanager installieren.“ Erster Klick: „Die reine Funktion muss den richtigen Befehl liefern, einschließlich Version und Paketmanager.“ Zweiter Klick: „Den gerenderten Paketmanager-Schalter prüft npmx mit axe. Das ist ein Regel-Audit, noch kein Nachweis der Tastaturbedienung.“ Dritter Klick: „Auf der laufenden Paketseite prüfen sie die Tastatur und die Rückkehr des Fokus. Ein weiterer Test klickt auf Kopieren und liest die echte Zwischenablage.“
+
+„Die Logik liefert den Befehl. Der Komponenten-Test prüft die Oberfläche. Der E2E-Test zeigt, dass ich sie in der App benutzen kann.“ Als optionale eigene Empfehlung: die Änderung des sichtbaren Befehls nach Auswahl von pnpm zusätzlich als Komponentenverhalten absichern. Der vorhandene Composable-Test setzt den Zustand direkt; ihn nicht als UI-Klicktest darstellen.
+
+Quelle: [lokal erfasste konkrete Tests](research/raw/2026-09-14-npmx-install-feature-tests.md). Der Node-Test verwendet lodash, die E2E-Tests vue beziehungsweise is-odd. Keine zusammenhängende ausgeführte Testsequenz behaupten.
+
+
+## Maßgeblicher Abschluss · Folien 64–66
+
+Diese Reihenfolge supersediert alle früheren Angaben zur Schlusssequenz: Auf „Ein Feature, drei Testfragen“ (64) folgt direkt „Danke!“ (65). Hydration startet erst im Backup ab 67. Die sieben verschobenen Folien bleiben erhalten; danach folgt die Reka-Migration. Kein weiterer inhaltlicher Hauptteil nach npmx.
+
+„Testet, was eure Nutzer tun – im echten Browser. Vielen Dank! Wenn ihr die Strategie in Ruhe nachlesen möchtet: Auf alexop.dev findet ihr meinen Artikel dazu. Der QR-Code führt euch direkt dorthin. Jetzt freue ich mich auf eure Fragen.“
+
+Die Schlussfolie während der Fragen stehen lassen. Der Blogartikel ist die weiterführende Lektüre, keine neue Folienquelle für allgemeine Laufzeit- oder Prozentversprechen. Die früheren Testgrenzen- und KI-Sprechertexte dienen jetzt nur als Backup.

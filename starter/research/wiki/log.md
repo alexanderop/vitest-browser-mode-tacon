@@ -285,3 +285,38 @@ Added six small editable outline icons and made the feedback loop explicit: revi
 ## 2026-09-13 — Introduce Reka UI before the migration
 
 Preserved the [user-supplied screenshot](../raw/2026-09-13-reka-ui-overview-image.md) and added an image slide immediately before the migration overview. No material new research claims; the image supports the presenter’s introduction of Reka UI.
+
+## 2026-09-14 — Link visual regression blog with QR code
+
+Verified the [canonical article](../raw/2025-02-22-alexop-visual-regression-blog.md) URL and publication date, preserving the existing manuscript in a separate capture. Added a reading slide at the end of the visual chapter with a local QR asset and clickable link. No material new technical claims; the older article examples do not replace the deck’s current matcher. No new open research question.
+
+
+## 2026-09-14 — npmx.dev strategy and revised closing
+
+- Ingested pinned GitHub configuration and test excerpts at `0e3cdadf3d0d9759a91462a1045297c836701c51` in [raw capture](../raw/2026-09-14-npmx-testing-strategy.md).
+- Result: new. Concrete Node / Browser Mode / Playwright division, axe, hydration and OG-image evidence.
+- Updated strategy synthesis and brief. Added three main slides after visuals; moved the intact Reka section and benchmark to backup.
+- Limit: source inspection only; no benchmark or suite-ratio claim, no executed npmx tests.
+
+## 2026-09-14 — npmx visual layout
+
+- Ingested [user screenshot and accepted visual direction](../raw/2026-09-14-npmx-slide-visuals.md).
+- Replaced the npmx table with a two-column generated pyramid and unchanged product screenshot. No new testing claim; areas do not represent suite proportions.
+
+## 2026-09-14 — One feature across three test levels
+
+- Captured [local npmx installation tests](../raw/2026-09-14-npmx-install-feature-tests.md).
+- Added accepted slide after the pyramid, with three click reveals. Component axe scope and separate E2E examples stay explicit.
+
+## 2026-09-14 — Single thank-you slide after npmx
+
+- Verified the existing strategy article title and canonical URL; [decision record](../raw/2026-09-14-closing-blog-link.md).
+- Moved hydration, boundaries, AI brief and former conclusion to backup. Added one thank-you slide with alexop.dev, article and local QR code.
+
+- 2026-09-14: Grouped Claw & Chew backup examples before Reka UI and hydration; inspected existing baseline/broken/fixed logs and added three concrete failure slides plus the pointer test comparison. Source: [local evidence](../raw/2026-09-14-claw-chew-backup-comparisons.md). No fresh shop test execution.
+
+- 2026-09-14: Replaced the detailed Reka backup with four simple non-code slides and a direct transition to hydration. Retained the original screenshot and historically sourced file counts. [Accepted scope](../raw/2026-09-14-reka-backup-overview.md).
+
+## 2026-09-14 — Browser Mode versus jsdom comparison
+
+Added one main-deck comparison after the three-contract recap. Rechecked Reka Slider and Tabs sources and historical performance evidence; included the scoped 13% suite overhead. Updated browser-native synthesis and index. [Evidence](../raw/2026-09-14-browser-mode-jsdom-comparison.md).

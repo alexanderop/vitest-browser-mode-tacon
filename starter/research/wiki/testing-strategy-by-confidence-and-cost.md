@@ -2,6 +2,16 @@
 
 ## Current synthesis
 
+The Reka backup is now four non-code slides: motivation with the original screenshot, preparation, an implementation/review/learning loop, and the 87-browser/10-Node outcome. Hydration follows immediately. This replaces the detailed migration and ARIA walkthrough, following the [accepted overview](../raw/2026-09-14-reka-backup-overview.md); the [historical chronology](../raw/2026-09-12-reka-migration-git-history.md) remains the evidence.
+
+Latest closing order: the npmx feature example leads directly to a single thank-you slide, with alexop.dev and a QR link to the existing Vue testing-pyramid article. Hydration, test boundaries, AI instructions and the former correctness conclusion now open the backup. [Accepted order and verified link](../raw/2026-09-14-closing-blog-link.md). This supersedes earlier main-deck boundary and closing placement.
+
+The accepted follow-up slide traces the installation feature through Node command generation, a mounted PackageManagerSelect axe audit, and separate E2E keyboard/clipboard checks. The three questions are revealed one at a time. This is source inspection at local revision `75329352`, not a newly executed suite. [Exact examples and limits](../raw/2026-09-14-npmx-install-feature-tests.md).
+
+The npmx example now uses a generated three-tier test pyramid beside the user-supplied Vitest package-page screenshot. Tier areas are explicitly not test proportions; the screenshot introduces the product. [Visual provenance](../raw/2026-09-14-npmx-slide-visuals.md).
+
+Latest accepted order (2026-09-14): after visual regression and its reading link, summarize behavior, accessibility and appearance; recommend Node for pure logic, Browser Mode for real-component workflows, focused accessibility/visual checks and Playwright for critical running-app paths. npmx.dev supplies a concrete Nuxt example before the existing hydration explanation. The complete Reka migration and performance section moves behind the Backup divider. This supersedes main-deck migration placement below. [User direction and pinned source capture](../raw/2026-09-14-npmx-testing-strategy.md).
+
 A hand-drawn-style overview now precedes the Reka editors: 97 originals split into 87 browser destinations via migration and review, and ten Node files; review findings feed corrected instructions for the next port. The originals remain as a comparison corpus. This is an editable schematic of the documented workflow, not a captured execution.
 
 The Reka migration section now uses six editable code-editor slides at the user’s request: parallel setup and early checks; the Slider pilot; Node extraction and further trials; per-file migration with independent review; persisted and corrected instructions; complete browser/Node destinations with originals retained. The existing editor layout now shows abbreviated configuration and Slider code, check commands, translated prompt excerpts and an explicitly summarized inventory. Clicks switch the Slider file tab and highlight the relevant lines. This replaces the three illustrated metaphors and supersedes the initial plain bullet layout. Git HEAD `ab4207bf` and the milestone commit messages were rechecked locally on 2026-09-13; historical test results were not rerun. [Chronology](../raw/2026-09-12-reka-migration-git-history.md) and [documented prompts](../raw/2026-09-12-reka-ai-migration.md).
@@ -32,6 +42,9 @@ This model supplies the strategic reason for an integration-heavy Vitest Browser
 
 ## Claims and evidence
 
+- npmx.dev at `0e3cdadf` configures a Node unit project and a Nuxt project with Browser Mode and a headless Chromium Playwright provider. Separate Playwright E2E tests cover the running application, including explicit hydration cases. Component axe checks clone DOM into an audit container; they do not replace interactive focus checks. OG image snapshots compare generated PNG responses in Playwright, not Vitest component screenshots. E2E route helpers serve controlled external responses. [Inspected configurations and tests](../raw/2026-09-14-npmx-testing-strategy.md).
+- The speaker endorses this division of responsibilities, with user workflows as the main UI investment and deliberately chosen visual references. This is a recommendation, not a measured npmx test distribution or an assertion that its test style is identical in every detail. [Scope and accepted direction](../raw/2026-09-14-npmx-testing-strategy.md).
+
 - Git chronology refines the earlier reference-port suggestion: the first recorded setup commit (`bd93d9b1`, August 16) already includes inventory, AST parity and coverage tooling plus two Slider cases. Slider completion, Node extraction, useForwardExpose and Label trials precede the committed reusable prompts (`675792e3`). The first batch taught new rules; `8829a1bb` explicitly corrects a false portal-query rule in the prompt. Completion is recorded August 18 (`12d75a3b`), with 87 browser destinations and 10 Node files and retained originals. August 22 (`864db198`) removes the temporary compatibility adapter and adds stronger native interaction and semantic coverage. These are commit milestones, not measured effort. [Git evidence](../raw/2026-09-12-reka-migration-git-history.md).
 - The documented loop uses one-file implementers and independent reviewers with separate contexts, and T2 batches of roughly eight files with three agents running concurrently. The transferable interpretation is: build verification early, learn from representative ports, persist and correct prompts, then expand in bounded batches. The initial answer's single-template framing understated that process. [Prompt source](../raw/2026-09-12-reka-ai-migration.md) and [historical evolution](../raw/2026-09-12-reka-migration-git-history.md).
 
@@ -60,6 +73,8 @@ This model supplies the strategic reason for an integration-heavy Vitest Browser
 - The claim that higher-level tests provide more confidence assumes that the test exercises representative behavior and remains reliable. Test level alone does not establish confidence.
 
 ## Sources
+
+- [npmx.dev pinned test configuration and examples](../raw/2026-09-14-npmx-testing-strategy.md).
 
 - [Nuxt startup path and prepared hydration mismatch](../raw/2026-09-13-nuxt-test-boundaries.md).
 

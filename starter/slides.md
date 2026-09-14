@@ -21,24 +21,12 @@ hideFooter: true
 />
 
 ---
-layout: cover
+layout: default
+class: p-0
 background: false
 hideFooter: true
 ---
-<div class="max-w-3xl">
-
-# Frontend-Testing<br>neu gedacht
-
-## Black-Box-Strategie mit Vitest Browser Mode
-
-<div class="mt-6 text-2xl">KI schreibt Tests. Wir definieren, was grün bedeutet.</div>
-
-<div class="mt-12 text-xl opacity-70">
-Alexander Opalic<br>
-Developer bei Otto Payments
-</div>
-
-</div>
+<TalkTitle />
 
 ---
 layout: default
@@ -47,7 +35,7 @@ hideFooter: true
 ---
 <h1 class="sr-only">Die klassische Testpyramide</h1>
 <img
-  src="/memes/hamcrab-testing-pyramid.png"
+  src="/memes/hamcrab-testing-pyramid-consistent-v1.png"
   alt="Testpyramide mit Unit-Tests als breiter Basis, Integrationstests in der Mitte und End-to-End-Tests an der Spitze. Beispiele: eine Preisberechnung, Produkt und Warenkorb, eine vollständige Bestellung. Die Verteilung ist eine Faustregel, keine feste Quote."
   class="absolute inset-0 h-full w-full object-contain"
 />
@@ -94,7 +82,7 @@ class: p-0
 hideFooter: true
 ---
 <img
-  src="/memes/hamcrab-jsdom-isolated-components-2021.png"
+  src="/memes/hamcrab-jsdom-isolated-components-2021-consistent-v1.png"
   alt="Isolierte Komponententests um 2021: Eine Komponente mit API-Mock, Router-Mock und Child-Stub in jsdom unter Node.js. jsdom bildet DOM und Events nach, berechnet aber kein Layout und rendert keine Darstellung."
   class="absolute inset-0 h-full w-full object-contain"
 />
@@ -565,7 +553,7 @@ class: p-0
 hideFooter: true
 ---
 <img
-  src="/memes/hamcrab-three-component-contracts-v2.png"
+  src="/memes/hamcrab-three-component-contracts-consistent-v1.png"
   alt="Drei Hamcrabs zeigen die Verträge Verhalten, Accessibility und Darstellung"
   class="absolute inset-0 h-full w-full object-contain"
 />
@@ -594,47 +582,21 @@ contractChapter: "1 / 3 · Verhalten"
 
 ---
 layout: center
-clicks: 3
 contractChapter: "1 / 3 · Verhalten"
 ---
-# Vom Klick zur ganzen Bestellung
+# Der Klick funktioniert.<br>Klappt auch die Bestellung?
 
-<Steps :steps="['Produkt', 'Warenkorb', 'Checkout', 'Bestätigung']" />
+<div class="mt-8 text-xl">Produkt → Warenkorb → Checkout → Bestätigung</div>
 
 ---
-layout: code-editor
-project: claw-and-chew
-activeFile: Shop.vue
-tabs: Shop.vue
-step: Komponente · vereinfacht
-files: |
-  app/
-    components/
-      Shop.vue
-    catalog/
-      ProductCard.vue
-    cart/
-      CartDrawer.vue
+layout: default
+contractChapter: "1 / 3 · Verhalten"
 hideFooter: true
 ---
 
-<div class="mb-3 text-xl font-bold">Shop.vue: die Bestellung zusammensetzen</div>
+# Shop.vue: die Bestellung zusammensetzen
 
-```vue
-<template>
-  <!-- Warenkorb öffnen -->
-  <button :aria-label="`Open bag, ${totals.count} items`"
-    @click="bagOpen = true">Bag</button>
-
-  <!-- Produkt auswählen und hinzufügen -->
-  <ProductCard v-for="product in products" :key="product.id"
-    :product="product" @add="quickAdd" />
-
-  <!-- Warenkorb → Checkout → Bestätigung -->
-  <CartDrawer v-model:open="bagOpen" :lines="lines"
-    @ordered="completeOrder" />
-</template>
-```
+<img src="/shop/shop-component-boundaries.png" alt="Claw & Chew: Shop.vue umfasst die Produktkarte ProductCard.vue und den CartDrawer.vue mit eingebettetem CheckoutForm.vue. Farbige Rechtecke markieren die Komponenten im Shop-UI." class="w-full h-[365px] object-contain" />
 
 <div class="mt-3 text-lg">Der Test bedient diese Komponenten gemeinsam über <code>Shop</code>.</div>
 
@@ -1102,13 +1064,13 @@ contractChapter: "3 / 3 · Darstellung"
 <div class="coverage-columns">
   <section>
     <h2>Eigene Core-UI</h2>
-    <p class="coverage-example">Button · Dialog · Eingabefeld</p>
-    <p>Ausgewählte Varianten<br>Fokus- und Fehlerzustände</p>
+    <img class="coverage-visual" src="/diagrams/visual-coverage-fields.png" alt="UI-Beispiel: ein E-Mail-Feld im Standardzustand, mit grünem Fokusring und mit roter Fehlermeldung." />
+    <p>Ausgewählte Varianten und Zustände</p>
   </section>
   <section>
     <h2>Fachliche Screens</h2>
-    <p class="coverage-example">Kompositionen · Layout-Risiken</p>
-    <p>Gezielt die Ansichten absichern,<br>bei denen Darstellung zählt.</p>
+    <img class="coverage-visual" src="/diagrams/visual-coverage-checkout.png" alt="UI-Beispiel: Checkout mit Lieferadresse und Bestellübersicht. Ein langer Produktname ist als Layout-Risiko pink markiert." />
+    <p>Kompositionen mit Layout-Risiken</p>
   </section>
 </div>
 
@@ -1119,16 +1081,462 @@ contractChapter: "3 / 3 · Darstellung"
 
 <style>
 .visual-coverage h1 { font-size: 34px; }
-.visual-coverage .coverage-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-top: 54px; text-align: left; }
-.visual-coverage .coverage-columns section { border-top: 3px solid #a8cf80; padding-top: 20px; }
-.visual-coverage .coverage-columns h2 { font-size: 27px; line-height: 1.2; margin: 0 0 18px; font-weight: 600; }
-.visual-coverage .coverage-columns p { font-size: 21px; line-height: 1.5; margin: 12px 0 0; }
-.visual-coverage .coverage-columns .coverage-example { color: #b9dba0; font-size: 20px; }
-.visual-coverage .coverage-rule { margin-top: 42px; padding-top: 20px; border-top: 1px solid #ffffff30; display: flex; flex-direction: column; gap: 8px; }
+.visual-coverage .coverage-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 22px; text-align: left; }
+.visual-coverage .coverage-columns section { border-top: 3px solid #a8cf80; padding-top: 12px; min-width: 0; }
+.visual-coverage .coverage-columns h2 { font-size: 27px; line-height: 1.2; margin: 0 0 8px; font-weight: 600; }
+.visual-coverage .coverage-visual { display: block; width: 100%; height: 218px; object-fit: contain; }
+.visual-coverage .coverage-columns p { color: #b9dba0; font-size: 18px; line-height: 1.4; margin: 8px 0 0; }
+.visual-coverage .coverage-rule { margin-top: 20px; padding-top: 14px; border-top: 1px solid #ffffff30; display: flex; flex-direction: column; gap: 5px; }
 .visual-coverage .coverage-rule strong { font-size: 23px; font-weight: 600; }
-.visual-coverage .coverage-rule span { font-size: 19px; opacity: .7; }
+.visual-coverage .coverage-rule span { font-size: 18px; opacity: .7; }
 </style>
 
+
+---
+layout: default
+contractChapter: "3 / 3 · Darstellung"
+---
+# Visual Regression zum Nachlesen
+
+<div class="mt-10 grid grid-cols-[1fr_280px] gap-12 items-center">
+  <div>
+    <p class="text-2xl leading-relaxed">In meinem Blogpost gehe ich genauer auf das Beispiel mit den Button-Varianten ein.</p>
+    <a href="https://alexop.dev/posts/visual-regression-testing-with-vue-and-vitest-browser/" target="_blank" rel="noopener noreferrer" class="mt-8 block text-2xl leading-snug">
+      How to Do Visual Regression<br>Testing in Vue with Vitest?
+    </a>
+    <p class="mt-5 text-xl opacity-70">alexop.dev</p>
+  </div>
+  <a href="https://alexop.dev/posts/visual-regression-testing-with-vue-and-vitest-browser/" target="_blank" rel="noopener noreferrer" aria-label="Blogpost über Visual Regression öffnen">
+    <img src="/qr/visual-regression-blog.png" alt="QR-Code zum Blogpost über Visual Regression mit Vue und Vitest" width="280" height="280" />
+  </a>
+</div>
+
+---
+layout: default
+---
+# Drei Blickwinkel auf dieselbe UI
+
+<div class="mt-10 text-2xl">Was soll ein grüner Test für unseren Shop beweisen?</div>
+
+| Vertrag | Unser Beispiel | Prüfung |
+| --- | --- | --- |
+| Verhalten | Ich kann eine Bestellung abschließen. | Interaktion → sichtbares Ergebnis |
+| Accessibility | Ich kann Tabs per Tastatur bedienen. | Fokus, ARIA-Zustand und axe |
+| Darstellung | Die freigegebenen Button-Varianten bleiben erhalten. | Bewusst gewählte Bildreferenz |
+
+<div class="mt-8 text-2xl">Zusammen bestimmen sie, was „funktioniert“ bedeutet.</div>
+
+---
+layout: default
+---
+# Browser Mode vs. jsdom
+
+<div class="mt-3 text-lg opacity-75">Erkenntnisse aus der Reka-UI-Migration · mit Playwright</div>
+
+<BrowserModeComparison />
+
+---
+layout: default
+---
+# So würde ich heute unsere Tests aufbauen
+
+| Wo? | Was sichern wir ab? |
+| --- | --- |
+| **Vitest · Node** | Reine Logik: Preise, Rabatte, Validierung |
+| **Vitest · Browser Mode** | Echte Komponenten im Zusammenspiel: die Bestellung |
+| **Im Browser ergänzen** | Tastatur, Fokus und axe; ausgewählte Bildreferenzen |
+| **Playwright · E2E** | Kritische Wege durch die laufende App: Start, Hydration, Reload |
+
+<div class="mt-8 text-2xl">Mein Schwerpunkt: Nutzerabläufe mit echten Komponenten.</div>
+<div class="mt-4 text-xl opacity-75">Typprüfung und Linting als Basis. Externe APIs gezielt kontrollieren.</div>
+
+---
+layout: default
+class: npmx-strategy
+---
+# So testet npmx.dev
+
+<div class="npmx-columns">
+  <img class="npmx-pyramid" src="/diagrams/npmx-test-pyramid.png" alt="Testpyramide: unten Vitest in Node für reine Logik, mittig Vitest Browser Mode für Komponenten und axe, oben Playwright E2E. Die Flächen zeigen keine gemessene Mengenverteilung." />
+  <figure>
+    <img class="npmx-screenshot" src="/shop/npmx-vitest-overview.png" alt="npmx.dev zeigt die Vitest-Paketseite mit Suche, Dokumentation, Versionen und Paketinformationen." />
+    <figcaption>Ein Open-Source-Browser für die npm-Registry</figcaption>
+  </figure>
+</div>
+
+<div class="npmx-source"><a href="https://github.com/npmx-dev/npmx.dev/tree/0e3cdadf3d0d9759a91462a1045297c836701c51">npmx-dev/npmx.dev · Quellstand 0e3cdadf</a></div>
+
+<style>
+.npmx-strategy .npmx-columns { display: grid; grid-template-columns: 0.9fr 1.3fr; gap: 28px; align-items: center; margin-top: 24px; }
+.npmx-strategy .npmx-pyramid { width: 100%; height: 360px; object-fit: contain; }
+.npmx-strategy figure { margin: 0; }
+.npmx-strategy .npmx-screenshot { width: 100%; height: auto; border: 1px solid #ffffff25; border-radius: 6px; }
+.npmx-strategy figcaption { margin-top: 12px; font-size: 17px; opacity: .75; }
+.npmx-strategy .npmx-source { margin-top: 16px; font-size: 12px; opacity: .65; }
+</style>
+
+---
+layout: default
+class: npmx-feature
+clicks: 3
+---
+# Ein Feature, drei Testfragen
+
+<p class="feature-intent">„Ich möchte das Paket mit meinem Paketmanager installieren.“</p>
+
+<div class="feature-levels">
+  <section v-click="1" class="feature-level feature-node">
+    <div class="feature-label">Vitest · Node<span>Logik</span></div>
+    <div><h2>Wird der richtige Befehl berechnet?</h2><p>lodash + pnpm + Version 4.17.21<br>→ <code>pnpm add lodash@4.17.21</code></p></div>
+  </section>
+  <section v-click="2" class="feature-level feature-browser">
+    <div class="feature-label">Browser Mode<span>Komponenten-Audit</span></div>
+    <div><h2>Besteht die Auswahl den axe-Audit?</h2><p><code>PackageManagerSelect</code> rendern<br>→ keine gemeldeten Regelverletzungen</p></div>
+  </section>
+  <section v-click="3" class="feature-level feature-e2e">
+    <div class="feature-label">Playwright · E2E<span>Laufende App</span></div>
+    <div><h2>Kann ich die Funktion in der App bedienen?</h2><p>Dropdown: Pfeiltasten, Escape und Fokus prüfen.<br>Kopieren: Befehl in der echten Zwischenablage prüfen.</p></div>
+  </section>
+</div>
+
+<div class="feature-source"><a href="https://github.com/npmx-dev/npmx.dev/tree/75329352ee47ef6d641ba547bc382b91ef73c68f/test">Konkrete Tests aus npmx.dev · Quellstand 75329352</a></div>
+
+<style>
+.npmx-feature .feature-intent { margin: 22px 0 20px; font-size: 22px; opacity: .85; }
+.npmx-feature .feature-levels { display: grid; gap: 0; }
+.npmx-feature .feature-level { display: grid; grid-template-columns: 210px 1fr; gap: 22px; border-top: 1px solid #ffffff25; padding: 12px 0; }
+.npmx-feature .feature-label { font-size: 21px; font-weight: 600; padding-top: 2px; }
+.npmx-feature .feature-label span { display: block; font-size: 16px; font-weight: 400; margin-top: 6px; opacity: .8; }
+.npmx-feature .feature-node .feature-label { color: #a8cf80; }
+.npmx-feature .feature-browser .feature-label { color: #79cddd; }
+.npmx-feature .feature-e2e .feature-label { color: #ed929b; }
+.npmx-feature .feature-level h2 { font-size: 21px; line-height: 1.3; margin: 0 0 6px; font-weight: 600; }
+.npmx-feature .feature-level p { font-size: 18px; line-height: 1.45; margin: 0; opacity: .9; }
+.npmx-feature .feature-source { margin-top: 8px; font-size: 12px; opacity: .65; }
+</style>
+
+---
+layout: default
+class: talk-thanks
+hideFooter: true
+---
+# Danke!
+
+<p class="thanks-message">Testet, was eure Nutzer tun – im echten Browser.</p>
+
+<div class="thanks-grid">
+  <div>
+    <a class="thanks-blog" href="https://alexop.dev/">alexop.dev</a>
+    <p class="thanks-intro">Die Teststrategie zum Nachlesen:</p>
+    <a class="thanks-article" href="https://alexop.dev/posts/vue3_testing_pyramid_vitest_browser_mode/">Vue 3 Testing Pyramid:<br>A Practical Guide with<br>Vitest Browser Mode</a>
+    <p class="thanks-topics">Logik · Integration · Accessibility · Visual Regression</p>
+  </div>
+  <a href="https://alexop.dev/posts/vue3_testing_pyramid_vitest_browser_mode/" aria-label="Blogartikel zur Teststrategie öffnen">
+    <img src="/qr/testing-strategy-blog.png" alt="QR-Code zum Blogartikel über die Teststrategie mit Vitest Browser Mode" width="240" height="240" />
+  </a>
+</div>
+
+<style>
+.talk-thanks h1 { font-size: 60px; margin-bottom: 16px; }
+.talk-thanks .thanks-message { font-size: 26px; margin: 0; }
+.talk-thanks .thanks-grid { display: grid; grid-template-columns: 1fr 240px; gap: 48px; align-items: center; margin-top: 42px; }
+.talk-thanks .thanks-blog { font-size: 44px; font-weight: 600; }
+.talk-thanks .thanks-intro { font-size: 19px; opacity: .75; margin: 22px 0 10px; }
+.talk-thanks .thanks-article { font-size: 24px; line-height: 1.35; }
+.talk-thanks .thanks-topics { font-size: 16px; opacity: .7; margin-top: 18px; }
+</style>
+
+---
+layout: statement
+hideFooter: true
+---
+# Backup
+
+---
+layout: default
+class: p-0
+hideFooter: true
+---
+<ShopDemoFrame scenario="missing-pointer-capture" title="Der Druck bleibt stehen" />
+
+---
+layout: two-cols-header
+zoom: 0.82
+---
+# Pointer Capture: derselbe Drag
+
+::left::
+
+## JSDOM bleibt grün
+
+```ts
+// Setup: Capture gilt im Mock immer als aktiv.
+hasPointerCapture: { value: vi.fn(() => true) }
+
+// Ausschnitt: Events direkt an das Handle senden.
+await fireEvent.pointerDown(handle, {
+  pointerId: 1, button: 0,
+  clientX: 200, clientY: 106,
+})
+await fireEvent.pointerMove(handle, {
+  pointerId: 1, buttons: 1,
+  clientX: 300, clientY: 141,
+})
+expect(screen.getByLabelText('Print position'))
+  .toHaveTextContent('Position: 75%, 60%')
+```
+
+Der Mock und das direkte Event umgehen das echte Pointer-Routing.
+
+::right::
+
+## Browser Mode schlägt fehl
+
+```ts
+const screen = await render(CustomizerHost)
+
+await commands.dragMascot()
+
+await expect.element(
+  screen.getByLabelText('Print position'),
+).toHaveTextContent('Position: 75%, 60%')
+```
+
+Der Helper bewegt die Maus mit gedrückter Taste aus dem Handle. Ohne Capture kommt der Drag dort nicht weiter an.
+
+---
+layout: default
+class: talk-code
+---
+# Ohne Capture bleibt der Druck stehen
+
+<div class="mb-5 text-lg"><code>ShirtCustomizer.browser.test.ts</code> · Defekt aktiv</div>
+
+```text
+Expected element to have text content:
+  Position: 75%, 60%
+Received:
+  Position: 50%, 45%
+```
+
+<div class="mt-6 text-xl" style="color: #f38ba8">✕ Browser Mode: fehlgeschlagen</div>
+<div class="mt-3 text-xl" style="color: #a6e3a1">✓ JSDOM: bestanden · nach dem Fix sind beide grün</div>
+<div class="mt-6 text-lg">Der Fix stellt <code>setPointerCapture(event.pointerId)</code> wieder her.</div>
+<div class="mt-4 text-sm opacity-60">Gekürzte Fehlerausgabe aus dem aufgezeichneten Claw-&amp;-Chew-Testlauf.</div>
+
+---
+layout: default
+class: p-0
+hideFooter: true
+---
+<ShopDemoFrame scenario="unscrollable-bag" title="Der letzte Artikel bleibt unerreichbar" />
+
+---
+layout: default
+zoom: 0.9
+---
+# Der unerreichbare Warenkorb
+
+<TestingLabExample example="unscrollable-bag" />
+
+---
+layout: two-cols-header
+zoom: 0.82
+---
+# Scrollbarer Warenkorb: dieselbe Absicht
+
+::left::
+
+## JSDOM bleibt grün
+
+```ts
+render(FullBagHost)
+const user = userEvent.setup()
+
+await user.click(await screen.findByRole(
+  'button',
+  { name: 'Remove Tiny claws sticker pack' },
+))
+
+expect(screen.queryByRole(
+  'button',
+  { name: 'Remove Tiny claws sticker pack' },
+)).not.toBeInTheDocument()
+```
+
+::right::
+
+## Browser Mode schlägt fehl
+
+```ts
+await page.viewport(375, 600)
+const screen = await render(FullBagHost)
+const remove = screen.getByRole('button', {
+  name: 'Remove Tiny claws sticker pack',
+})
+
+await commands.scrollBag()
+await expect.poll(() => {
+  const item = remove.element().getBoundingClientRect()
+  const bag = document.querySelector('.drawer-body')!
+    .getBoundingClientRect()
+  return item.top >= bag.top && item.bottom <= bag.bottom
+}).toBe(true)
+```
+
+---
+layout: default
+class: talk-code
+---
+# Scrollen: Der letzte Artikel bleibt unerreichbar
+
+<div class="mb-5 text-lg"><code>CartDrawer.browser.test.ts</code> · Defekt aktiv</div>
+
+```text
+The last bag item must be reachable by wheel scrolling:
+expected false to be true
+```
+
+<div class="mt-6 text-xl" style="color: #f38ba8">✕ Browser Mode: fehlgeschlagen</div>
+<div class="mt-3 text-xl" style="color: #a6e3a1">✓ JSDOM: bestanden · nach dem Fix sind beide grün</div>
+<div class="mt-6 text-lg">Der Fix erlaubt Scrollen im Warenkorb wieder. Die Prüfung scheitert bereits vor dem Klick auf „Remove“.</div>
+<div class="mt-4 text-sm opacity-60">Gekürzte Fehlerausgabe aus dem aufgezeichneten Claw-&amp;-Chew-Testlauf.</div>
+
+---
+layout: default
+class: p-0
+hideFooter: true
+---
+<ShopDemoFrame scenario="fixed-preview-width" title="Resize: Der Druck landet falsch" />
+
+---
+layout: default
+zoom: 0.9
+---
+# Produktvorschau: Resize vor dem Drag
+
+<TestingLabExample example="fixed-preview-width" />
+
+---
+layout: two-cols-header
+zoom: 0.82
+---
+# Responsive Preview: dieselbe Absicht
+
+::left::
+
+## JSDOM bleibt grün
+
+```ts
+render(CustomizerHost)
+await fireEvent.click(screen.getByRole(
+  'button', { name: 'Resize preview' },
+))
+
+await fireEvent.pointerMove(handle, {
+  clientX: 300,
+  clientY: 141,
+})
+
+expect(screen.getByLabelText('Print position'))
+  .toHaveTextContent('Position: 75%, 60%')
+```
+
+JSDOM verwendet weiterhin das erfundene Rechteck mit 400 px.
+
+::right::
+
+## Browser Mode schlägt fehl
+
+```ts
+const screen = await render(CustomizerHost)
+await screen.getByRole('button', {
+  name: 'Resize preview',
+}).click()
+
+await expect.element(screen.getByLabelText(
+  'Preview width',
+)).toHaveTextContent('Preview: 280 px')
+
+await commands.dragMascot()
+await expect.element(screen.getByLabelText(
+  'Print position',
+)).toHaveTextContent('Position: 75%, 60%')
+```
+
+---
+layout: default
+class: talk-code
+---
+# Resize: Der Drag rechnet mit 400 px
+
+<div class="mb-5 text-lg"><code>ShirtCustomizer.browser.test.ts</code> · Defekt aktiv</div>
+
+```text
+Expected element to have text content:
+  Position: 75%, 60%
+Received:
+  Position: 53%, 60%
+```
+
+<div class="mt-6 text-xl" style="color: #f38ba8">✕ Browser Mode: fehlgeschlagen</div>
+<div class="mt-3 text-xl" style="color: #a6e3a1">✓ JSDOM: bestanden · nach dem Fix sind beide grün</div>
+<div class="mt-6 text-lg">Die Vorschau ist 280 px breit. Der Defekt rechnet noch mit 400 px; der Fix verwendet die gemessene Breite.</div>
+<div class="mt-4 text-sm opacity-60">Gekürzte Fehlerausgabe aus dem aufgezeichneten Claw-&amp;-Chew-Testlauf.</div>
+
+---
+layout: default
+class: p-0
+hideFooter: true
+---
+<ShopDemoFrame scenario="low-contrast-notice" title="Der Checkout-Hinweis ist kaum lesbar" />
+
+---
+layout: default
+---
+# Mein Praxisversuch mit Reka UI
+
+<img src="/shop/reka-ui-overview.png" alt="Reka UI mit Kalender, Farbauswahl, Slider und weiteren UI-Komponenten." class="w-full h-80 object-contain mt-5" />
+
+<div class="mt-5 text-xl">Browser Mode an einer bestehenden Komponentenbibliothek ausprobieren.</div>
+
+---
+layout: default
+---
+# Meine Vorbereitung
+
+<div class="mt-12 space-y-9">
+  <div><div class="text-3xl font-semibold">Tests sichten</div><div class="mt-2 text-xl opacity-75">Welche Tests brauchen einen Browser, welche prüfen reine Logik?</div></div>
+  <div><div class="text-3xl font-semibold">Browser Mode einrichten</div><div class="mt-2 text-xl opacity-75">Die vorhandenen Tests zum Vergleich weiterlaufen lassen.</div></div>
+  <div><div class="text-3xl font-semibold">Einen ersten Test übertragen</div><div class="mt-2 text-xl opacity-75">Am Slider lernen und daraus die Anleitung entwickeln.</div></div>
+</div>
+
+---
+layout: default
+---
+# So habe ich die Migration organisiert
+
+<div class="grid grid-cols-[1fr_auto_1fr_auto_1fr] items-center gap-5 mt-20">
+  <div><div class="text-3xl font-semibold">Übertragen</div><div class="mt-4 text-xl opacity-75">Ein Agent übernimmt eine Testdatei.</div></div>
+  <div class="text-4xl" style="color: #ff55e7" aria-hidden="true">→</div>
+  <div><div class="text-3xl font-semibold">Prüfen</div><div class="mt-4 text-xl opacity-75">Ein zweiter Agent vergleicht mit dem Original.</div></div>
+  <div class="text-4xl" style="color: #ff55e7" aria-hidden="true">→</div>
+  <div><div class="text-3xl font-semibold">Lernen</div><div class="mt-4 text-xl opacity-75">Erkenntnisse verbessern die Anleitung.</div></div>
+</div>
+
+<div class="mt-16 text-2xl">Die nächste Datei startet mit der verbesserten Anleitung.</div>
+
+---
+layout: default
+---
+# Das Ergebnis
+
+<div class="grid grid-cols-2 gap-16 mt-14 text-center">
+  <div><div class="text-8xl font-bold" style="color: #ff55e7">87</div><div class="mt-5 text-2xl">Testdateien im Browser</div></div>
+  <div><div class="text-8xl font-bold" style="color: #a6e3a1">10</div><div class="mt-5 text-2xl">Testdateien in Node</div></div>
+</div>
+
+<div class="mt-14 text-2xl text-center">Die ursprünglichen Tests blieben zum Vergleich erhalten.</div>
 
 ---
 layout: default
@@ -1190,6 +1598,109 @@ layout: default
 
 ---
 layout: default
+zoom: 0.9
+---
+# Nuxt: Vom Server-HTML zum Warenkorb
+
+```ts
+const hydrationErrors: string[] = []
+page.on('console', (message) => {
+  if (/hydration.*mismatch/i.test(message.text()))
+    hydrationErrors.push(message.text())
+})
+
+await page.goto('/')
+await page.getByRole('button', {
+  name: 'Add The little claw plush to bag',
+}).click()
+await page.getByRole('button', { name: 'Open bag, 1 items' }).click()
+await expect(page.getByRole('dialog', {
+  name: 'Your little haul',
+})).toBeVisible()
+expect(hydrationErrors).toEqual([])
+```
+
+<div class="mt-5 text-xl">Direkter Mount: grün · eingebauter Hydration-Defekt: hier rot</div>
+
+---
+layout: two-cols-header
+zoom: 0.84
+---
+# Hydration braucht die gebaute Anwendung
+
+::left::
+
+## Browser Mode bleibt grün
+
+```ts
+const screen = await render(Shop)
+
+await screen.getByRole('button', {
+  name: 'Add The little claw plush to bag',
+}).click()
+
+await screen.getByRole('button', {
+  name: 'Open bag, 1 items',
+}).click()
+
+await expect.element(screen.getByRole(
+  'dialog', { name: 'Your little haul' },
+)).toBeVisible()
+```
+
+Browser Mode mountet nur den Client-Zustand.
+
+::right::
+
+## Playwright schlägt fehl
+
+```ts
+const hydrationErrors: string[] = []
+page.on('console', (message) => {
+  if (/hydration.*mismatch/i.test(message.text()))
+    hydrationErrors.push(message.text())
+})
+
+await page.goto('/')
+
+expect(
+  hydrationErrors,
+  'The server HTML must hydrate without mismatches',
+).toEqual([])
+```
+
+Playwright beginnt mit dem HTML des Nuxt-Servers.
+
+---
+layout: default
+zoom: 0.9
+---
+# Hydration: die Grenze im Modell
+
+<TestingLabExample example="hydration-mismatch" />
+
+---
+layout: two-cols-header
+---
+# Browser Mode ersetzt nicht alles
+
+::left::
+
+- Kein Nuxt-Server beim direkten Mount
+- Kein Beweis für Safari auf einem echten Gerät
+- Kein vollständiger Accessibility-Audit
+- Experimentelle ARIA- und Screenshot-APIs
+
+::right::
+
+## Dafür bleibt Playwright End-to-End
+
+- Hydration
+- Produktions-Routing und Assets
+- kritische vollständige Abläufe
+
+---
+layout: default
 ---
 # Was bleibt für unseren Shop echt?
 
@@ -1216,308 +1727,6 @@ layout: default
 - Verdecke den Button: rot. Entferne den Defekt: grün.
 
 ---
-layout: default
-class: p-0
-hideFooter: true
----
-<h1 class="sr-only">Reka UI</h1>
-<img
-  src="/shop/reka-ui-overview.png"
-  alt="Reka UI mit Beispielen für Kalender, Farbauswahl, Slider, Zahleneingabe und weitere UI-Komponenten."
-  class="absolute inset-0 h-full w-full object-contain"
-  style="background: #0b100c"
-/>
-
----
-layout: default
----
-
-<RekaMigrationOverview />
-
----
-layout: code-editor
-project: reka-ui
-activeFile: vite.config.ts
-tabs: vite.config.ts
-step: 1 / 6 · Migration
-clicks: 1
-files: |
-  packages/
-    core/
-      src/
-        Slider/
-          Slider.test.ts
-          Slider.browser.test.ts
-      vite.config.ts
-  PORTING.md
-  PORT-PROMPTS.md
-  PORT-INVENTORY.tsv
-hideFooter: true
----
-
-<div class="mb-4 text-xl font-bold">1. Browser Mode neben jsdom ergänzen</div>
-
-````md magic-move {duration:400}
-```ts
-// Ausschnitt: bestehendes Testprojekt
-{
-  name: 'unit',
-  environment: 'jsdom',
-  include: ['./**/*.test.{ts,js}'],
-  setupFiles: './vitest.setup.ts',
-}
-```
-```ts
-// Neues Projekt neben dem bisherigen jsdom-Projekt
-{
-  name: 'browser',
-  include: ['./**/*.browser.test.ts'],
-  setupFiles: './vitest.browser.setup.ts',
-  browser: {
-    enabled: true,
-    provider: playwright(),
-    instances: [{ browser: 'chromium' }],
-  },
-}
-```
-````
-
-<div class="mt-5 text-lg">97 Testdateien als Ausgangspunkt. Die Originale liefen weiter.</div>
-
----
-layout: code-editor
-project: reka-ui
-activeFile: Slider.test.ts
-tabs: Slider.test.ts, Slider.browser.test.ts@1
-step: 2 / 6 · Migration
-clicks: 1
-files: |
-  packages/
-    core/
-      src/
-        Slider/
-          Slider.test.ts
-          Slider.browser.test.ts
-      vite.config.ts
-  PORTING.md
-  PORT-PROMPTS.md
-  PORT-INVENTORY.tsv
-hideFooter: true
----
-
-<div class="mb-4 text-xl font-bold">2. Den Slider in den Browser übertragen</div>
-
-````md magic-move {duration:400}
-```ts
-// Ausschnitt aus Slider.test.ts
-import { mount } from '@vue/test-utils'
-
-window.HTMLElement.prototype.setPointerCapture = vi.fn()
-
-beforeEach(() => {
-  wrapper = mount(Slider, { props: { disabled: false } })
-})
-
-it('should have default value', () => {
-  expect(wrapper.html()).toContain('aria-valuenow="50"')
-})
-```
-```ts
-// Ausschnitt aus Slider.browser.test.ts
-import { render } from 'vitest-browser-vue'
-
-// Pointer Capture kommt jetzt vom Browser.
-beforeEach(async () => {
-  screen = await renderSlider()
-})
-
-it('should have default value', async () => {
-  await expect.element(screen.getByRole('slider'))
-    .toHaveAttribute('aria-valuenow', '50')
-})
-```
-````
-
-<div class="mt-5 text-lg">39 Tests portiert. Gegenprobe ohne Pointer Capture: Browser rot, jsdom grün.</div>
-
----
-layout: code-editor
-project: reka-ui
-activeFile: vite.config.ts
-tabs: vite.config.ts
-step: 3 / 6 · Migration
-clicks: 2
-files: |
-  packages/
-    core/
-      src/
-        Slider/
-          Slider.test.ts
-          Slider.browser.test.ts
-      vite.config.ts
-  PORTING.md
-  PORT-PROMPTS.md
-  PORT-INVENTORY.tsv
-hideFooter: true
----
-
-<div class="mb-4 text-xl font-bold">3. Zehn Dateien brauchen keinen Browser</div>
-
-```ts {all|4-7|11-12}
-// Eigenes Projekt für reine Logik
-{
-  extends: true,
-  test: {
-    name: 'node',
-    environment: 'node',
-    include: NODE_TESTS,
-  },
-}
-
-// Im jsdom-Projekt: diese Dateien ausschließen.
-exclude: ['**/node_modules/**', '**/*.browser.test.ts', ...NODE_TESTS]
-```
-
-<div class="mt-5 text-lg">Kein DOM, kein Browser-Setup. Weitere Pilotdateien: useForwardExpose und Label.</div>
-
----
-layout: code-editor
-project: reka-ui
-activeFile: PORTING.md
-tabs: PORTING.md
-step: 4 / 6 · Migration
-clicks: 3
-files: |
-  packages/
-    core/
-      src/
-        Slider/
-          Slider.test.ts
-          Slider.browser.test.ts
-      vite.config.ts
-  PORTING.md
-  PORT-PROMPTS.md
-  PORT-INVENTORY.tsv
-hideFooter: true
----
-
-<div class="mb-4 text-xl font-bold">4. Jeden Port prüfen lassen</div>
-
-```sh {all|1-2|4-7|9-10}
-# Ein Agent migriert. Ein zweiter vergleicht Original und Port.
-pnpm --filter reka-ui exec vitest run --project=browser Slider
-
-# Fehlen Testfälle? Wurden Assertions oder Coverage verloren?
-pnpm --filter reka-ui port:checklist Slider --complete
-pnpm --filter reka-ui port:parity Slider --complete
-pnpm --filter reka-ui port:coverage Slider
-
-# Auch das Original muss weiter laufen.
-pnpm --filter reka-ui exec vitest run --project=unit Slider
-```
-
-<div class="mt-5 text-lg">Der Reviewer sucht schwächere Assertions. Gleiche Zahlen allein reichen nicht.</div>
-
----
-layout: code-editor
-project: reka-ui
-activeFile: PORT-PROMPTS.md
-tabs: PORT-PROMPTS.md
-step: 5 / 6 · Migration
-clicks: 2
-files: |
-  packages/
-    core/
-      src/
-        Slider/
-          Slider.test.ts
-          Slider.browser.test.ts
-      vite.config.ts
-  PORTING.md
-  PORT-PROMPTS.md
-  PORT-INVENTORY.tsv
-hideFooter: true
----
-
-<div class="mb-4 text-xl font-bold">5. Erkenntnisse in die Anleitung übernehmen</div>
-
-```md {all|2-5|7-10}
-<!-- Aufträge aus PORT-PROMPTS.md, gekürzt und übersetzt -->
-## Migration
-- Übertrage genau eine Testdatei.
-- Behalte Testfälle und die Stärke der Assertions bei.
-- Dokumentiere neue Erkenntnisse.
-
-## Unabhängiges Review
-- Lies Original und Port ohne die Erklärung des Implementierers.
-- Suche fehlende oder schwächere Assertions.
-- Würde der Test ohne funktionierendes Feature bestehen?
-```
-
-<div class="mt-5 text-lg">Prompts und AGENTS.md wurden korrigiert und für die nächsten Dateien genutzt.</div>
-
----
-layout: code-editor
-project: reka-ui
-activeFile: PORT-INVENTORY.tsv
-tabs: PORT-INVENTORY.tsv
-step: 6 / 6 · Migration
-files: |
-  packages/
-    core/
-      src/
-        Slider/
-          Slider.test.ts
-          Slider.browser.test.ts
-      vite.config.ts
-  PORTING.md
-  PORT-PROMPTS.md
-  PORT-INVENTORY.tsv
-hideFooter: true
----
-
-<div class="mb-4 text-xl font-bold">6. Jede Datei hat ein neues Testziel</div>
-
-```text
-Zusammenfassung der Migration · 97 ursprüngliche Dateien
-
-Ziel                     Dateien
-────────────────────────────────
-Vitest Browser Mode           87
-Node                          10
-────────────────────────────────
-Ohne neues Testziel            0
-
-Die jsdom-Originale bleiben als Vergleich erhalten.
-```
-
-<div class="mt-5 text-lg">Danach folgte die Qualitätsarbeit an Interaktionen und Assertions.</div>
-
----
-layout: default
----
-# Was kostet ein echter Klick?
-
-<div class="grid grid-cols-2 gap-10 mt-7">
-  <div>
-    <div class="text-xl opacity-70">jsdom · <code>element.click()</code></div>
-    <div class="text-4xl font-bold mt-3">0,03 ms</div>
-    <div class="text-xl mt-4">Löst das Klick-Event direkt im DOM aus.</div>
-  </div>
-  <div>
-    <div class="text-xl opacity-70">Browser · <code>locator.click()</code></div>
-    <div class="text-4xl font-bold mt-3">≈ 26 ms</div>
-    <div class="text-xl mt-4">Prüft: sichtbar, aktiviert, erreichbar, stabil.</div>
-    <div class="text-xl mt-2">Maus bewegen → drücken → loslassen</div>
-  </div>
-</div>
-
-<div class="mt-7 text-2xl font-bold">≈ 18 ms davon: auf eine stabile Position warten</div>
-<div class="mt-2 text-xl">Gleiche Position und Größe in zwei aufeinanderfolgenden Animationsframes.</div>
-<div class="mt-5 text-xl">Meine Reka-UI-Suite: 10,75 s → 12,10 s · ≈ 13 % länger</div>
-<div class="mt-3 text-sm opacity-70">Lokale Messung · M4 Pro · Chromium headless · kein allgemeines Tempo-Versprechen</div>
-
----
 layout: statement
 ---
 # Wir definieren, was grün bedeutet
@@ -1526,241 +1735,6 @@ layout: statement
 <div class="mt-6 text-2xl">Der Browser prüft echtes Browser-Verhalten.</div>
 <div class="mt-6 text-2xl">Ein gezielter Defekt prüft unseren Test.</div>
 
----
-layout: end
-hideFooter: true
----
-# Was soll euer nächster Test beweisen?
-
-<div class="mt-10 text-xl opacity-70">Fragen · alexop.dev · Beispiele: claw-and-chew.vercel.app</div>
-
----
-layout: statement
-hideFooter: true
----
-# Backup
-
----
-layout: default
-class: talk-code
-contractChapter: "2 / 3 · Accessibility"
----
-# Drei Erwartungen. Ein Vertrag.
-
-<div class="mt-6 mb-6 text-xl">Nach dem Tastaturwechsel zu Password:</div>
-
-```ts
-await expect.element(password).toHaveFocus()
-await expect.element(password).toHaveAttribute('aria-selected', 'true')
-await expect.element(panel).toHaveAccessibleName('Password')
-```
-
-<div class="mt-8 flex gap-12 text-2xl" style="color: #ff55e7"><span>Fokus</span><span>Auswahl</span><span>Panel-Name</span></div>
-<div class="mt-6 text-xl">Gleicher Test: mit Defekt rot, nach der Reparatur grün.</div>
-<div class="mt-6 text-base opacity-75">Diese ARIA-Fehler sind auch in JSDOM prüfbar. Browser Mode ergänzt die echte Browserumgebung. Die Assertions bestimmen, was wir prüfen.</div>
-
----
-layout: default
-class: talk-code
-zoom: 0.9
-contractChapter: "2 / 3 · Accessibility"
----
-# Der Bug: ARIA bleibt auf Account stehen
-
-<div class="mb-4 text-lg">Aus unserer Demo: <code>broken = true</code> hält den gemeldeten Namen fest.</div>
-
-```ts
-const selected = ref<'Account' | 'Password'>('Password')
-const semanticName = computed(() =>
-  broken.value ? 'Account' : selected.value
-)
-```
-
-```vue
-<!-- Auszug: Der Password-Tab bekommt zwei verschiedene Zustände. -->
-<button role="tab"
-  :class="{ active: selected === 'Password' }"
-  :aria-selected="semanticName === 'Password'"
-  @click="selected = 'Password'">Password</button>
-```
-
-<div class="mt-5 grid grid-cols-2 gap-8 text-xl">
-<div><span style="color: #a6e3a1">Sichtbar: selected = Password</span><br>Markierung und Inhalt wechseln.</div>
-<div><span style="color: #f38ba8">Gemeldet: semanticName = Account</span><br><code>aria-selected</code> bleibt falsch.</div>
-</div>
-<div class="mt-4 text-base opacity-80">Auch <code>aria-labelledby</code> nutzt semanticName: Der Passwort-Bereich heißt weiter „Account“.</div>
-
----
-layout: default
-class: talk-code
-zoom: 0.85
-contractChapter: "2 / 3 · Accessibility"
----
-# Dieser JSDOM-Test bleibt grün
-
-```ts
-// @vitest-environment jsdom
-import { expect, test } from 'vitest'
-import { render, screen } from '@testing-library/vue'
-import userEvent from '@testing-library/user-event'
-import TabsContractDemo from './TabsContractDemo.vue'
-
-test('zeigt den Passwort-Bereich', async () => {
-  render(TabsContractDemo)
-  const user = userEvent.setup()
-  await user.click(screen.getByRole('tab', { name: 'Account' }))
-  await user.click(screen.getByRole('tab', { name: 'Password' }))
-  expect(screen.getByText('Change your password here.')).toBeTruthy()
-})
-```
-
-<div class="mt-5 text-xl" style="color: #a6e3a1">✓ Der Text ist da. Genau das prüft dieser Test.</div>
-<div class="mt-3 text-lg">Er prüft weder die gemeldete Auswahl noch den Namen des Panels.</div>
-<div class="mt-3 text-base opacity-70">Testbeispiel: Mit derselben Text-Assertion wäre auch Browser Mode grün.</div>
-
----
-layout: default
-class: talk-code
-zoom: 0.85
-contractChapter: "2 / 3 · Accessibility"
----
-# Dieser Browser-Test prüft auch die Bedeutung
-
-```ts
-import { expect, test } from 'vitest'
-import { page, userEvent } from 'vitest/browser'
-import { render } from 'vitest-browser-vue'
-import TabsContractDemo from './TabsContractDemo.vue'
-
-test('wechselt Auswahl und Bedeutung per Tastatur', async () => {
-  await render(TabsContractDemo)
-  await page.getByRole('tab', { name: 'Account' }).click()
-  await userEvent.keyboard('{ArrowRight}')
-  const password = page.getByRole('tab', { name: 'Password' })
-  await expect.element(password).toHaveFocus()
-  await expect.element(password).toHaveAttribute('aria-selected', 'true')
-  await expect.element(page.getByRole('tabpanel'))
-    .toHaveAccessibleName('Password')
-})
-```
-
-<div class="mt-4 text-xl" style="color: #f38ba8">✕ Erwartet: aria-selected="true" · Tatsächlich: "false"</div>
-<div class="mt-2 text-base">Testbeispiel: Die Auswahl-Assertion schlägt fehl. Nach der Reparatur passen auch Auswahl und Panel-Name.</div>
-<div class="mt-2 text-base opacity-70">Auch JSDOM könnte diese ARIA-Fehler prüfen. Browser Mode ergänzt die echte Browser- und Tastaturumgebung.</div>
-
----
-layout: default
-class: talk-code
-zoom: 0.9
-contractChapter: "2 / 3 · Accessibility"
----
-# Der Fix: ARIA folgt der sichtbaren Auswahl
-
-<div class="mb-4 text-lg">Den festgehaltenen Wert entfernen. Beide Darstellungen lesen denselben Zustand.</div>
-
-```diff
-- const semanticName = computed(() =>
--   broken.value ? 'Account' : selected.value
-- )
-+ const semanticName = computed(() => selected.value)
-```
-
-<div class="mt-5 text-lg">Nach dem Wechsel zu Password rendert Vue jetzt:</div>
-
-```html
-<button role="tab" aria-selected="false">Account</button>
-<button role="tab" id="demo-password" aria-selected="true">Password</button>
-<div role="tabpanel" aria-labelledby="demo-password">…</div>
-```
-
-<div class="mt-5 text-xl" style="color: #a6e3a1">✓ Password fokussiert · Password ausgewählt · Panel heißt Password</div>
-<div class="mt-3 text-lg">Der Test bleibt unverändert. Die Komponente erfüllt jetzt seine Erwartungen.</div>
-<div class="mt-3 text-base opacity-70">„Defekt aktiv“ ausschalten aktiviert in der Demo genau diesen Pfad: semanticName folgt selected.</div>
-
----
-layout: default
-class: talk-code
-contractChapter: "2 / 3 · Accessibility"
----
-# Den Zusammenhang als ARIA-Snapshot prüfen
-
-```ts
-await expect.element(page.getByRole('tablist')).toMatchAriaInlineSnapshot(`
-  - tablist "Manage your account":
-    - tab "Account"
-    - tab "Password" [selected]
-`)
-await expect.element(page.getByRole('tabpanel'))
-  .toHaveAccessibleName('Password')
-```
-
-<div class="mt-8 text-xl">Der Snapshot hält fest, welcher Tab als ausgewählt gemeldet werden soll.</div>
-<div class="mt-4 text-xl">Im Defekt steht <code>[selected]</code> bei Account. Nach der Reparatur bei Password.</div>
-
-<style>
-pre code { white-space: pre-wrap; overflow-wrap: anywhere; }
-</style>
-
----
-layout: two-cols-header
-zoom: 0.82
----
-# Scrollbarer Warenkorb: dieselbe Absicht
-
-::left::
-
-## JSDOM bleibt grün
-
-```ts
-render(FullBagHost)
-const user = userEvent.setup()
-
-await user.click(await screen.findByRole(
-  'button',
-  { name: 'Remove Tiny claws sticker pack' },
-))
-
-expect(screen.queryByRole(
-  'button',
-  { name: 'Remove Tiny claws sticker pack' },
-)).not.toBeInTheDocument()
-```
-
-::right::
-
-## Browser Mode schlägt fehl
-
-```ts
-await page.viewport(375, 600)
-const screen = await render(FullBagHost)
-const remove = screen.getByRole('button', {
-  name: 'Remove Tiny claws sticker pack',
-})
-
-await commands.scrollBag()
-await expect.poll(() => {
-  const item = remove.element().getBoundingClientRect()
-  const bag = document.querySelector('.drawer-body')!
-    .getBoundingClientRect()
-  return item.top >= bag.top && item.bottom <= bag.bottom
-}).toBe(true)
-```
-
----
-layout: default
-zoom: 0.9
----
-# Der unerreichbare Warenkorb
-
-<TestingLabExample example="unscrollable-bag" />
-
----
-layout: default
-zoom: 0.9
----
-# Produktvorschau: Resize vor dem Drag
-
-<TestingLabExample example="fixed-preview-width" />
 
 ---
 layout: default
@@ -1775,32 +1749,6 @@ layout: default
 
 <div class="mt-8 text-2xl">Beide testen Verhalten. Die Sprache des Vertrags ändert sich.</div>
 <div class="mt-5 text-xl opacity-70">Private Refs und interne Methoden sind kein Nutzervertrag.</div>
-
----
-layout: default
-zoom: 0.9
----
-# Nuxt: Vom Server-HTML zum Warenkorb
-
-```ts
-const hydrationErrors: string[] = []
-page.on('console', (message) => {
-  if (/hydration.*mismatch/i.test(message.text()))
-    hydrationErrors.push(message.text())
-})
-
-await page.goto('/')
-await page.getByRole('button', {
-  name: 'Add The little claw plush to bag',
-}).click()
-await page.getByRole('button', { name: 'Open bag, 1 items' }).click()
-await expect(page.getByRole('dialog', {
-  name: 'Your little haul',
-})).toBeVisible()
-expect(hydrationErrors).toEqual([])
-```
-
-<div class="mt-5 text-xl">Direkter Mount: grün · eingebauter Hydration-Defekt: hier rot</div>
 
 ---
 layout: default
@@ -1881,34 +1829,6 @@ layout: center
 
 ---
 layout: default
-class: p-0
-hideFooter: true
----
-<ShopDemoFrame scenario="missing-pointer-capture" title="Der Druck bleibt stehen" />
-
----
-layout: default
-class: p-0
-hideFooter: true
----
-<ShopDemoFrame scenario="fixed-preview-width" title="Resize: Der Druck landet falsch" />
-
----
-layout: default
-class: p-0
-hideFooter: true
----
-<ShopDemoFrame scenario="unscrollable-bag" title="Der letzte Artikel bleibt unerreichbar" />
-
----
-layout: default
-class: p-0
-hideFooter: true
----
-<ShopDemoFrame scenario="low-contrast-notice" title="Der Checkout-Hinweis ist kaum lesbar" />
-
----
-layout: default
 ---
 # Teste den Vertrag, nicht den privaten Ref
 
@@ -1977,149 +1897,6 @@ layout: default
 
 <div class="mt-8 text-2xl">Mehrfach ausgeführter Code ist normal.</div>
 <div class="mt-4 text-xl">Dieselbe Erwartung an vielen Stellen kostet Wartung.</div>
-
----
-layout: two-cols-header
----
-# Pointer Capture
-
-::left::
-
-```ts
-handle.setPointerCapture(event.pointerId)
-```
-
-JSDOM nimmt im Mock an, dass Capture aktiv ist.
-
-::right::
-
-Der Browser bewegt den Pointer aus dem Handle.
-
-Ohne Capture bleibt der Print bei `50%, 45%` statt `75%, 60%`.
-
----
-layout: two-cols-header
-zoom: 0.82
----
-# Responsive Preview: dieselbe Absicht
-
-::left::
-
-## JSDOM bleibt grün
-
-```ts
-render(CustomizerHost)
-await fireEvent.click(screen.getByRole(
-  'button', { name: 'Resize preview' },
-))
-
-await fireEvent.pointerMove(handle, {
-  clientX: 300,
-  clientY: 141,
-})
-
-expect(screen.getByLabelText('Print position'))
-  .toHaveTextContent('Position: 75%, 60%')
-```
-
-JSDOM verwendet weiterhin das erfundene Rechteck mit 400 px.
-
-::right::
-
-## Browser Mode schlägt fehl
-
-```ts
-const screen = await render(CustomizerHost)
-await screen.getByRole('button', {
-  name: 'Resize preview',
-}).click()
-
-await expect.element(screen.getByLabelText(
-  'Preview width',
-)).toHaveTextContent('Preview: 280 px')
-
-await commands.dragMascot()
-await expect.element(screen.getByLabelText(
-  'Print position',
-)).toHaveTextContent('Position: 75%, 60%')
-```
-
----
-layout: two-cols-header
-zoom: 0.84
----
-# Hydration braucht die gebaute Anwendung
-
-::left::
-
-## Browser Mode bleibt grün
-
-```ts
-const screen = await render(Shop)
-
-await screen.getByRole('button', {
-  name: 'Add The little claw plush to bag',
-}).click()
-
-await screen.getByRole('button', {
-  name: 'Open bag, 1 items',
-}).click()
-
-await expect.element(screen.getByRole(
-  'dialog', { name: 'Your little haul' },
-)).toBeVisible()
-```
-
-Browser Mode mountet nur den Client-Zustand.
-
-::right::
-
-## Playwright schlägt fehl
-
-```ts
-const hydrationErrors: string[] = []
-page.on('console', (message) => {
-  if (/hydration.*mismatch/i.test(message.text()))
-    hydrationErrors.push(message.text())
-})
-
-await page.goto('/')
-
-expect(
-  hydrationErrors,
-  'The server HTML must hydrate without mismatches',
-).toEqual([])
-```
-
-Playwright beginnt mit dem HTML des Nuxt-Servers.
-
----
-layout: default
-zoom: 0.9
----
-# Hydration: die Grenze im Modell
-
-<TestingLabExample example="hydration-mismatch" />
-
----
-layout: two-cols-header
----
-# Browser Mode ersetzt nicht alles
-
-::left::
-
-- Kein Nuxt-Server beim direkten Mount
-- Kein Beweis für Safari auf einem echten Gerät
-- Kein vollständiger Accessibility-Audit
-- Experimentelle ARIA- und Screenshot-APIs
-
-::right::
-
-## Dafür bleibt Playwright End-to-End
-
-- Hydration
-- Produktions-Routing und Assets
-- kritische vollständige Abläufe
 
 ---
 layout: two-cols-header

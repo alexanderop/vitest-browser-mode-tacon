@@ -156,3 +156,13 @@ Use four slides for SSR/hydration, the existing category mismatch, an automatic 
 The user replaces the three migration illustrations with simple step-by-step slides explaining their actual work. Six editable text slides follow the inspected Git chronology: setup, Slider, Node extraction, migration/review, instruction updates, and completion. This supersedes the illustrated migration decision above. Preserve the short closing section; no new live demo.
 
 The follow-up visual direction uses the existing code-editor layout for these six steps, with short code excerpts and click highlights. No images. Preserve explanations alongside the code; prompts are shortened translations and the inventory is a summary, not captured terminal output.
+
+
+## Closing strategy revision, 2026-09-14
+
+The latest user direction supersedes the Reka migration as a main-deck conclusion. Complete visual regression and the reading link, summarize the three contracts, then give the speaker's recommended strategy: Node for pure logic, real-component workflows in Browser Mode, focused accessibility and visual references, and Playwright for critical running-app boundaries. Show npmx.dev as a concrete Nuxt example before explaining hydration. Preserve the AI test brief and correctness conclusion. Move the complete Reka overview, six migration steps and click-performance comparison to backup. [Pinned source evidence and direction](raw/2026-09-14-npmx-testing-strategy.md).
+
+
+## Final closing revision, 2026-09-14
+
+After the npmx feature example, show exactly one thank-you slide with alexop.dev and the linked testing-pyramid article. Hydration, test boundaries, AI brief and the earlier correctness conclusion move to backup. This supersedes earlier main-deck closing instructions. [Accepted direction and verified link](raw/2026-09-14-closing-blog-link.md).

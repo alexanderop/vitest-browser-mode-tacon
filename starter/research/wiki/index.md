@@ -1,5 +1,7 @@
 # Research index
 
+Latest closing strategy: [npmx.dev runtime split and concrete checks](../raw/2026-09-14-npmx-testing-strategy.md), synthesized in [testing strategy](testing-strategy-by-confidence-and-cost.md). Summary and recommendation follow visuals; the Reka migration remains backup material; the new main-deck comparison summarizes its benefits and measured runtime tradeoff.
+
 Latest migration revision: six editable code-editor steps replace the illustrations; see [testing strategy](testing-strategy-by-confidence-and-cost.md) and the [rechecked Git chronology](../raw/2026-09-12-reka-migration-git-history.md).
 
 Latest visual gallery: [Vitest 5 native screenshot comparison and curated button variants](../raw/2026-09-13-vitest-5-button-variants.md), based on the [user-supplied article](../raw/visual-regression-testing-vue-vitest-user-article.md).
@@ -40,3 +42,17 @@ Previous opening revision: [testing basics before the jsdom demonstration](../ra
 Latest Nuxt revision: [hydration fixture article](../raw/2026-09-13-hydration-playwright-user-article.md) and [verification](../raw/2026-09-13-hydration-fixture-verification.md), synthesized in [testing strategy](testing-strategy-by-confidence-and-cost.md). Four main slides replace seven boundary slides.
 
 Visual introduction: [User-supplied Reka UI screenshot](../raw/2026-09-13-reka-ui-overview-image.md), shown before the migration overview.
+
+Visual chapter reading link: [published alexop.dev article and canonical URL](../raw/2025-02-22-alexop-visual-regression-blog.md).
+
+Visual strategy example: [supplied npmx screenshot and schematic pyramid](../raw/2026-09-14-npmx-slide-visuals.md).
+
+Feature walkthrough: [installation command, component audit and E2E interaction](../raw/2026-09-14-npmx-install-feature-tests.md).
+
+Final closing: [thank-you slide, alexop.dev and the verified strategy article](../raw/2026-09-14-closing-blog-link.md).
+
+Backup examples and ordering: [Claw & Chew tests and recorded failures](../raw/2026-09-14-claw-chew-backup-comparisons.md).
+
+Reka backup simplification: [four slides on preparation, workflow and outcome](../raw/2026-09-14-reka-backup-overview.md).
+
+Comparison slide: [Browser Mode versus jsdom, grounded in the Reka migration](../raw/2026-09-14-browser-mode-jsdom-comparison.md).
