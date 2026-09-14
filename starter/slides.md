@@ -1178,6 +1178,7 @@ class: npmx-strategy
 ---
 layout: default
 class: npmx-feature
+hideFooter: true
 clicks: 3
 ---
 # Ein Feature, drei Testfragen
@@ -1186,33 +1187,61 @@ clicks: 3
 
 <div class="feature-levels">
   <section v-click="1" class="feature-level feature-node">
-    <div class="feature-label">Vitest · Node<span>Logik</span></div>
-    <div><h2>Wird der richtige Befehl berechnet?</h2><p>lodash + pnpm + Version 4.17.21<br>→ <code>pnpm add lodash@4.17.21</code></p></div>
+    <div class="feature-question"><div class="feature-label">Vitest · Node <span>Logik</span></div><h2>Wird der richtige<br>Befehl berechnet?</h2></div>
+    <div class="feature-visual">
+      <div class="feature-inputs"><span>lodash</span><b>+</b><span>pnpm</span><b>+</b><span>4.17.21</span></div>
+      <div class="feature-command"><span class="feature-arrow">↳</span><code>pnpm add lodash@4.17.21</code></div>
+    </div>
   </section>
   <section v-click="2" class="feature-level feature-browser">
-    <div class="feature-label">Browser Mode<span>Komponenten-Audit</span></div>
-    <div><h2>Besteht die Auswahl den axe-Audit?</h2><p><code>PackageManagerSelect</code> rendern<br>→ keine gemeldeten Regelverletzungen</p></div>
+    <div class="feature-question"><div class="feature-label">Browser Mode <span>Komponenten-Audit</span></div><h2>Besteht die Auswahl<br>den axe-Audit?</h2></div>
+    <div class="feature-visual">
+      <div class="feature-audit"><div class="feature-select">pnpm <span>⌄</span></div><span class="feature-arrow">→</span><div class="feature-audit-result"><strong>axe</strong><span>0 Regelverletzungen</span></div></div>
+      <div class="feature-caption"><code>PackageManagerSelect</code> rendern &amp; prüfen</div>
+    </div>
   </section>
   <section v-click="3" class="feature-level feature-e2e">
-    <div class="feature-label">Playwright · E2E<span>Laufende App</span></div>
-    <div><h2>Kann ich die Funktion in der App bedienen?</h2><p>Dropdown: Pfeiltasten, Escape und Fokus prüfen.<br>Kopieren: Befehl in der echten Zwischenablage prüfen.</p></div>
+    <div class="feature-question"><div class="feature-label">Playwright · E2E <span>Laufende App</span></div><h2>Kann ich die Funktion<br>in der App bedienen?</h2></div>
+    <div class="feature-visual feature-interactions">
+      <div><span class="feature-keys"><kbd>↑</kbd><kbd>↓</kbd><kbd>Esc</kbd></span><span class="feature-arrow">→</span><span>Dropdown &amp; Fokus</span></div>
+      <div><span class="feature-copy">Kopieren</span><span class="feature-arrow">→</span><span>Echte Zwischenablage</span></div>
+    </div>
   </section>
 </div>
 
 <div class="feature-source"><a href="https://github.com/npmx-dev/npmx.dev/tree/75329352ee47ef6d641ba547bc382b91ef73c68f/test">Konkrete Tests aus npmx.dev · Quellstand 75329352</a></div>
 
 <style>
-.npmx-feature .feature-intent { margin: 22px 0 20px; font-size: 22px; opacity: .85; }
-.npmx-feature .feature-levels { display: grid; gap: 0; }
-.npmx-feature .feature-level { display: grid; grid-template-columns: 210px 1fr; gap: 22px; border-top: 1px solid #ffffff25; padding: 12px 0; }
-.npmx-feature .feature-label { font-size: 21px; font-weight: 600; padding-top: 2px; }
-.npmx-feature .feature-label span { display: block; font-size: 16px; font-weight: 400; margin-top: 6px; opacity: .8; }
-.npmx-feature .feature-node .feature-label { color: #a8cf80; }
-.npmx-feature .feature-browser .feature-label { color: #79cddd; }
-.npmx-feature .feature-e2e .feature-label { color: #ed929b; }
-.npmx-feature .feature-level h2 { font-size: 21px; line-height: 1.3; margin: 0 0 6px; font-weight: 600; }
-.npmx-feature .feature-level p { font-size: 18px; line-height: 1.45; margin: 0; opacity: .9; }
-.npmx-feature .feature-source { margin-top: 8px; font-size: 12px; opacity: .65; }
+.npmx-feature .feature-intent { margin: 18px 0 22px; font-size: 22px; opacity: .85; }
+.npmx-feature .feature-levels { display: grid; }
+.npmx-feature .feature-level { display: grid; grid-template-columns: 390px 1fr; gap: 26px; align-items: center; border-top: 1px solid #ffffff25; padding: 12px 0; min-height: 112px; }
+.npmx-feature .feature-node { --feature-color: #a8cf80; }
+.npmx-feature .feature-browser { --feature-color: #79cddd; }
+.npmx-feature .feature-e2e { --feature-color: #ed929b; }
+.npmx-feature .feature-label { color: var(--feature-color); font-size: 17px; font-weight: 600; margin-bottom: 7px; }
+.npmx-feature .feature-label span { font-size: 13px; font-weight: 400; opacity: .8; margin-left: 10px; }
+.npmx-feature .feature-level h2 { font-size: 25px; line-height: 1.2; margin: 0; font-weight: 600; }
+.npmx-feature .feature-visual { font-size: 18px; }
+.npmx-feature .feature-inputs { display: flex; align-items: center; gap: 12px; }
+.npmx-feature .feature-inputs > span { border-bottom: 2px solid var(--feature-color); padding: 0 5px 5px; }
+.npmx-feature .feature-inputs b { opacity: .45; font-weight: 400; }
+.npmx-feature .feature-command { display: flex; align-items: center; gap: 14px; margin-top: 12px; }
+.npmx-feature .feature-command code { font-size: 19px; color: var(--feature-color); background: transparent; padding: 0; }
+.npmx-feature .feature-arrow { color: var(--feature-color); font-size: 26px; }
+.npmx-feature .feature-audit { display: flex; align-items: center; gap: 18px; }
+.npmx-feature .feature-select { display: flex; justify-content: space-between; width: 142px; border: 1px solid var(--feature-color); border-radius: 5px; padding: 8px 12px; }
+.npmx-feature .feature-select span { color: var(--feature-color); }
+.npmx-feature .feature-audit-result { display: flex; flex-direction: column; gap: 2px; }
+.npmx-feature .feature-audit-result strong { color: var(--feature-color); font-size: 24px; }
+.npmx-feature .feature-audit-result span { font-size: 16px; }
+.npmx-feature .feature-caption { font-size: 13px; opacity: .75; margin-top: 10px; }
+.npmx-feature .feature-caption code { background: transparent; padding: 0; }
+.npmx-feature .feature-interactions { display: grid; gap: 12px; font-size: 16px; }
+.npmx-feature .feature-interactions > div { display: flex; align-items: center; gap: 15px; }
+.npmx-feature .feature-keys { display: flex; gap: 6px; width: 142px; }
+.npmx-feature kbd { border: 1px solid #ed929b88; border-bottom-width: 3px; border-radius: 5px; padding: 4px 9px; font: inherit; color: var(--feature-color); }
+.npmx-feature .feature-copy { width: 142px; border: 1px solid #ed929b88; border-radius: 5px; padding: 5px 12px; text-align: center; color: var(--feature-color); }
+.npmx-feature .feature-source { margin-top: 12px; font-size: 12px; opacity: .65; }
 </style>
 
 ---
