@@ -345,3 +345,19 @@ Moved the schematic missing-variant comparison immediately after the full galler
 ## 2026-09-15 — Button gallery narrative
 
 Reordered the visual chapter around the approved audience progression: other button states, prepared story-like examples, gallery reference, visible difference, then implementation. Moved ProductCard screenshot mechanics after the gallery test and updated presenter transitions into CI and reference updates. Reused the existing gallery evidence; no new API or execution claims.
+
+## 2026-09-15 — Chromium terminal playback
+
+Replaced the static blocked-click excerpt with a real recorded failing Browser Mode run, using the same player as the earlier green JSDOM result. [Evidence](../raw/2026-09-15-blocked-button-browser-terminal.md).
+
+## 2026-09-15 — Simplify factory to Faker product data
+
+- Request: show a simple product factory with Faker.js.
+- Result: replaced cart/shipping code with aProduct() and one call; updated presenter guidance.
+- Source: [Faker API verification](../raw/2026-09-15-faker-product-factory.md).
+
+## 2026-09-15 — Show the factory benefit in MSW
+
+- Added a short comparison after the Faker slide: two explicit products versus two factory calls.
+- Updated presenter guidance with imports, setup scope and generated-value distinction.
+- Source: [MSW comparison evidence](../raw/2026-09-15-msw-factory-comparison.md).

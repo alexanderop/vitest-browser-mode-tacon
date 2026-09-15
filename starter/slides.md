@@ -30,6 +30,14 @@ hideFooter: true
 
 ---
 layout: default
+hideFooter: true
+---
+<AudienceQuestion>
+Wer hatte trotz grüner Tests einen Bug im Release?
+</AudienceQuestion>
+
+---
+layout: default
 class: p-0
 hideFooter: true
 ---
@@ -185,7 +193,7 @@ layout: statement
 # Was soll dieser grüne Test beweisen?
 
 <div class="mt-10 text-2xl">Ich kann das Plüschtier in den Warenkorb legen.</div>
-<div v-click class="mt-6 text-xl">Warum klappt genau das im Shop nicht?</div>
+<div class="mt-6 text-xl">Warum klappt genau das im Shop nicht?</div>
 
 ---
 layout: default
@@ -541,28 +549,13 @@ layout: default
 ---
 # Der Test scheitert schon beim Klick
 
-<div class="mb-4 text-sm opacity-65">Aufgezeichneter Chromium-Lauf · Originalauszug, Wiederholungen gekürzt</div>
+<TerminalRecording
+  src="shop/terminal/blocked-button-browser.cast"
+  label="Aufgezeichneter fehlgeschlagener Chromium-Testlauf mit aktivem CSS-Bug"
+/>
 
-```text
-TimeoutError: locator.click: Timeout 1500ms exceeded.
-
-Call log:
-  - attempting click action
-      - element is visible, enabled and stable
-      - done scrolling
-```
-
-<div class="my-4 border-l-3 border-rose-400 pl-4 text-xl text-rose-300">
-<code>class="product-decoration"</code><br>
-<strong>intercepts pointer events</strong>
-</div>
-
-```ts
-  .click({ timeout: 1500 })
-// ^ Hier bricht der Test ab.
-```
-
-<div class="mt-4 text-xl">Die Dekoration blockiert den Klick.<br>Die Warenkorb-Assertion wird gar nicht mehr erreicht.</div>
+<div class="mt-5 text-xl">Chromium · echter aufgezeichneter Testlauf · CSS-Bug aktiv</div>
+<div class="mt-3 text-xl text-rose-300"><code>product-decoration</code> blockiert den Klick.</div>
 
 ---
 layout: default
@@ -796,50 +789,102 @@ contractChapter: "1 / 3 · Verhalten"
 class: factory-data-slide
 hideFooter: true
 ---
-# Testdaten: Nur das Entscheidende ändern
+# Testdaten mit einer Factory
 
 <div class="mt-5 grid grid-cols-[1.15fr_1fr] gap-7">
 <div>
-<div class="mb-3 text-xl font-bold">Die Factory liefert gültige Standarddaten</div>
+<div class="mb-3 text-xl font-bold">Faker erzeugt die Produktdaten</div>
 
 ```ts
-export function aPlushLine(
-  { quantity = 1 } = {},
-): CartLine {
-  const product = products.find(p => p.id === 'plush')
-  if (!product) throw new Error('Plush fehlt')
+import { faker } from '@faker-js/faker'
+
+function aProduct() {
   return {
-    key: 'plush-fixture', product,
-    variant: 'One size · 18 cm',
-    print: null,
-    quantity,
+    id: faker.string.uuid(),
+    name: faker.commerce.productName(),
+    price: Number(faker.commerce.price()),
   }
 }
 ```
 
 </div>
 <div>
-<div class="mb-3 text-xl font-bold">Der Test bestimmt den Sonderfall</div>
+<div class="mb-3 text-xl font-bold">Im Test reicht ein Aufruf</div>
 
 ```ts
-const lines = [
-  aPlushLine({ quantity: 3 }),
-]
-
-expect(summarize(lines).shipping)
-  .toBe(0)
+const product = aProduct()
 ```
 
-<div class="mt-5 text-2xl font-bold text-teal-300">3 Plüschtiere → kostenloser Versand</div>
-<div class="mt-3 text-base opacity-70">Claw & Chew · Versandlogik als Unit-Test in Node</div>
+<div class="mt-5 text-2xl font-bold text-teal-300">Ein neues Produkt als Testdaten</div>
+<div class="mt-3 text-base opacity-70">ID, Name und Preis kommen von Faker.js</div>
 </div>
 </div>
 
-<div class="mt-6 text-xl">Standards in der Factory · relevante Daten und Erwartung im Test</div>
+<div class="mt-6 text-xl">Einmal definieren · in Tests wiederverwenden</div>
 
 <style>
 .factory-data-slide pre { font-size: 15px !important; line-height: 1.55 !important; }
 </style>
+
+---
+layout: default
+contractChapter: "1 / 3 · Verhalten"
+class: factory-msw-slide
+hideFooter: true
+---
+# API-Mocks: weniger Testdaten schreiben
+
+<div class="mt-5 grid grid-cols-2 gap-7">
+<div>
+<div class="mb-3 text-xl font-bold">Ohne Factory</div>
+
+```ts
+http.get('/api/products', () => {
+  return HttpResponse.json([
+    {
+      id: 'product-1',
+      name: 'Plüschtier',
+      price: 25,
+    },
+    {
+      id: 'product-2',
+      name: 'Tasse',
+      price: 12,
+    },
+  ])
+})
+```
+
+</div>
+<div>
+<div class="mb-3 text-xl font-bold">Mit Factory</div>
+
+```ts
+http.get('/api/products', () => {
+  return HttpResponse.json([
+    aProduct(),
+    aProduct(),
+  ])
+})
+```
+
+<div class="mt-5 text-2xl font-bold text-teal-300">Zwei Produkte. Fertig.</div>
+<div class="mt-3 text-base opacity-70">Die Produktstruktur steht einmal in der Factory.</div>
+</div>
+</div>
+
+<div class="mt-5 text-xl">MSW mockt die API · die Factory liefert die Daten</div>
+
+<style>
+.factory-msw-slide pre { font-size: 15px !important; line-height: 1.45 !important; }
+</style>
+
+---
+layout: default
+---
+<AudienceQuestion>
+Wer testet regelmäßig nur mit der Tastatur?
+</AudienceQuestion>
 
 ---
 layout: default
@@ -949,6 +994,13 @@ contractChapter: "2 / 3 · Accessibility"
 
 <div class="mt-10 text-2xl">Das prüfen wir zusätzlich zum Kaufablauf.</div>
 <div class="mt-6 text-xl">Unser Accessibility-Vertrag für diese Tabs.</div>
+
+---
+layout: default
+---
+<AudienceQuestion>
+Wer findet Darstellungsfehler, die automatisierte Tests übersehen?
+</AudienceQuestion>
 
 ---
 layout: default
@@ -1301,75 +1353,6 @@ class: npmx-strategy
 .npmx-strategy .npmx-screenshot { width: 100%; height: auto; border: 1px solid #ffffff25; border-radius: 6px; }
 .npmx-strategy figcaption { margin-top: 12px; font-size: 17px; opacity: .75; }
 .npmx-strategy .npmx-source { margin-top: 16px; font-size: 12px; opacity: .65; }
-</style>
-
----
-layout: default
-class: npmx-feature
-hideFooter: true
-clicks: 3
----
-# Ein Feature, drei Testfragen
-
-<p class="feature-intent">„Ich möchte das Paket mit meinem Paketmanager installieren.“</p>
-
-<div class="feature-levels">
-  <section v-click="1" class="feature-level feature-node">
-    <div class="feature-question"><div class="feature-label">Vitest · Node <span>Logik</span></div><h2>Wird der richtige<br>Befehl berechnet?</h2></div>
-    <div class="feature-visual">
-      <div class="feature-inputs"><span>lodash</span><b>+</b><span>pnpm</span><b>+</b><span>4.17.21</span></div>
-      <div class="feature-command"><span class="feature-arrow">↳</span><code>pnpm add lodash@4.17.21</code></div>
-    </div>
-  </section>
-  <section v-click="2" class="feature-level feature-browser">
-    <div class="feature-question"><div class="feature-label">Browser Mode <span>Komponenten-Audit</span></div><h2>Besteht die Auswahl<br>den axe-Audit?</h2></div>
-    <div class="feature-visual">
-      <div class="feature-audit"><div class="feature-select">pnpm <span>⌄</span></div><span class="feature-arrow">→</span><div class="feature-audit-result"><strong>axe</strong><span>0 Regelverletzungen</span></div></div>
-      <div class="feature-caption"><code>PackageManagerSelect</code> rendern &amp; prüfen</div>
-    </div>
-  </section>
-  <section v-click="3" class="feature-level feature-e2e">
-    <div class="feature-question"><div class="feature-label">Playwright · E2E <span>Laufende App</span></div><h2>Kann ich die Funktion<br>in der App bedienen?</h2></div>
-    <div class="feature-visual feature-interactions">
-      <div><span class="feature-keys"><kbd>↑</kbd><kbd>↓</kbd><kbd>Esc</kbd></span><span class="feature-arrow">→</span><span>Dropdown &amp; Fokus</span></div>
-      <div><span class="feature-copy">Kopieren</span><span class="feature-arrow">→</span><span>Echte Zwischenablage</span></div>
-    </div>
-  </section>
-</div>
-
-<div class="feature-source"><a href="https://github.com/npmx-dev/npmx.dev/tree/75329352ee47ef6d641ba547bc382b91ef73c68f/test">Konkrete Tests aus npmx.dev · Quellstand 75329352</a></div>
-
-<style>
-.npmx-feature .feature-intent { margin: 18px 0 22px; font-size: 22px; opacity: .85; }
-.npmx-feature .feature-levels { display: grid; }
-.npmx-feature .feature-level { display: grid; grid-template-columns: 390px 1fr; gap: 26px; align-items: center; border-top: 1px solid #ffffff25; padding: 12px 0; min-height: 112px; }
-.npmx-feature .feature-node { --feature-color: #a8cf80; }
-.npmx-feature .feature-browser { --feature-color: #79cddd; }
-.npmx-feature .feature-e2e { --feature-color: #ed929b; }
-.npmx-feature .feature-label { color: var(--feature-color); font-size: 17px; font-weight: 600; margin-bottom: 7px; }
-.npmx-feature .feature-label span { font-size: 13px; font-weight: 400; opacity: .8; margin-left: 10px; }
-.npmx-feature .feature-level h2 { font-size: 25px; line-height: 1.2; margin: 0; font-weight: 600; }
-.npmx-feature .feature-visual { font-size: 18px; }
-.npmx-feature .feature-inputs { display: flex; align-items: center; gap: 12px; }
-.npmx-feature .feature-inputs > span { border-bottom: 2px solid var(--feature-color); padding: 0 5px 5px; }
-.npmx-feature .feature-inputs b { opacity: .45; font-weight: 400; }
-.npmx-feature .feature-command { display: flex; align-items: center; gap: 14px; margin-top: 12px; }
-.npmx-feature .feature-command code { font-size: 19px; color: var(--feature-color); background: transparent; padding: 0; }
-.npmx-feature .feature-arrow { color: var(--feature-color); font-size: 26px; }
-.npmx-feature .feature-audit { display: flex; align-items: center; gap: 18px; }
-.npmx-feature .feature-select { display: flex; justify-content: space-between; width: 142px; border: 1px solid var(--feature-color); border-radius: 5px; padding: 8px 12px; }
-.npmx-feature .feature-select span { color: var(--feature-color); }
-.npmx-feature .feature-audit-result { display: flex; flex-direction: column; gap: 2px; }
-.npmx-feature .feature-audit-result strong { color: var(--feature-color); font-size: 24px; }
-.npmx-feature .feature-audit-result span { font-size: 16px; }
-.npmx-feature .feature-caption { font-size: 13px; opacity: .75; margin-top: 10px; }
-.npmx-feature .feature-caption code { background: transparent; padding: 0; }
-.npmx-feature .feature-interactions { display: grid; gap: 12px; font-size: 16px; }
-.npmx-feature .feature-interactions > div { display: flex; align-items: center; gap: 15px; }
-.npmx-feature .feature-keys { display: flex; gap: 6px; width: 142px; }
-.npmx-feature kbd { border: 1px solid #ed929b88; border-bottom-width: 3px; border-radius: 5px; padding: 4px 9px; font: inherit; color: var(--feature-color); }
-.npmx-feature .feature-copy { width: 142px; border: 1px solid #ed929b88; border-radius: 5px; padding: 5px 12px; text-align: center; color: var(--feature-color); }
-.npmx-feature .feature-source { margin-top: 12px; font-size: 12px; opacity: .65; }
 </style>
 
 ---

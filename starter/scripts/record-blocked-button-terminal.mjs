@@ -8,7 +8,10 @@ import { spawn } from 'node:child_process'
 const shop = process.env.SHOP_REPO ?? '/Users/alexanderopalic/Projects/opensource/claw-and-chew'
 const destination = new URL('../public/shop/terminal/', import.meta.url)
 const scratch = await mkdtemp(resolve(tmpdir(), 'tacon-terminal-'))
-const args = ['exec', 'vitest', 'run', '--project', 'jsdom', 'app/catalog/ProductCard.dom.test.ts', '--reporter=default']
+const browser = process.argv.includes('--browser')
+const project = browser ? 'browser' : 'jsdom'
+const basename = `blocked-button-${project}`
+const args = ['exec', 'vitest', 'run', '--project', project, `app/catalog/ProductCard.${browser ? 'browser' : 'dom'}.test.ts`, '--reporter=default']
 try {
   for (const entry of ['app', 'tests', 'package.json', 'vitest.config.ts', 'tsconfig.json']) {
     await cp(resolve(shop, entry), resolve(scratch, entry), { recursive: true })
@@ -33,14 +36,18 @@ try {
   child.stdout.on('data', capture)
   child.stderr.on('data', capture)
   const code = await new Promise((accept, reject) => { child.on('error', reject); child.on('close', accept) })
-  if (code !== 0 || !output.replace(/\x1b\[[0-9;]*m/g, '').includes('1 passed')) throw new Error(`Test did not pass: ${output}`)
+  const plain = output.replace(/\x1b\[[0-9;]*m/g, '')
+  const expected = browser
+    ? code === 1 && plain.includes('1 failed') && plain.includes('intercepts pointer events') && plain.includes('Timeout 1500ms exceeded')
+    : code === 0 && plain.includes('1 passed')
+  if (!expected) throw new Error(`Unexpected test result: ${output}`)
   events.push([events.at(-1)[0] + 3, 'o', '\r\n$ '])
   await mkdir(destination, { recursive: true })
-  await writeFile(new URL('blocked-button-jsdom.cast', destination), [
-    { version: 2, width: 100, height: 15, timestamp: Math.floor(Date.now() / 1000), title: 'JSDOM: blocked button, test passes', env: { TERM: 'xterm-256color' } },
+  await writeFile(new URL(`${basename}.cast`, destination), [
+    { version: 2, width: 100, height: 15, timestamp: Math.floor(Date.now() / 1000), title: browser ? 'Chromium: blocked button, test fails' : 'JSDOM: blocked button, test passes', env: { TERM: 'xterm-256color' } },
     ...events,
   ].map(JSON.stringify).join('\n') + '\n')
-  await writeFile(new URL('blocked-button-jsdom.json', destination), JSON.stringify({
+  await writeFile(new URL(`${basename}.json`, destination), JSON.stringify({
     recordedAt: new Date().toISOString(), command, exitCode: code,
     mutation: { file: 'app/catalog/ProductCard.vue', before: 'pointer-events: none;', after: 'pointer-events: auto;' },
     method: 'Real process output with measured timing; isolated source copy; working directory redacted.',

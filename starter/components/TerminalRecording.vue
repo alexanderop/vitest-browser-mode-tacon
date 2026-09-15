@@ -3,12 +3,20 @@ import { onBeforeUnmount, onMounted, ref } from 'vue'
 import { create } from 'asciinema-player'
 import 'asciinema-player/dist/bundle/asciinema-player.css'
 
+const props = withDefaults(defineProps<{
+  src?: string
+  label?: string
+}>(), {
+  src: 'shop/terminal/blocked-button-jsdom.cast',
+  label: 'Aufgezeichneter JSDOM-Testlauf mit aktivem CSS-Bug',
+})
+
 const host = ref<HTMLDivElement | null>(null)
 const error = ref(false)
 let player: ReturnType<typeof create> | undefined
 onMounted(() => {
   if (!host.value) return
-  player = create(`${import.meta.env.BASE_URL}shop/terminal/blocked-button-jsdom.cast`, host.value, {
+  player = create(`${import.meta.env.BASE_URL}${props.src}`, host.value, {
     cols: 100, rows: 15, autoPlay: false, preload: true, fit: 'width',
     terminalFontSize: 20, theme: 'dracula', poster: 'npt:0:0.5',
   })
@@ -19,7 +27,7 @@ onBeforeUnmount(() => player?.dispose())
 
 <template>
   <div class="terminal-recording" @keydown.stop>
-    <div ref="host" aria-label="Aufgezeichneter JSDOM-Testlauf mit aktivem CSS-Bug" />
+    <div ref="host" :aria-label="props.label" />
     <p v-if="error" role="alert">Die Aufnahme konnte nicht geladen werden.</p>
   </div>
 </template>

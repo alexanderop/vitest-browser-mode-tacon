@@ -14,7 +14,7 @@ The visual chapter extends ProductCard with a curated BaseButton gallery: three 
 
 The axe scope slide follows the existing diagram: DOM-based names, labels and ARIA validity are representative JSDOM checks; text contrast needs real rendering. The Reka AlertDialog migration records non-vacuous DOM audits in JSDOM and an additional contrast violation in Chromium. These are inspected historical findings, not a fresh test run. Intended keyboard behavior and tab meaning remain explicit assertions. [Scope sources and Reka excerpts](../raw/2026-09-13-axe-rule-scope.md).
 
-The blocked-button explanation now includes the actual ProductCard Browser Mode test and a shortened recorded Chromium error. The explicit 1500 ms click timeout reports that `product-decoration` intercepts pointer events; the bag assertion is not reached. This is an inspected existing run, not a new execution. [Test and original failure log](../raw/2026-09-13-blocked-button-browser-error.md).
+The blocked-button explanation now includes the actual ProductCard Browser Mode test and a playable real Chromium terminal recording. [Fresh recording evidence](../raw/2026-09-15-blocked-button-browser-terminal.md). The explicit 1500 ms click timeout reports that `product-decoration` intercepts pointer events; the bag assertion is not reached. The terminal recording was freshly captured on 2026-09-15 in an isolated source copy. [Test and original failure log](../raw/2026-09-13-blocked-button-browser-error.md).
 
 The Browser UI screenshot now leads into a jsdom debugging comparison: `screen.debug()` prints DOM and `screen.logTestingPlaygroundURL()` exports markup for query exploration. This export does not carry the running Vue component or external app CSS. The DOM excerpt is illustrative; avoid denying Testing Playground an HTML preview. [Verified APIs and implementation](../raw/2026-09-13-testing-library-debugging.md).
 
@@ -196,4 +196,8 @@ The author's article uses strong advocacy for Testing Library and blanket mock a
 
 ### Test data factory before accessibility (2026-09-15)
 
-The behavior chapter now ends with the cart-line data factory and its shipping assertion: default quantity 1, explicit override 3, expected shipping 0. The slide is moved from backup and contrasts valid defaults with the test-specific input. It distinguishes this Node unit test from the preceding browser setup factory. The current local files `talk/tacon/cart-line.ts` and `shipping.unit.test.ts` were re-read; the displayed excerpts shorten naming and isolate the shipping assertion. [Local example evidence](../raw/2026-09-11-claw-and-chew-talk-examples.md). [Data factory rationale](../raw/2025-12-14-vue-3-testing-pyramid-vitest-browser-mode.md).
+The behavior chapter ends with a minimal standalone `aProduct()` factory using Faker.js for id, name and price. A single `const product = aProduct()` call demonstrates reuse. This supersedes the cart-line and shipping example at the user's request; it is an illustrative product model, not executable Claw & Chew source. [Verified Faker APIs and editorial scope](../raw/2026-09-15-faker-product-factory.md).
+
+### MSW factory comparison (2026-09-15)
+
+Immediately after the Faker factory, a side-by-side MSW handler illustrates the reuse benefit: two handwritten product objects versus two `aProduct()` calls. It is a teaching example for tests where exact generated values are irrelevant. [Official API verification and scope](../raw/2026-09-15-msw-factory-comparison.md).

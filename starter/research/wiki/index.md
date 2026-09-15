@@ -58,3 +58,5 @@ Backup examples and ordering: [Claw & Chew tests and recorded failures](../raw/2
 Reka backup simplification: [four slides on preparation, workflow and outcome](../raw/2026-09-14-reka-backup-overview.md).
 
 Comparison slide: [Browser Mode versus jsdom, grounded in the Reka migration](../raw/2026-09-14-browser-mode-jsdom-comparison.md).
+
+Latest terminal playback: [Recorded Chromium failure](../raw/2026-09-15-blocked-button-browser-terminal.md).

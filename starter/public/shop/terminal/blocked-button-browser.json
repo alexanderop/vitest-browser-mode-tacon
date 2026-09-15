@@ -1,0 +1,11 @@
+{
+  "recordedAt": "2026-09-15T11:32:20.758Z",
+  "command": "pnpm exec vitest run --project browser app/catalog/ProductCard.browser.test.ts --reporter=default",
+  "exitCode": 1,
+  "mutation": {
+    "file": "app/catalog/ProductCard.vue",
+    "before": "pointer-events: none;",
+    "after": "pointer-events: auto;"
+  },
+  "method": "Real process output with measured timing; isolated source copy; working directory redacted."
+}

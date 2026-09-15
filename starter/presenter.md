@@ -1,10 +1,32 @@
 # TACON presenter guide
 
-66 Hauptfolien einschließlich Dankesfolie, danach der Backup-Trenner (67) und 46 Backup-Folien (68–113). Geplant: 36 Minuten Inhalt, fünf Minuten Fragen und vier Minuten Reserve. Die überarbeitete Schlusssequenz ersetzt den Reka-Migrationsblock im Hauptteil. Diese Zeiten sind keine gemessene Sprechprobe.
+74 Hauptfolien einschließlich Dankesfolie, danach der Backup-Trenner (75) und 37 Backup-Folien (76–112). Geplant: 36 Minuten Inhalt, fünf Minuten Fragen und vier Minuten Reserve. Die überarbeitete Schlusssequenz ersetzt den Reka-Migrationsblock im Hauptteil. Diese Zeiten sind keine gemessene Sprechprobe.
 
 Die Geschichte folgt dem Einkauf: Ich will das Plüschtier kaufen. Der Test ist grün, aber der Button funktioniert nicht. Wir erklären und reparieren diesen Widerspruch, prüfen danach den Kaufablauf, die Bedienung und die Darstellung. Nach der Erklärung des Button-Fehlers zeigen wir die drei Verträge als Überblick. Danach vertiefen wir Verhalten, Accessibility und Darstellung in dieser Reihenfolge. Nach Visual Regression fassen wir die drei Verträge zusammen und empfehlen eine Teststrategie, mit npmx.dev als Praxisbeispiel. Testgrenzen und KI-Auftrag wenden das Gelernte an. Die Reka-Migration folgt ausschließlich im Backup.
 
-## Einstieg in die drei Kapitel
+## Handzeichenfragen für das QA-Publikum
+
+Drei kurze Pausen, jeweils etwa 20–30 Sekunden. Frage vorlesen, fünf Sekunden warten und ins Publikum schauen. Handzeichen neutral aufgreifen; niemand muss seine Antwort rechtfertigen. Besonders bei Tastaturtests keine Wertung vornehmen. Insgesamt etwa eine bis anderthalb Minuten aus der Reserve einplanen. Die zusätzlichen Folien verschieben die historischen Nummern unten; nach Folientitel navigieren.
+
+### Nach der Titelfolie, vor „Die klassische Testpyramide“
+
+„Hand hoch: Wer hatte trotz grüner Tests einen Bug im Release?“
+
+Überleitung: „Schauen wir uns einen konkreten Fall an: Der Test ist grün, aber der Kaufen-Button funktioniert nicht.“
+
+### Vor „Der Kauf klappt. Auch mit der Tastatur?“
+
+„Hand hoch: Wer testet regelmäßig nur mit der Tastatur?“
+
+Überleitung: „Probieren wir das an unserem Shop aus. Und schauen wir, was wir davon automatisiert absichern können.“
+
+### Vor „Bedienbar. Sieht es auch richtig aus?“
+
+„Hand hoch: Wer findet Darstellungsfehler, die automatisierte Tests übersehen?“
+
+Überleitung: „Die Funktion stimmt, aber die Darstellung nicht. Dafür brauchen wir eine zusätzliche Art von Prüfung.“
+
+## Kapitelübergänge
 
 Zur Vertragsübersicht: „Drei Blickwinkel auf dieselbe Komponente. Für jeden legen wir fest, was ein grüner Test uns versprechen soll.“
 
@@ -342,10 +364,22 @@ Diese Reihenfolge supersediert alle früheren Angaben zur Schlusssequenz: Auf �
 Die Schlussfolie während der Fragen stehen lassen. Der Blogartikel ist die weiterführende Lektüre, keine neue Folienquelle für allgemeine Laufzeit- oder Prozentversprechen. Die früheren Testgrenzen- und KI-Sprechertexte dienen jetzt nur als Backup.
 
 
-## Testdaten-Factory vor Accessibility (ca. 40 Sekunden)
+## Testdaten-Factory vor Accessibility (ca. 20 Sekunden)
 
-„Gerade hat uns `renderShop()` den Shop vorbereitet. Eine Factory kann auch Testdaten erzeugen. `aPlushLine()` liefert eine gültige Warenkorbposition mit einem Plüschtier. Für diesen Test ändere ich nur die Menge: drei. Produkt, Variante und die übrigen Standardwerte bleiben in der Factory. Im Test sehe ich sofort den Fall und das erwartete Ergebnis: kostenloser Versand.“
+„Eine Factory ist einfach eine Funktion, die uns Testdaten erstellt. Hier erzeugt Faker eine ID, einen Produktnamen und einen Preis. Im Test rufe ich nur `aProduct()` auf und bekomme ein neues Produkt.“
 
-„Die Versandberechnung braucht keinen Browser; sie läuft als Unit-Test in Node. Die Factory-Idee können wir genauso für die Daten unserer Komponententests verwenden. Jetzt zurück zum Kauf: Der Ablauf klappt – aber auch mit der Tastatur?“
+„Jetzt zurück zum Kauf: Der Ablauf klappt – aber auch mit der Tastatur?“
 
-Quellen: `claw-and-chew/talk/tacon/cart-line.ts` und `shipping.unit.test.ts`, am 15.09.2026 gelesen. Der Factory-Ausschnitt kürzt den Parameternamen im Lookup und die Fehlermeldung, Imports entfallen. Der Test zeigt die Versand-Assertion aus der vollständigen Summen-Erwartung. Es geht um feste gültige Standarddaten und gezielte Overrides; Faker ist dafür nicht erforderlich. Die bisherige Factory-Folie im Backup entfällt.
+Vereinfachtes, eigenständiges Produktmodell für die Erklärung. `faker.commerce.price()` liefert einen String; `Number()` wandelt ihn in eine Zahl um. Quellen: [Faker Commerce](https://fakerjs.dev/api/commerce), [Faker String](https://fakerjs.dev/api/string), [Faker Usage](https://fakerjs.dev/guide/usage). Die Folie ersetzt das Warenkorb- und Versandbeispiel.
+
+## Factory in einem MSW-Mock (ca. 20 Sekunden)
+
+„Wenn ich mit Mock Service Worker eine API mocke, brauche ich Daten für die Antwort. Links schreibe ich jedes Produkt aus. Rechts verwende ich unsere Factory zweimal. Ich sehe sofort: Die API liefert zwei Produkte. Die Produktstruktur pflege ich an einer Stelle.“
+
+Beide Ausschnitte sind alternative MSW-Handler für `GET /api/products`. `http` und `HttpResponse` werden aus `msw` importiert, `aProduct` aus der Testdaten-Datei; Registrierung und Imports sind auf der Folie ausgeblendet. Die rechte Variante erzeugt zufällige Werte und zeigt dieselbe Antwortstruktur, nicht dieselben konkreten Werte. Das Beispiel setzt voraus, dass konkrete Produktnamen und Preise für den Test unerheblich sind.
+
+Quelle: [Offizielles MSW-Beispiel](https://github.com/mswjs/http-middleware#api). Eigenständiges Lehrbeispiel, kein ausgeführter Claw-&-Chew-Test.
+
+## Terminalaufnahme: Der Test scheitert schon beim Klick
+
+Auf Play klicken und den aufgezeichneten Chromium-Lauf bis „1 failed“ abspielen. „Vorhin war derselbe Benutzerwunsch in JSDOM grün. Im Browser scheitert schon der Klick: Die Dekoration liegt darüber. Die Warenkorb-Assertion wird nicht mehr erreicht.“ Die Aufnahme stammt vom 15.09.2026; kein Live-Terminal. Quelle: [Aufnahme und Methode](research/raw/2026-09-15-blocked-button-browser-terminal.md).
