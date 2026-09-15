@@ -320,3 +320,28 @@ Verified the [canonical article](../raw/2025-02-22-alexop-visual-regression-blog
 ## 2026-09-14 — Browser Mode versus jsdom comparison
 
 Added one main-deck comparison after the three-contract recap. Rechecked Reka Slider and Tabs sources and historical performance evidence; included the scoped 13% suite overhead. Updated browser-native synthesis and index. [Evidence](../raw/2026-09-14-browser-mode-jsdom-comparison.md).
+
+
+## 2026-09-15 — jsdom visual-browser scope
+
+Ingested the complete [selected README section](../raw/jsdom-pretending-to-be-a-visual-browser.md). No material change to the existing layout claim; adds direct maintainer wording and the explicit pretendToBeVisual caveat. Updated the browser-native synthesis and index. Added a quote slide after BlockedButtonSlide and separate presenter guidance. No conflicting evidence or open factual question for this scoped quote.
+
+## 2026-09-15 — Test data factory in the behavior chapter
+
+- Request: briefly explain factories before accessibility using Claw & Chew code.
+- Result: moved and redesigned the existing backup example as defaults beside a quantity override and shipping assertion; added a short presenter transition. Re-read the current local helper and unit test; existing raw evidence remains unchanged.
+
+
+## [2026-09-15] simplify | Button gallery explanation
+
+Split the dense fixture/test slide into a short Vue excerpt beside the gallery and a three-click screenshot test. Retained the gallery introduction and schematic missing-variant comparison. Added matching spoken guidance in presenter.md. No new API claims; [existing evidence](../raw/2026-09-13-vitest-5-button-variants.md).
+
+
+## [2026-09-15] reorder | Show the gallery result before implementation
+
+Moved the schematic missing-variant comparison immediately after the full gallery. The Vue excerpt and screenshot test now explain how to create that result, with direct rendering of the gallery without Storybook. Updated presenter transitions; retained the schematic disclosure and existing API evidence.
+
+
+## 2026-09-15 — Button gallery narrative
+
+Reordered the visual chapter around the approved audience progression: other button states, prepared story-like examples, gallery reference, visible difference, then implementation. Moved ProductCard screenshot mechanics after the gallery test and updated presenter transitions into CI and reference updates. Reused the existing gallery evidence; no new API or execution claims.

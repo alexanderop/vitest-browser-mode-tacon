@@ -193,6 +193,23 @@ layout: default
 <BlockedButtonSlide />
 
 ---
+layout: default
+hideFooter: true
+---
+# jsdom beschreibt diese Grenze selbst
+
+<div class="mt-14 text-lg opacity-60">Aus der jsdom-Dokumentation</div>
+<blockquote class="!m-0 !mt-5 !border-0 !p-0" style="font-size: 46px; line-height: 1.35; background: transparent">
+  “jsdom still <strong style="color: #ff55e7">does not do any<br>layout or rendering</strong>”
+</blockquote>
+
+<div class="mt-9 text-2xl">Auch mit <code>pretendToBeVisual: true</code>.</div>
+
+<div class="mt-10 text-base opacity-70">
+  <a href="https://github.com/jsdom/jsdom#pretending-to-be-a-visual-browser">jsdom README · Pretending to be a visual browser ↗</a>
+</div>
+
+---
 layout: statement
 ---
 # Würdet ihr euren Node.js-Backend-Server in Chrome laufen lassen?
@@ -775,6 +792,57 @@ test('a customer can order a plush', async () => {
 
 ---
 layout: default
+contractChapter: "1 / 3 · Verhalten"
+class: factory-data-slide
+hideFooter: true
+---
+# Testdaten: Nur das Entscheidende ändern
+
+<div class="mt-5 grid grid-cols-[1.15fr_1fr] gap-7">
+<div>
+<div class="mb-3 text-xl font-bold">Die Factory liefert gültige Standarddaten</div>
+
+```ts
+export function aPlushLine(
+  { quantity = 1 } = {},
+): CartLine {
+  const product = products.find(p => p.id === 'plush')
+  if (!product) throw new Error('Plush fehlt')
+  return {
+    key: 'plush-fixture', product,
+    variant: 'One size · 18 cm',
+    print: null,
+    quantity,
+  }
+}
+```
+
+</div>
+<div>
+<div class="mb-3 text-xl font-bold">Der Test bestimmt den Sonderfall</div>
+
+```ts
+const lines = [
+  aPlushLine({ quantity: 3 }),
+]
+
+expect(summarize(lines).shipping)
+  .toBe(0)
+```
+
+<div class="mt-5 text-2xl font-bold text-teal-300">3 Plüschtiere → kostenloser Versand</div>
+<div class="mt-3 text-base opacity-70">Claw & Chew · Versandlogik als Unit-Test in Node</div>
+</div>
+</div>
+
+<div class="mt-6 text-xl">Standards in der Factory · relevante Daten und Erwartung im Test</div>
+
+<style>
+.factory-data-slide pre { font-size: 15px !important; line-height: 1.55 !important; }
+</style>
+
+---
+layout: default
 ---
 <ContractChapter :number="2" title="Accessibility" question="Der Kauf klappt.&#10;Auch mit der Tastatur?" />
 
@@ -912,6 +980,121 @@ contractChapter: "3 / 3 · Darstellung"
 />
 
 ---
+layout: default
+contractChapter: "3 / 3 · Darstellung"
+---
+# Und die anderen Button-Zustände?
+
+<div class="mt-14 flex justify-center">
+  <VisualDemoButton variant="primary" size="large" />
+</div>
+
+<div v-click class="mt-12 flex items-end justify-center gap-12">
+  <div class="text-center"><VisualDemoButton variant="secondary" size="large" /><div class="mt-4 text-lg">Secondary</div></div>
+  <div class="text-center"><VisualDemoButton variant="outline" size="large" /><div class="mt-4 text-lg">Outline</div></div>
+  <div class="text-center"><VisualDemoButton variant="primary" size="large" disabled /><div class="mt-4 text-lg">Disabled</div></div>
+</div>
+
+<div v-click class="mt-12 text-center text-2xl">Wie behalten wir sie gemeinsam im Blick?</div>
+
+---
+layout: default
+contractChapter: "3 / 3 · Darstellung"
+---
+# Jeder Zustand bekommt einen festen Platz
+
+<div class="mt-4 text-xl">Wie Stories in Storybook oder Histoire: gezielt vorbereitete Beispiele</div>
+<div class="mt-5 flex justify-center"><ButtonVariantGallery /></div>
+
+---
+layout: default
+contractChapter: "3 / 3 · Darstellung"
+---
+# Diese Galerie wird unser Referenzbild
+
+<div class="mt-4 text-xl">3 Varianten × 4 Größen und Zustände · ein gemeinsamer Bildvergleich</div>
+<div class="mt-5 flex justify-center">
+  <div class="rounded-xl p-2" style="outline: 3px solid var(--brand-accent, #ff55e7)"><ButtonVariantGallery /></div>
+</div>
+
+---
+layout: default
+contractChapter: "3 / 3 · Darstellung"
+---
+# Eine Variante fehlt — der Vergleich wird rot
+
+<ButtonVariantComparison />
+
+<div class="mt-8 text-2xl">Der Outline-Button fehlt. Der Bildvergleich erkennt die Änderung.</div>
+<div v-click class="mt-6 text-2xl">Wie bauen wir diese Galerie und den Test?</div>
+
+---
+layout: two-cols-header
+contractChapter: "3 / 3 · Darstellung"
+---
+# Wie bauen wir diese Galerie selbst?
+
+<div class="button-gallery-code" aria-hidden="true" />
+
+::left::
+
+<div class="mb-3 text-lg">ButtonVariantGallery.vue · Ausschnitt</div>
+
+```vue
+<section aria-label="Button-Varianten">
+  <BaseButton variant="primary">
+    In den Warenkorb
+  </BaseButton>
+  <BaseButton variant="secondary">
+    In den Warenkorb
+  </BaseButton>
+  <BaseButton disabled>
+    In den Warenkorb
+  </BaseButton>
+</section>
+```
+
+<div class="mt-4 text-base">Die vollständige Galerie enthält alle Kombinationen.</div>
+
+::right::
+
+<div class="mb-5 text-lg">Feste Beispiele in einer Vue-Komponente</div>
+<div class="button-gallery-preview"><ButtonVariantGallery /></div>
+
+---
+layout: default
+contractChapter: "3 / 3 · Darstellung"
+---
+# Ein Screenshot für die ganze Galerie
+
+<div class="mt-5 text-base opacity-70">Test-Ausschnitt · Vitest Browser Mode mit Playwright</div>
+
+<div v-click="1" class="mt-4">
+<div class="mb-2 text-xl">1 · Galerie im Browser rendern</div>
+
+```ts
+const screen = await render(Gallery)
+```
+
+</div>
+<div v-click="2" class="mt-4">
+<div class="mb-2 text-xl">2 · Den gesamten Galerie-Bereich auswählen</div>
+
+```ts
+const gallery = screen.getByRole('region', { name: 'Button-Varianten' })
+```
+
+</div>
+<div v-click="3" class="mt-4">
+<div class="mb-2 text-xl">3 · Screenshot aufnehmen und mit der Referenz vergleichen</div>
+
+```ts
+await expect(gallery).toMatchScreenshot('button-variants')
+```
+
+</div>
+
+---
 layout: two-cols-header
 class: visual-contract
 contractChapter: "3 / 3 · Darstellung"
@@ -954,77 +1137,6 @@ Nur die relevante Komponente.
 layout: default
 contractChapter: "3 / 3 · Darstellung"
 ---
-# Viele Button-Varianten, eine Referenz
-
-<div class="mt-5 text-xl">3 Varianten × 4 Zustände · ein Screenshot des gesamten Containers</div>
-<div class="mt-6 flex justify-center"><ButtonVariantGallery /></div>
-
----
-layout: two-cols-header
-contractChapter: "3 / 3 · Darstellung"
----
-# Die Galerie ist unsere Test-Fixture
-
-<div class="button-gallery-code" aria-hidden="true" />
-
-::left::
-
-<div class="mb-3 text-lg">ButtonVariantGallery.vue · Ausschnitt</div>
-
-```vue
-<section
-  aria-label="Button-Varianten">
-  <template v-for="state in states"
-    :key="state.name">
-    <BaseButton
-      v-for="variant in variants"
-      :key="variant"
-      :variant="variant"
-      :size="state.size"
-      :disabled="state.disabled"
-    >In den Warenkorb</BaseButton>
-  </template>
-</section>
-```
-
-::right::
-
-<div class="mb-3 text-lg">Vitest 5 · Browser Mode / Playwright</div>
-
-```ts
-import { expect, test } from 'vitest'
-import { render } from 'vitest-browser-vue'
-import Gallery from './ButtonVariantGallery.vue'
-
-test('Button-Varianten', async () => {
-  const screen = await render(Gallery)
-  await document.fonts.ready
-
-  const gallery = screen.getByRole('region', {
-    name: 'Button-Varianten',
-  })
-  await expect(gallery)
-    .toMatchScreenshot('button-variants')
-})
-```
-
-<div class="mt-4 text-lg">Aufnehmen und vergleichen mit einem Matcher.</div>
-
----
-layout: default
-contractChapter: "3 / 3 · Darstellung"
----
-# Eine Variante fehlt — der Vergleich wird rot
-
-<ButtonVariantComparison />
-
-<div class="mt-8 text-2xl">Auch falsche Farben, Abstände oder abgeschnittene Labels werden sichtbar.</div>
-<div class="mt-6 text-xl">Der Test kennt nur die freigegebene Matrix.<br>Nie aufgenommene Varianten entdeckt er nicht von selbst.</div>
-
----
-layout: default
-contractChapter: "3 / 3 · Darstellung"
----
 # Visual Tests bei jedem Pull Request
 
 <div class="mt-4">
@@ -1037,22 +1149,38 @@ contractChapter: "3 / 3 · Darstellung"
 
 ---
 layout: default
+class: reference-update
 contractChapter: "3 / 3 · Darstellung"
 ---
 # Gewollte Änderung? Referenz bewusst aktualisieren
 
-<div class="grid grid-cols-3 gap-8 mt-10 text-xl">
-<div><h2 style="font-size: 1.5rem">1 · Manuell starten</h2><p><code>workflow_dispatch</code><br>auf dem Feature-Branch.</p></div>
-<div><h2 style="font-size: 1.5rem">2 · In CI erzeugen</h2><p>Dieselbe Umgebung wie beim normalen Vergleich.</p></div>
-<div><h2 style="font-size: 1.5rem">3 · Bilder reviewen</h2><p>Referenzen committen.<br>PR-Check erneut ausführen.</p></div>
+<img class="reference-update__visual" src="/diagrams/reference-update-workflow.png" alt="Illustration: Ein Workflow wird manuell gestartet, ein CI-Server erzeugt Vergleichsbilder und eine Lupe steht für das bewusste Review der neuen Referenzen." />
+
+<div class="reference-update__steps">
+<section><h2>1 · Manuell starten</h2><p><code>workflow_dispatch</code><br>auf dem Feature-Branch.</p></section>
+<section><h2>2 · In CI erzeugen</h2><p>Dieselbe Umgebung wie<br>beim normalen Vergleich.</p></section>
+<section><h2>3 · Bilder reviewen</h2><p>Referenzen committen.<br>PR-Check erneut ausführen.</p></section>
 </div>
 
 ```sh
 pnpm exec vitest run --project vrt --update
 ```
 
-<div class="mt-7 text-xl">Ein roter Vergleich ist eine Review-Aufgabe, keine automatische Freigabe.</div>
-<div class="mt-4 text-lg opacity-80">Kein <code>--update</code> im normalen PR-Check. Keine lokalen Mac-Referenzen für den Linux-Vergleich.</div>
+<div class="reference-update__rule">Ein roter Vergleich braucht ein bewusstes Review.</div>
+<div class="reference-update__caution">Kein <code>--update</code> im PR-Check · Keine Mac-Referenzen für den Linux-Vergleich.</div>
+<div class="reference-update__credit">KI-Illustration</div>
+
+<style>
+.slidev-layout.reference-update { padding-top: 28px; }
+.reference-update h1 { font-size: 32px; margin-bottom: 0; }
+.reference-update .reference-update__visual { display: block; width: 100%; height: 230px; object-fit: cover; margin: 0; }
+.reference-update .reference-update__steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 12px; }
+.reference-update .reference-update__steps h2 { font-size: 23px; font-weight: 600; line-height: 1.25; margin: 0 0 8px; }
+.reference-update .reference-update__steps p { font-size: 18px; line-height: 1.4; margin: 0; }
+.reference-update .reference-update__rule { margin-top: 12px; font-size: 23px; color: #b9dc91; font-weight: 600; }
+.reference-update .reference-update__caution { margin-top: 6px; font-size: 16px; line-height: 1.5; opacity: .8; }
+.reference-update .reference-update__credit { position: absolute; right: 28px; bottom: 18px; font-size: 11px; opacity: .45; }
+</style>
 
 ---
 layout: default
@@ -1899,29 +2027,6 @@ Prüft das Ergebnis für den Kunden.
 </div>
 
 <div class="mt-8 text-2xl">Auch unser JSDOM-Test ist ein Black-Box-Test.</div>
-
----
-layout: default
----
-# Eine Factory macht den Unterschied sichtbar
-
-```ts
-export function aPlushLine({ quantity = 1 } = {}): CartLine {
-  const product = products.find((item) => item.id === 'plush')
-  if (!product) throw new Error('The talk fixture requires the plush product')
-  return {
-    key: 'plush-fixture', product,
-    variant: 'One size · 18 cm', print: null, quantity,
-  }
-}
-```
-
-```ts
-const lines = [aPlushLine({ quantity: 3 })]
-expect(summarize(lines).shipping).toBe(0)
-```
-
-<div class="mt-5 text-xl">Drei Plüschtiere → kostenloser Versand · reine Logik in Node</div>
 
 ---
 layout: default

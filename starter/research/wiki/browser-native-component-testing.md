@@ -2,9 +2,13 @@
 
 ## Current synthesis
 
+The opening now quotes jsdom's own documented scope directly after the blocked-button explanation. Even `pretendToBeVisual: true` does not provide layout or rendering; it changes visibility signals and enables animation-frame APIs. This supports a fair explanation of the demo's environment limit. [Official README section](../raw/jsdom-pretending-to-be-a-visual-browser.md).
+
 The backup now starts with grouped Claw & Chew pointer-capture, scrolling and resize examples, including actual recorded browser failure excerpts and the corresponding passing JSDOM results. Existing baseline and restored logs pass in both environments; these are inspected recordings, not fresh executions. Reka UI follows, then the collected hydration section. [Local source and logs](../raw/2026-09-14-claw-chew-backup-comparisons.md).
 
 The visual chapter ends with a QR code linking to Alexander Opalic’s [published article](../raw/2025-02-22-alexop-visual-regression-blog.md), expanding the button-variant example. The article dates from 2025; the deck retains its already verified native Vitest 5 matcher.
+
+The gallery teaching sequence now follows the ProductCard visual failure directly: reveal further button variants/states, introduce prepared examples using the Storybook/Histoire story analogy, frame the same gallery as a reference image, then show the schematic missing-variant comparison. Only then explain the Vue component and three click-revealed test steps. The ProductCard screenshot code follows as a stability detail before PR checks and deliberate reference updates. This is an editorial sequence built on the [curated gallery example](../raw/2026-09-13-vitest-5-button-variants.md), not a new execution result.
 
 The visual chapter extends ProductCard with a curated BaseButton gallery: three variants and four size/state cases share one reference. Vitest 5 teaching code uses awaited Vue rendering and native `toMatchScreenshot`; the supplied article's path truthiness/base64 workaround is historical. The missing-variant comparison is explicitly schematic. A baseline detects changes to captured content, not variants never included in the fixture. [Current API verification and editorial scope](../raw/2026-09-13-vitest-5-button-variants.md); [original supplied article](../raw/visual-regression-testing-vue-vitest-user-article.md).
 
@@ -188,3 +192,8 @@ The author's article uses strong advocacy for Testing Library and blanket mock a
 - [axe JSDOM and browser diagram evidence](../raw/2026-09-12-axe-jsdom-diagram-evidence.md)
 
 - [Browser Mode slide audit against local Vitest source](../raw/2026-09-13-vitest-source-audit.md)
+
+
+### Test data factory before accessibility (2026-09-15)
+
+The behavior chapter now ends with the cart-line data factory and its shipping assertion: default quantity 1, explicit override 3, expected shipping 0. The slide is moved from backup and contrasts valid defaults with the test-specific input. It distinguishes this Node unit test from the preceding browser setup factory. The current local files `talk/tacon/cart-line.ts` and `shipping.unit.test.ts` were re-read; the displayed excerpts shorten naming and isolate the shipping assertion. [Local example evidence](../raw/2026-09-11-claw-and-chew-talk-examples.md). [Data factory rationale](../raw/2025-12-14-vue-3-testing-pyramid-vitest-browser-mode.md).

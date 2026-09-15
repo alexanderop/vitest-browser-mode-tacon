@@ -1,5 +1,7 @@
 # Research index
 
+Latest opening source: [jsdom’s explicit layout and rendering limit](../raw/jsdom-pretending-to-be-a-visual-browser.md), synthesized in [Browser-native component testing](browser-native-component-testing.md).
+
 Latest closing strategy: [npmx.dev runtime split and concrete checks](../raw/2026-09-14-npmx-testing-strategy.md), synthesized in [testing strategy](testing-strategy-by-confidence-and-cost.md). Summary and recommendation follow visuals; the Reka migration remains backup material; the new main-deck comparison summarizes its benefits and measured runtime tradeoff.
 
 Latest migration revision: six editable code-editor steps replace the illustrations; see [testing strategy](testing-strategy-by-confidence-and-cost.md) and the [rechecked Git chronology](../raw/2026-09-12-reka-migration-git-history.md).

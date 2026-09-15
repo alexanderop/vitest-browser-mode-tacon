@@ -54,6 +54,18 @@ Folie 9: „Was soll dieser grüne Test beweisen? Dass ich das Plüschtier in de
 
 Folie 10: „Eine Dekoration liegt über dem Button.“ In der lokalen Rekonstruktion zuerst „Introduce defect“ wählen. Der echte Klick erreicht den Button nicht. „Dispatch a direct DOM click“ erhöht dagegen den Zähler. Dieser Knopf ruft `HTMLButtonElement.click()` auf; er illustriert den Unterschied und ist nicht der user-event-Aufruf aus dem echten JSDOM-Test.
 
+### jsdom beschreibt diese Grenze selbst · 20–30 Sekunden
+
+Direkt nach der Erklärung des blockierten Buttons, vor der Frage zum Node.js-Backend in Chrome:
+
+„Die jsdom-Dokumentation sagt das selbst ganz klar: Es gibt kein Layout und kein Rendering. Auch diese Option ändert daran nichts. Für unseren Shop heißt das: Ob die Dekoration über dem Button liegt und den Klick abfängt, kann dieser Test so nicht prüfen.“
+
+Bei Rückfragen: `pretendToBeVisual` ändert Sichtbarkeitssignale und aktiviert `requestAnimationFrame` sowie `cancelAnimationFrame`. Die Option ergänzt keine Layout- oder Rendering-Engine. jsdom beschreibt damit ausdrücklich seinen Umfang.
+
+Übergang: „Für diese Frage brauchen wir also die Browser-Engine. Würdet ihr euren Node.js-Backend-Server in Chrome laufen lassen?“
+
+Quelle: [jsdom README — Pretending to be a visual browser](https://github.com/jsdom/jsdom#pretending-to-be-a-visual-browser), [lokaler Quellenauszug](research/raw/jsdom-pretending-to-be-a-visual-browser.md).
+
 Folie 11: Gandalf kurz wirken lassen. „Was steckt technisch hinter unserem Türsteher?“
 
 ### Folien 12–17: Sechs Minuten Browser Mode
@@ -87,7 +99,7 @@ Folie 19 schließt die Frage aus Folie 9: „Der Kunde kann das Plüschtier hinz
 
 Zur Folie „Der Klick funktioniert. Klappt auch die Bestellung?“: „Bisher haben wir geprüft, ob das Produkt im Warenkorb landet. Jetzt gehen wir weiter: Produkt auswählen, Kundendaten eingeben, Bestellung abschicken. Dafür testen wir die Komponenten gemeinsam.“ Der Ablauf ist vollständig sichtbar; anschließend mit `Shop.vue` zeigen, wie die Komponenten zusammenspielen.
 
-Die Handlungen im Helper nur in einem Satz erklären; die Assertion bleibt sichtbar im Test. Page-Object-Code und Factory stehen im Backup. Der Test mountet echte Vue-Komponenten; Server, Zahlung und Versand sind damit nicht bewiesen. Diese Grenze nach den drei Beispielen gemeinsam erklären.
+Die Handlungen im Helper nur in einem Satz erklären; die Assertion bleibt sichtbar im Test. Page Object und Setup-Factory werden vor dem fertigen Test erklärt. Die Testdaten-Factory folgt direkt danach vor Accessibility. Der Test mountet echte Vue-Komponenten; Server, Zahlung und Versand sind damit nicht bewiesen. Diese Grenze nach den drei Beispielen gemeinsam erklären.
 
 Quellen im Shop: `talk/tacon/purchase.browser.test.ts`, `shop-page.ts`, `cart-line.ts`, `shipping.unit.test.ts`. Probe bei Bedarf mit `pnpm exec vitest run --config talk/vitest.tacon.config.ts --project browser` beziehungsweise `--project unit`.
 
@@ -195,7 +207,9 @@ Bildprompts: `../output/imagegen/testing-basics-prompts.json`, `frontend-compone
 
 ## Ergänzung im Visual-Teil: GitHub Actions (ca. 60–90 Sekunden)
 
-Nach „Ein Screenshot für einen konkreten Vertrag“ die beiden CI-Folien zeigen. „Der gleiche Test läuft bei jedem PR. Das vrt-Projekt ist separat konfiguriert: Playwright-Provider, Chromium, headless und ein fester Viewport. Node, pnpm und Checkout sind im Auszug ausgelassen. Playwright ist im Projekt gepinnt und wird über den Lockfile installiert. Bei Abweichungen lade ich Referenz, aktuelles Bild und Diff aus den Actions-Artefakten herunter.“ `include-hidden-files` nimmt den versteckten `.vitest`-Ordner mit. Den Beispieljob nicht als bereits installierte oder ausgeführte Pipeline bezeichnen.
+Nach dem Galerie-Test und „Ein Screenshot für einen konkreten Vertrag“ die beiden CI-Folien zeigen. „Der gleiche Test läuft bei jedem PR. Das vrt-Projekt ist separat konfiguriert: Playwright-Provider, Chromium, headless und ein fester Viewport. Node, pnpm und Checkout sind im Auszug ausgelassen. Playwright ist im Projekt gepinnt und wird über den Lockfile installiert. Bei Abweichungen lade ich Referenz, aktuelles Bild und Diff aus den Actions-Artefakten herunter.“ `include-hidden-files` nimmt den versteckten `.vitest`-Ordner mit. Den Beispieljob nicht als bereits installierte oder ausgeführte Pipeline bezeichnen.
+
+Übergang zur Update-Folie: „Der Vergleich meldet eine Änderung. Was machen wir, wenn genau diese Änderung gewollt ist?“
 
 „Ist die Änderung gewollt, starte ich einen separaten Workflow manuell auf meinem Feature-Branch. Er erzeugt mit --update Referenzen in derselben Umgebung. Bilder reviewen, committen, normalen PR-Check erneut starten. Ein Update darf den normalen Vergleich nicht ersetzen.“ Der kurze Update-Ablauf zeigt absichtlich keinen automatischen Push; die Quelle enthält einen ausführlicheren Bot-Commit-Ansatz. GitHub-hosted Runner können sich trotz gleicher Ubuntu-Bezeichnung verändern; Browser und Fonts kontrollieren, bei Bedarf ein festes Container-Image nutzen. Quelle: [Vitest Visual Regression Testing](research/raw/2026-09-12-vitest-visual-regression-ci.md).
 
@@ -245,7 +259,48 @@ Quellen: [Recherche und lokale Belege](research/raw/2026-09-13-axe-rule-scope.md
 
 ## Ergänzung: Button-Varianten gemeinsam absichern
 
-Nach „Ein Screenshot für einen konkreten Vertrag“ folgen drei Folien: Galerie, Fixture/Test, fehlende Variante. Etwa 90 Sekunden: „Unsere eigenen Basis-Komponenten haben viele Varianten. Ich rendere eine bewusst ausgewählte Matrix und fotografiere den gesamten Container. Verschwindet der bereits freigegebene Outline-Button im Disabled-Zustand, weicht das Bild ab. Eine nie eingetragene Variante kann dieser Test nicht erraten.“ Die drei Ansichten sind als schematischer Vergleich gekennzeichnet, keine aufgezeichnete Vitest-Ausgabe. Das Vue-Beispiel kürzt Beschriftungen und Layout; BaseButton steht für die eigene Designsystem-Komponente. Der gezeigte Matcher braucht das bereits erklärte Browser-Projekt mit Playwright und festem Viewport. Vitest 5 übernimmt Aufnahme und Bildvergleich; der alte Artikel brauchte dafür einen Base64-Workaround. Erstes Referenzbild prüfen und committen; Updates bleiben bewusste Reviews. Quellen: [API und redaktionelle Grenzen](research/raw/2026-09-13-vitest-5-button-variants.md). Die zusätzliche Zeit ist noch nicht durch eine Sprechprobe bestätigt.
+Direkt nach „Die Interaktion bleibt grün“ folgt: **weitere Button-Zustände → vorbereitete Beispiele → Galerie als Referenz → sichtbare Abweichung → Vue-Galerie → Screenshot-Test.** Der Produktkarten-Code folgt erst danach als Ergänzung zur stabilen Aufnahme; anschließend PR-Check und bewusstes Referenz-Update.
+
+### Und die anderen Button-Zustände?
+
+Zunächst ist nur der Primary-Button sichtbar. „Damit haben wir eine Darstellung abgesichert. Aber unser Button kommt an vielen Stellen vor.“
+
+- **Klick 1:** „Es gibt weitere Varianten und Zustände: Secondary, Outline oder deaktiviert.“
+- **Klick 2:** „Wie behalten wir die gemeinsam im Blick?“
+
+### Jeder Zustand bekommt einen festen Platz
+
+„Die Idee kennt ihr vielleicht aus Storybook oder Histoire: Wir zeigen eine Komponente in gezielt vorbereiteten Zuständen. Genau solche Beispiele können wir auch für unseren Bildvergleich nutzen.“ Auf die drei Variantenspalten und die vier Größen- und Zustandszeilen zeigen. Noch keinen Code und keine Test-API erklären. Die Galerie ist eine live gerenderte Illustration.
+
+### Diese Galerie wird unser Referenzbild
+
+„Wir nehmen diesen ganzen Bereich auf und prüfen das Bild als Referenz. Damit halten wir fest, wie die ausgewählten Beispiele aussehen sollen.“ Der farbige Rahmen zeigt den Aufnahmebereich. Dieselbe Galerie bleibt bewusst sichtbar, damit das Publikum den Schritt von den Beispielen zum Referenzbild nachvollziehen kann.
+
+### Eine Variante fehlt — der Vergleich wird rot
+
+„Jetzt fehlt unten rechts der Outline-Button. Links ist unsere freigegebene Referenz, in der Mitte der neue Stand, rechts die markierte Abweichung. Genau diese Änderung soll unser Test melden.“ Kurz auf die fehlende Zelle zeigen. Die Vergleichsansichten sind ausdrücklich schematisch, keine aufgezeichnete Vitest-Ausgabe.
+
+**Klick:** „Wie kommen wir zu so einem Bild? Wir brauchen dafür eine kleine Galerie-Komponente und einen Browser-Test.“
+
+### Wie bauen wir diese Galerie selbst?
+
+„Für diese Galerie reicht eine kleine Vue-Komponente. Darin rendern wir unsere eigenen Buttons mit festen Props. Links sind drei Beispiele; rechts seht ihr wieder die vollständige Galerie.“
+
+BaseButton steht für die eigene Designsystem-Komponente. Beschriftungen, Layout und die übrigen Kombinationen sind im Ausschnitt weggelassen. Die Aussage bezieht sich auf dieses Beispiel; sie ist keine Empfehlung, ein vorhandenes Storybook abzuschaffen. Eine nie in die Galerie aufgenommene Variante kann der Bildvergleich nicht entdecken.
+
+### Ein Screenshot für die ganze Galerie
+
+- **Klick 1:** „Vitest rendert diese Vue-Komponente im Browser.“
+- **Klick 2:** „Wir wählen den gesamten Galerie-Bereich aus.“ Bei Bedarf kurz `aria-label` und `name` verbinden.
+- **Klick 3:** „Und dieser Aufruf nimmt den Screenshot auf und vergleicht ihn mit der gespeicherten Referenz. So entsteht der Bildvergleich, den ihr gerade gesehen habt.“ Dabei auf die zuvor gezeigte schematische Darstellung Bezug nehmen, nicht behaupten, sie sei eine echte Testausgabe.
+
+Der Test-Ausschnitt lässt Imports und `test(...)` weg. Das Browser-Projekt mit Playwright und festem Viewport ist bereits eingerichtet. Vor dem Screenshot müssen Fonts bereit sein (`await document.fonts.ready`); bei Bildern zusätzlich auf Laden und Dekodieren warten. Das erste Referenzbild wird geprüft und committed; spätere Updates werden bewusst überprüft.
+
+Danach „Ein Screenshot für einen konkreten Vertrag“: „Bei unserer Produktkarte kommt noch das Bild dazu. Vor der Aufnahme warten wir auf das Bild und die Fonts. Viewport und Aufnahmebereich legen wir bewusst fest.“
+
+Übergang zur CI: „Diesen Test können wir jetzt bei jedem Pull Request laufen lassen.“
+
+Quellen: [API und redaktionelle Grenzen](research/raw/2026-09-13-vitest-5-button-variants.md). Etwa drei Minuten für die Galerie-Sequenz einplanen; noch nicht durch eine Sprechprobe bestätigt.
 
 
 ## Aktueller Schluss nach Visual Regression · Folien 61–71
@@ -285,3 +340,12 @@ Diese Reihenfolge supersediert alle früheren Angaben zur Schlusssequenz: Auf �
 „Testet, was eure Nutzer tun – im echten Browser. Vielen Dank! Wenn ihr die Strategie in Ruhe nachlesen möchtet: Auf alexop.dev findet ihr meinen Artikel dazu. Der QR-Code führt euch direkt dorthin. Jetzt freue ich mich auf eure Fragen.“
 
 Die Schlussfolie während der Fragen stehen lassen. Der Blogartikel ist die weiterführende Lektüre, keine neue Folienquelle für allgemeine Laufzeit- oder Prozentversprechen. Die früheren Testgrenzen- und KI-Sprechertexte dienen jetzt nur als Backup.
+
+
+## Testdaten-Factory vor Accessibility (ca. 40 Sekunden)
+
+„Gerade hat uns `renderShop()` den Shop vorbereitet. Eine Factory kann auch Testdaten erzeugen. `aPlushLine()` liefert eine gültige Warenkorbposition mit einem Plüschtier. Für diesen Test ändere ich nur die Menge: drei. Produkt, Variante und die übrigen Standardwerte bleiben in der Factory. Im Test sehe ich sofort den Fall und das erwartete Ergebnis: kostenloser Versand.“
+
+„Die Versandberechnung braucht keinen Browser; sie läuft als Unit-Test in Node. Die Factory-Idee können wir genauso für die Daten unserer Komponententests verwenden. Jetzt zurück zum Kauf: Der Ablauf klappt – aber auch mit der Tastatur?“
+
+Quellen: `claw-and-chew/talk/tacon/cart-line.ts` und `shipping.unit.test.ts`, am 15.09.2026 gelesen. Der Factory-Ausschnitt kürzt den Parameternamen im Lookup und die Fehlermeldung, Imports entfallen. Der Test zeigt die Versand-Assertion aus der vollständigen Summen-Erwartung. Es geht um feste gültige Standarddaten und gezielte Overrides; Faker ist dafür nicht erforderlich. Die bisherige Factory-Folie im Backup entfällt.

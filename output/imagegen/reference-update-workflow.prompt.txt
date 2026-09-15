@@ -1,0 +1,7 @@
+Tool: built-in image_gen
+Asset: starter/public/diagrams/reference-update-workflow.png
+
+Use case: productivity-visual
+Asset type: wide illustrated strip for an existing dark technical conference slide, aspect ratio 3:1.
+Create three equally spaced polished 3D miniature editorial illustrations in a single horizontal row. Left third: a hand pressing a luminous green triangular play button on a small dark workflow console, with a small branching git path. Middle third: a compact graphite CI server stack with a browser window emerging from it, showing two identical simple product image thumbnails. Right third: a large magnifying glass inspecting two screenshot prints side by side, their button colors subtly differing pink versus green; a small pencil conveys conscious human review. These are conceptual illustrations, not real UI screenshots.
+Style: refined tactile clay and matte graphite, clean bevels, soft studio light, restrained detail, readable at small slide size. Palette: dark navy background exactly #232736, soft lime green #b9dc91, lavender and pink #e879f9 accents, off-white. Each vignette centered at 1/6, 1/2, 5/6 image width, balanced equal visual weight, generous spacing between vignettes, no enclosing cards, no borders, no arrows between scenes. Background uniformly #232736 all the way to edges, no horizon or floor line. Objects fully inside canvas. No text, no letters, no numbers, no logos, no watermark.
