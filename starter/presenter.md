@@ -1,8 +1,8 @@
 # TACON presenter guide
 
-74 Hauptfolien einschließlich Dankesfolie, danach der Backup-Trenner (75) und 37 Backup-Folien (76–112). Geplant: 36 Minuten Inhalt, fünf Minuten Fragen und vier Minuten Reserve. Die überarbeitete Schlusssequenz ersetzt den Reka-Migrationsblock im Hauptteil. Diese Zeiten sind keine gemessene Sprechprobe.
+79 Hauptfolien einschließlich Dankesfolie, danach Backup (80) und 33 Backup-Folien (81–113). Auf „One more thing…“ (73) folgt der kompakte Reka-Teil (74–78). Die aktuelle Sprecherfassung steht am Ende; ältere Nummern und Zeitpläne sind historisch.
 
-Die Geschichte folgt dem Einkauf: Ich will das Plüschtier kaufen. Der Test ist grün, aber der Button funktioniert nicht. Wir erklären und reparieren diesen Widerspruch, prüfen danach den Kaufablauf, die Bedienung und die Darstellung. Nach der Erklärung des Button-Fehlers zeigen wir die drei Verträge als Überblick. Danach vertiefen wir Verhalten, Accessibility und Darstellung in dieser Reihenfolge. Nach Visual Regression fassen wir die drei Verträge zusammen und empfehlen eine Teststrategie, mit npmx.dev als Praxisbeispiel. Testgrenzen und KI-Auftrag wenden das Gelernte an. Die Reka-Migration folgt ausschließlich im Backup.
+Die Geschichte folgt dem Einkauf: Ich will das Plüschtier kaufen. Der Test ist grün, aber der Button funktioniert nicht. Wir erklären und reparieren diesen Widerspruch, prüfen danach den Kaufablauf, die Bedienung und die Darstellung. Nach der Erklärung des Button-Fehlers zeigen wir die drei Verträge als Überblick. Danach vertiefen wir Verhalten, Accessibility und Darstellung in dieser Reihenfolge. Nach Visual Regression fassen wir die drei Verträge zusammen und empfehlen eine Teststrategie, mit npmx.dev als Praxisbeispiel. Testgrenzen und KI-Auftrag wenden das Gelernte an. Die Reka-Migration folgt nach npmx.dev im Hauptteil.
 
 ## Handzeichenfragen für das QA-Publikum
 
@@ -229,7 +229,7 @@ Bildprompts: `../output/imagegen/testing-basics-prompts.json`, `frontend-compone
 
 ## Ergänzung im Visual-Teil: GitHub Actions (ca. 60–90 Sekunden)
 
-Nach dem Galerie-Test und „Ein Screenshot für einen konkreten Vertrag“ die beiden CI-Folien zeigen. „Der gleiche Test läuft bei jedem PR. Das vrt-Projekt ist separat konfiguriert: Playwright-Provider, Chromium, headless und ein fester Viewport. Node, pnpm und Checkout sind im Auszug ausgelassen. Playwright ist im Projekt gepinnt und wird über den Lockfile installiert. Bei Abweichungen lade ich Referenz, aktuelles Bild und Diff aus den Actions-Artefakten herunter.“ `include-hidden-files` nimmt den versteckten `.vitest`-Ordner mit. Den Beispieljob nicht als bereits installierte oder ausgeführte Pipeline bezeichnen.
+Nach dem Galerie-Test die beiden CI-Folien zeigen. „Der gleiche Test läuft bei jedem PR. Das vrt-Projekt ist separat konfiguriert: Playwright-Provider, Chromium, headless und ein fester Viewport. Node, pnpm und Checkout sind im Auszug ausgelassen. Playwright ist im Projekt gepinnt und wird über den Lockfile installiert. Bei Abweichungen lade ich Referenz, aktuelles Bild und Diff aus den Actions-Artefakten herunter.“ `include-hidden-files` nimmt den versteckten `.vitest`-Ordner mit. Den Beispieljob nicht als bereits installierte oder ausgeführte Pipeline bezeichnen.
 
 Übergang zur Update-Folie: „Der Vergleich meldet eine Änderung. Was machen wir, wenn genau diese Änderung gewollt ist?“
 
@@ -318,8 +318,6 @@ BaseButton steht für die eigene Designsystem-Komponente. Beschriftungen, Layout
 
 Der Test-Ausschnitt lässt Imports und `test(...)` weg. Das Browser-Projekt mit Playwright und festem Viewport ist bereits eingerichtet. Vor dem Screenshot müssen Fonts bereit sein (`await document.fonts.ready`); bei Bildern zusätzlich auf Laden und Dekodieren warten. Das erste Referenzbild wird geprüft und committed; spätere Updates werden bewusst überprüft.
 
-Danach „Ein Screenshot für einen konkreten Vertrag“: „Bei unserer Produktkarte kommt noch das Bild dazu. Vor der Aufnahme warten wir auf das Bild und die Fonts. Viewport und Aufnahmebereich legen wir bewusst fest.“
-
 Übergang zur CI: „Diesen Test können wir jetzt bei jedem Pull Request laufen lassen.“
 
 Quellen: [API und redaktionelle Grenzen](research/raw/2026-09-13-vitest-5-button-variants.md). Etwa drei Minuten für die Galerie-Sequenz einplanen; noch nicht durch eine Sprechprobe bestätigt.
@@ -383,3 +381,35 @@ Quelle: [Offizielles MSW-Beispiel](https://github.com/mswjs/http-middleware#api)
 ## Terminalaufnahme: Der Test scheitert schon beim Klick
 
 Auf Play klicken und den aufgezeichneten Chromium-Lauf bis „1 failed“ abspielen. „Vorhin war derselbe Benutzerwunsch in JSDOM grün. Im Browser scheitert schon der Klick: Die Dekoration liegt darüber. Die Warenkorb-Assertion wird nicht mehr erreicht.“ Die Aufnahme stammt vom 15.09.2026; kein Live-Terminal. Quelle: [Aufnahme und Methode](research/raw/2026-09-15-blocked-button-browser-terminal.md).
+
+## Historisch: Reka und AI in neun Folien (durch die Kurzfassung unten ersetzt)
+
+Diese Reihenfolge ersetzt sämtliche älteren Angaben zur Reka-Platzierung und zum Schluss. Nach npmx.dev folgen die Folien 73–81; Danke ist 82, Backup 83. Für Reka etwa vier Minuten einplanen; das ist keine gemessene Sprechprobe.
+
+- **73 · Es ist 2026:** „Ich dachte, für meinen Talk muss ich auch irgendwie AI einbauen.“ Kurz stehen lassen, dann das Experiment vorstellen.
+- **74 · Was ist Reka UI?:** „Das sind Vue-Bausteine wie Slider, Dialoge und Kalender. Styling bringe ich mit; Tastaturbedienung, Fokus und ARIA gehören zur Bibliothek.“ Quelle: [Reka UI](https://reka-ui.com/). Screenshot beibehalten.
+- **75 · Der Slider-Test in jsdom:** „Die Bibliothek hatte bereits viele Tests. Allein hier stehen vor dem Test ein Observer-Stub und vier API-Mocks.“ Links das echte Setup, rechts ArrowRight: 50 wird 51, die Änderung ist 1. Das ist das Original im untersuchten Fork, keine Aussage über den heutigen Upstream. `proto` kürzt nur den langen Prototypnamen ab; Setup und Test sind Ausschnitte.
+- **76 · Das müsste AI doch können:** „Die Erwartungen sind schon da. Ich dachte: AI müsste inzwischen gut genug sein, diese Tests zu migrieren.“ Das ist der damalige Ausgangsgedanke.
+- **77 · Meine Vorbereitung:** „Ich habe Vitest lokal unter `opensource/vitest` geklont und dem Agenten als Referenz gegeben. Er konnte die Doku, den Quellcode und die Tests von Vitest selbst lesen: Wie benutzt Vitest seine eigenen APIs? Das half ihm, die passenden APIs für die Migration zu verwenden.“ Danach Tests inventarisieren, beide Laufzeiten parallel einrichten, an Slider und weiteren Pilotdateien lernen. Die Anleitung entstand mit den Versuchen; sie war nicht von Anfang an fertig.
+- **78 · So habe ich die Migration organisiert:** Ein Agent pro Datei, unabhängiger Reviewer mit Original und Port. Testnamen, Assertion-Zahlen und Coverage maschinell vergleichen. Erkenntnisse in AGENTS.md und PORT-PROMPTS.md korrigieren. Zahlen allein beweisen keine gleich starken Tests: semantisches Review und gezielte Defekte ergänzen die Checks.
+- **79 · Der migrierte Slider-Test:** „Dieselbe Erwartung, jetzt mit Browser-Tastaturaktion und einer wartenden Assertion.“ Der Ausschnitt zieht Render-Helper und beforeEach zusammen. Die zwei Assertions bleiben erhalten. Den Fokus setzt dieser Test ausdrücklich per focus(); er behauptet keinen Tab-Reihenfolge-Test. Die Browser-API-Mocks entfallen. Das ist der fertige, weiter geprüfte Port, keine unveränderte erste AI-Ausgabe.
+- **80 · Mein Fork:** „Alle 97 ursprünglichen Dateien haben ein Ziel: 87 UI-Dateien in Browser Mode und zehn Logikdateien in Node.“ Originale zum Vergleich behalten. Vollständig migriert bedeutet nicht befundfrei: dokumentierte erwartete Fehler bleiben ausführbar. Link zum Fork öffnen nur bei Bedarf.
+- **81 · Für solche Migrationen ist AI richtig gut:** „Viele ähnliche Änderungen, klare Regeln, überprüfbare Erwartungen. Dafür hat AI für mich gut funktioniert. Review und Tests gehören dazu.“ Persönliche Schlussfolgerung; keine behauptete Zeitersparnis. Danach Danke.
+
+Quellen: [aktuell inspizierter Slider und Scope](research/raw/2026-09-15-reka-main-ai-story.md), [tatsächliche Prompts](research/raw/2026-09-12-reka-ai-migration.md), [Git-Chronologie](research/raw/2026-09-12-reka-migration-git-history.md). Checkout ab4207bf am 15. September gelesen; keine vollständige Testsuite neu ausgeführt.
+
+Ergänzung zur Vorbereitung: [Schilderung des lokalen Vitest-Checkouts durch den Sprecher](research/raw/2026-09-15-vitest-local-reference.md). Der Pfad beschreibt den damaligen Arbeitsablauf; der Checkout wurde in dieser Ergänzung nicht erneut inspiziert.
+
+## Aktuell: fünf visuelle Reka-Folien (2026-09-15)
+
+**73 · One more thing…:** Nach npmx.dev kurz pausieren und das Steve-Jobs-Foto wirken lassen. „Eine Sache noch.“ Dann weiter zum Reka-/AI-Einstieg. Bildquelle: [TecMundo](https://www.tecmundo.com.br/celular/85185-marca-relogios-luxo-patenteia-one-more-thing-cutucar-apple.htm); [lokale Provenienz](research/raw/2026-09-15-steve-jobs-one-more-thing.md).
+
+Diese Kurzfassung ersetzt die vorherige Neun-Folien-Sequenz. Etwa 2:30–3:00 Minuten als Plan, noch nicht geprobt.
+
+- **74 · 2026. Also musste AI in den Talk.:** „Reka UI liefert Vue-Bausteine wie Slider, mit Tastaturbedienung und ARIA. Dafür gab es schon viele jsdom-Tests. Ich dachte: Diese Migration müsste AI inzwischen können.“ Screenshot als Orientierung, keinen Komponenten-Katalog erklären.
+- **75 · Vitest selbst als Nachschlagewerk:** Auf das große Buch zeigen. „Ich habe Vitest lokal unter opensource/vitest geklont. Der Agent konnte Doku, Implementierung und Vitests eigene Tests lesen und die passenden APIs dort nachschlagen.“ Inventar, parallele Laufzeiten und Slider-Pilot bei Bedarf mündlich ergänzen.
+- **76 · Einer migriert. Einer prüft.:** Auf das fehlende Puzzleteil zeigen: „Ein Agent überträgt eine Datei. Ein unabhängiger zweiter vergleicht mit dem Original. Eine verlorene Erwartung darf nicht durchgehen. Die Erkenntnisse landen in AGENTS.md und den Prompts für den nächsten Versuch.“ Testnamen, Assertion-Zahlen und Coverage automatisch vergleichen; diese Zahlen ersetzen kein semantisches Review. Bilder sind Metaphern, keine Ausführungsbelege.
+- **77 · Der Slider: vorher und nachher:** Links auf die fünf Browser-Ersatzstücke zeigen, rechts auf Tastatur und Erwartung. „Wert 51 bleibt die Erwartung. Der Browser liefert die APIs.“ Stark gekürzte Ausschnitte: `proto` steht für HTMLElement.prototype; der ResizeObserver-Block kürzt drei leere Methoden ab. Render-Setup ist zusammengezogen. Beide vollständigen Tests prüfen zusätzlich die Änderung um 1. Fokus wird hier ausdrücklich gesetzt, kein Tab-Reihenfolge-Beleg.
+- **78 · 97 Dateien migriert:** „87 UI-Dateien im Browser, zehn Logikdateien in Node. Für solche wiederholbaren Aufgaben ist AI für mich richtig gut, mit passenden Referenzen und Review.“ Ursprüngliche jsdom-Dateien bleiben als Vergleich, dokumentierte erwartete Fehler bleiben bestehen. Keine neue Laufzeit- oder Produktivitätsmessung.
+
+Danach Danke (79), Backup (80). Quellen: [Slider und Migration](research/raw/2026-09-15-reka-main-ai-story.md), [lokaler Vitest-Checkout](research/raw/2026-09-15-vitest-local-reference.md), [visuelle Kurzfassung und Bildprovenienz](research/raw/2026-09-15-reka-visual-short-story.md).

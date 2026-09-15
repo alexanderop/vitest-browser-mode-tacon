@@ -361,3 +361,19 @@ Replaced the static blocked-click excerpt with a real recorded failing Browser M
 - Added a short comparison after the Faker slide: two explicit products versus two factory calls.
 - Updated presenter guidance with imports, setup scope and generated-value distinction.
 - Source: [MSW comparison evidence](../raw/2026-09-15-msw-factory-comparison.md).
+
+## 2026-09-15: Reka migration restored to the main talk
+
+Ingested [Slider source pair and accepted AI narrative](../raw/2026-09-15-reka-main-ai-story.md). Replaced the four backup slides with nine main slides, preserving 87 browser / 10 Node scope. Updated strategy and presenter guidance. No migration tests rerun.
+
+## 2026-09-15: Local Vitest reference
+
+Captured the [speaker’s account](../raw/2026-09-15-vitest-local-reference.md) of providing a Vitest clone to the agent. Emphasized upstream docs, source and tests on the preparation slide and in presenter notes.
+
+## 2026-09-15: Five-slide visual Reka story
+
+Condensed nine main slides into five, generated two explanatory Hamcrab illustrations and retained code/evidence. [Source and provenance](../raw/2026-09-15-reka-visual-short-story.md).
+
+## 2026-09-15: One more thing transition
+
+Added the user-requested sourced Steve Jobs photograph before the Reka/AI chapter; recorded source and updated speaker numbering. [Provenance](../raw/2026-09-15-steve-jobs-one-more-thing.md).

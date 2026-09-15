@@ -106,3 +106,8 @@
 .slidev-presenter .group:has(> .font-mono) [class~="i-carbon:renew"]::after {
   content: 'Reset';
 }
+
+/* Shared layout for the illustrated Reka migration slides. */
+.reka-picture > img { display: block; width: 100%; height: 340px; object-fit: contain; margin-top: 16px; }
+.reka-picture .reka-picture-caption { margin-top: 16px; font-size: 22px; }
+.reka-picture .reka-picture-credit { margin-top: 6px; font-size: 12px; opacity: .55; }

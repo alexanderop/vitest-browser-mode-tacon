@@ -2,9 +2,13 @@
 
 ## Current synthesis
 
-The Reka backup is now four non-code slides: motivation with the original screenshot, preparation, an implementation/review/learning loop, and the 87-browser/10-Node outcome. Hydration follows immediately. This replaces the detailed migration and ARIA walkthrough, following the [accepted overview](../raw/2026-09-14-reka-backup-overview.md); the [historical chronology](../raw/2026-09-12-reka-migration-git-history.md) remains the evidence.
+A sourced Steve Jobs “One more thing” photograph now bridges npmx.dev and the five-slide Reka/AI chapter, at the user’s request. [Transition and provenance](../raw/2026-09-15-steve-jobs-one-more-thing.md).
 
-Latest closing order: the npmx feature example leads directly to a single thank-you slide, with alexop.dev and a QR link to the existing Vue testing-pyramid article. Hydration, test boundaries, AI instructions and the former correctness conclusion now open the backup. [Accepted order and verified link](../raw/2026-09-14-closing-blog-link.md). This supersedes earlier main-deck boundary and closing placement.
+The Reka main-deck story is now five visual slides instead of nine: AI/Reka introduction, local Vitest reference, independent review, Slider before/after, and completed destinations with the personal AI conclusion. Two clearly labeled generated illustrations replace process prose; code and counts remain source-based. This supersedes the nine-slide order below. [Visual revision and provenance](../raw/2026-09-15-reka-visual-short-story.md).
+
+The speaker also supplied a local Vitest clone at `opensource/vitest` as a migration reference: documentation, implementation and upstream tests were available to guide API choices. This is the speaker's account, not a new inspection or a claim that every document was read. The preparation slide emphasizes this step. [Speaker source](../raw/2026-09-15-vitest-local-reference.md).
+
+The latest user direction restores the Reka migration to the main deck after npmx.dev and before Danke. Nine slides cover the 2026/AI hook, Reka introduction, original Slider mocks and key test, migration hypothesis, preparation, implementation/review and stored instructions, migrated Slider, complete fork, and the speaker's AI assessment. The 87 Browser Mode / 10 Node split is explicit. The original comparison files are retained; snippets are abbreviated and no new suite or timing result is claimed. [Current source inspection and direction](../raw/2026-09-15-reka-main-ai-story.md). This supersedes the earlier backup-only placement below.
 
 The accepted follow-up slide traces the installation feature through Node command generation, a mounted PackageManagerSelect axe audit, and separate E2E keyboard/clipboard checks. The three questions are revealed one at a time. This is source inspection at local revision `75329352`, not a newly executed suite. [Exact examples and limits](../raw/2026-09-14-npmx-install-feature-tests.md).
 
@@ -73,6 +77,12 @@ This model supplies the strategic reason for an integration-heavy Vitest Browser
 - The claim that higher-level tests provide more confidence assumes that the test exercises representative behavior and remains reliable. Test level alone does not establish confidence.
 
 ## Sources
+
+- [Five-slide visual Reka story and generated asset provenance](../raw/2026-09-15-reka-visual-short-story.md).
+
+- [Local Vitest checkout supplied to the migration agent](../raw/2026-09-15-vitest-local-reference.md).
+
+- [Current Reka main-deck direction and Slider source](../raw/2026-09-15-reka-main-ai-story.md).
 
 - [npmx.dev pinned test configuration and examples](../raw/2026-09-14-npmx-testing-strategy.md).
 

@@ -2,9 +2,9 @@
 
 Latest opening source: [jsdom’s explicit layout and rendering limit](../raw/jsdom-pretending-to-be-a-visual-browser.md), synthesized in [Browser-native component testing](browser-native-component-testing.md).
 
-Latest closing strategy: [npmx.dev runtime split and concrete checks](../raw/2026-09-14-npmx-testing-strategy.md), synthesized in [testing strategy](testing-strategy-by-confidence-and-cost.md). Summary and recommendation follow visuals; the Reka migration remains backup material; the new main-deck comparison summarizes its benefits and measured runtime tradeoff.
+Latest closing strategy: [npmx.dev runtime split and concrete checks](../raw/2026-09-14-npmx-testing-strategy.md), synthesized in [testing strategy](testing-strategy-by-confidence-and-cost.md). Summary and recommendation follow visuals; the Reka migration now follows npmx.dev in the main deck; the new main-deck comparison summarizes its benefits and measured runtime tradeoff.
 
-Latest migration revision: six editable code-editor steps replace the illustrations; see [testing strategy](testing-strategy-by-confidence-and-cost.md) and the [rechecked Git chronology](../raw/2026-09-12-reka-migration-git-history.md).
+Latest migration revision: [five visual slides with the Slider pair](../raw/2026-09-15-reka-visual-short-story.md), now in the main deck; see [testing strategy](testing-strategy-by-confidence-and-cost.md).
 
 Latest visual gallery: [Vitest 5 native screenshot comparison and curated button variants](../raw/2026-09-13-vitest-5-button-variants.md), based on the [user-supplied article](../raw/visual-regression-testing-vue-vitest-user-article.md).
 
@@ -60,3 +60,9 @@ Reka backup simplification: [four slides on preparation, workflow and outcome](.
 Comparison slide: [Browser Mode versus jsdom, grounded in the Reka migration](../raw/2026-09-14-browser-mode-jsdom-comparison.md).
 
 Latest terminal playback: [Recorded Chromium failure](../raw/2026-09-15-blocked-button-browser-terminal.md).
+
+Migration preparation: [local Vitest source, docs and own tests as agent reference](../raw/2026-09-15-vitest-local-reference.md).
+
+Latest Reka format: [five visual slides, two generated illustrations](../raw/2026-09-15-reka-visual-short-story.md).
+
+Main-deck transition: [Steve Jobs “One more thing” photograph](../raw/2026-09-15-steve-jobs-one-more-thing.md) immediately before Reka/AI.

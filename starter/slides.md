@@ -1147,45 +1147,6 @@ await expect(gallery).toMatchScreenshot('button-variants')
 </div>
 
 ---
-layout: two-cols-header
-class: visual-contract
-contractChapter: "3 / 3 · Darstellung"
----
-# Ein Screenshot für einen konkreten Vertrag
-
-::left::
-
-```ts
-const screen = await render(
-  ProductCardHost,
-)
-const artwork = screen
-  .getByRole('img', {
-    name: 'The little claw plush',
-  })
-  .element()
-if (!(artwork instanceof HTMLImageElement))
-  throw new Error('Produktbild fehlt')
-await artwork.decode()
-await document.fonts.ready
-
-await expect(screen.getByRole('article'))
-  .toMatchScreenshot('plush-card')
-```
-
-::right::
-
-<div class="pl-6 text-2xl leading-relaxed">
-
-Fester Viewport.
-
-Geladene Bilder und Fonts.
-
-Nur die relevante Komponente.
-
-</div>
-
----
 layout: default
 contractChapter: "3 / 3 · Darstellung"
 ---
@@ -1354,6 +1315,127 @@ class: npmx-strategy
 .npmx-strategy figcaption { margin-top: 12px; font-size: 17px; opacity: .75; }
 .npmx-strategy .npmx-source { margin-top: 16px; font-size: 12px; opacity: .65; }
 </style>
+
+---
+layout: default
+class: p-0
+hideFooter: true
+---
+<h1 class="sr-only">One more thing…</h1>
+<img src="/memes/steve-jobs-one-more-thing.jpg" alt="Steve Jobs auf der Bühne vor der Aufschrift One more thing…" class="absolute inset-0 w-full h-full object-contain" style="background: #000" />
+
+---
+layout: default
+hideFooter: true
+---
+# 2026. Also musste AI in den Talk.
+
+<div class="mt-3 text-2xl">Mein Versuch: die Tests von Reka UI migrieren.</div>
+
+<img src="/shop/reka-ui-overview.png" alt="Reka UI zeigt unter anderem Kalender, Farbauswahl und Slider." class="w-full h-80 object-contain mt-5" />
+
+<div class="mt-4 text-xl"><a href="https://reka-ui.com/">Reka UI</a>: Vue-Bausteine mit Tastaturbedienung und ARIA.</div>
+
+---
+layout: default
+class: reka-picture
+hideFooter: true
+---
+# Vitest selbst als Nachschlagewerk
+
+<img src="/memes/hamcrab-vitest-reference-v1.png" alt="Ein Hamcrab-Agent liest in einem großen Vitest-Buch Dokumentation, Code und Tests. Ein Slider-Beispiel zeigt die Änderung von 50 auf 51." />
+
+<div class="reka-picture-caption">Lokal geklont: <strong>opensource/vitest</strong> · Doku, Code und eigene Tests.</div>
+<div class="reka-picture-credit">KI-Illustration</div>
+
+
+
+---
+layout: default
+class: reka-picture
+hideFooter: true
+---
+# Einer migriert. Einer prüft.
+
+<img src="/memes/hamcrab-migration-review-v2.png" alt="Ein Agent migriert einen Test. Ein zweiter vergleicht ihn mit dem Original, findet ein fehlendes Puzzleteil und ergänzt die gemeinsame Anleitung AGENTS.md." />
+
+<div class="reka-picture-caption">Original vergleichen. Tests ausführen. Anleitung verbessern.</div>
+<div class="reka-picture-credit">KI-Illustration</div>
+
+---
+layout: default
+class: reka-pair
+hideFooter: true
+---
+# Der Slider: vorher und nachher
+
+<div class="reka-pair-grid">
+<div>
+
+### jsdom
+
+```ts
+// Setup · prototypname gekürzt
+ResizeObserver = class { /* Stub */ }
+proto.scrollIntoView = vi.fn()
+proto.hasPointerCapture = vi.fn()
+  .mockImplementation(id => id)
+proto.releasePointerCapture = vi.fn()
+proto.setPointerCapture = vi.fn()
+
+await slider.trigger('keydown', {
+  key: 'ArrowRight',
+})
+expect(slider.attributes('aria-valuenow'))
+  .toBe('51')
+```
+
+</div>
+<div>
+
+### Browser Mode
+
+```ts
+const screen = await render(Slider)
+const slider = screen.getByRole('slider')
+slider.element().focus()
+
+await userEvent.keyboard('{ArrowRight}')
+
+await expect.element(slider)
+  .toHaveAttribute('aria-valuenow', '51')
+```
+
+<div class="mt-6 text-xl" style="color: #a6e3a1">Diese fünf Browser-Stubs und Mocks entfallen.</div>
+
+</div>
+</div>
+
+<div class="mt-5 text-xl">Gleiche Erwartung. Echte Browser-APIs.</div>
+<div class="mt-2 text-sm opacity-60">Gekürzte Ausschnitte; der vollständige Test prüft zusätzlich die Änderung um 1.</div>
+
+<style>
+.reka-pair .reka-pair-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 22px; }
+.reka-pair .reka-pair-grid > div { min-width: 0; }
+.reka-pair h3 { margin: 0 0 12px; font-size: 24px; }
+.reka-pair pre { font-size: 14px !important; line-height: 1.6 !important; }
+</style>
+
+---
+layout: default
+hideFooter: true
+---
+# 97 Dateien migriert
+
+<div class="grid grid-cols-2 gap-16 mt-10 text-center">
+  <div><div class="text-8xl font-bold" style="color: #ff55e7">87</div><div class="mt-4 text-2xl">Browser Mode</div></div>
+  <div><div class="text-8xl font-bold" style="color: #a6e3a1">10</div><div class="mt-4 text-2xl">Node</div></div>
+</div>
+
+<div class="mt-10 text-3xl text-center">Für solche Migrationen ist AI richtig gut.</div>
+<div class="mt-3 text-xl text-center opacity-75">Meine Erfahrung: mit guten Referenzen und Review.</div>
+<div class="mt-7 text-lg text-center"><a href="https://github.com/alexanderop/reka-ui-bench-mark/tree/browserMode">Mein Fork: alexanderop/reka-ui-bench-mark</a></div>
+<div class="mt-3 text-sm text-center opacity-60">Die jsdom-Originale bleiben zum Vergleich erhalten.</div>
 
 ---
 layout: default
@@ -1640,53 +1722,6 @@ class: p-0
 hideFooter: true
 ---
 <ShopDemoFrame scenario="low-contrast-notice" title="Der Checkout-Hinweis ist kaum lesbar" />
-
----
-layout: default
----
-# Mein Praxisversuch mit Reka UI
-
-<img src="/shop/reka-ui-overview.png" alt="Reka UI mit Kalender, Farbauswahl, Slider und weiteren UI-Komponenten." class="w-full h-80 object-contain mt-5" />
-
-<div class="mt-5 text-xl">Browser Mode an einer bestehenden Komponentenbibliothek ausprobieren.</div>
-
----
-layout: default
----
-# Meine Vorbereitung
-
-<div class="mt-12 space-y-9">
-  <div><div class="text-3xl font-semibold">Tests sichten</div><div class="mt-2 text-xl opacity-75">Welche Tests brauchen einen Browser, welche prüfen reine Logik?</div></div>
-  <div><div class="text-3xl font-semibold">Browser Mode einrichten</div><div class="mt-2 text-xl opacity-75">Die vorhandenen Tests zum Vergleich weiterlaufen lassen.</div></div>
-  <div><div class="text-3xl font-semibold">Einen ersten Test übertragen</div><div class="mt-2 text-xl opacity-75">Am Slider lernen und daraus die Anleitung entwickeln.</div></div>
-</div>
-
----
-layout: default
----
-# So habe ich die Migration organisiert
-
-<div class="grid grid-cols-[1fr_auto_1fr_auto_1fr] items-center gap-5 mt-20">
-  <div><div class="text-3xl font-semibold">Übertragen</div><div class="mt-4 text-xl opacity-75">Ein Agent übernimmt eine Testdatei.</div></div>
-  <div class="text-4xl" style="color: #ff55e7" aria-hidden="true">→</div>
-  <div><div class="text-3xl font-semibold">Prüfen</div><div class="mt-4 text-xl opacity-75">Ein zweiter Agent vergleicht mit dem Original.</div></div>
-  <div class="text-4xl" style="color: #ff55e7" aria-hidden="true">→</div>
-  <div><div class="text-3xl font-semibold">Lernen</div><div class="mt-4 text-xl opacity-75">Erkenntnisse verbessern die Anleitung.</div></div>
-</div>
-
-<div class="mt-16 text-2xl">Die nächste Datei startet mit der verbesserten Anleitung.</div>
-
----
-layout: default
----
-# Das Ergebnis
-
-<div class="grid grid-cols-2 gap-16 mt-14 text-center">
-  <div><div class="text-8xl font-bold" style="color: #ff55e7">87</div><div class="mt-5 text-2xl">Testdateien im Browser</div></div>
-  <div><div class="text-8xl font-bold" style="color: #a6e3a1">10</div><div class="mt-5 text-2xl">Testdateien in Node</div></div>
-</div>
-
-<div class="mt-14 text-2xl text-center">Die ursprünglichen Tests blieben zum Vergleich erhalten.</div>
 
 ---
 layout: default

@@ -166,3 +166,11 @@ The latest user direction supersedes the Reka migration as a main-deck conclusio
 ## Final closing revision, 2026-09-14
 
 After the npmx feature example, show exactly one thank-you slide with alexop.dev and the linked testing-pyramid article. Hydration, test boundaries, AI brief and the earlier correctness conclusion move to backup. This supersedes earlier main-deck closing instructions. [Accepted direction and verified link](raw/2026-09-14-closing-blog-link.md).
+
+## Reka AI story in the main deck, 2026-09-15
+
+The latest user direction supersedes backup-only Reka placement: after npmx.dev, introduce the personal 2026/AI motivation, explain Reka, show the original Slider and mocks, explain preparation and per-file review, show the migrated test, then the 87-browser/10-Node fork and personal AI conclusion. Danke remains the final main slide. [Source and scope](raw/2026-09-15-reka-main-ai-story.md).
+
+## Reka visual condensation, 2026-09-15
+
+The user requests fewer slides and stronger images. Reka now uses five main slides, combining the AI/Reka introduction and final outcome/conclusion, illustrating the Vitest reference and independent review, and putting Slider before/after together. Details remain in presenter.md. [Provenance](raw/2026-09-15-reka-visual-short-story.md).
